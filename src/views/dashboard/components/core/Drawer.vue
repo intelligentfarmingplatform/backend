@@ -2,7 +2,7 @@
   <v-navigation-drawer
     id="core-navigation-drawer"
     v-model="drawer"
-    :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
+    color="#4caf50 "
     :expand-on-hover="expandOnHover"
     :right="$vuetify.rtl"
     :src="bar"
@@ -12,12 +12,12 @@
     width="250"
     v-bind="$attrs"
   >
-    <template v-slot:img="props">
+    <!-- <template v-slot:img="props">
       <v-img
         :gradient="`to bottom, ${barColor}`"
         v-bind="props"
       />
-    </template>
+    </template> -->
 
     <v-list-item class="logo_img">
         <v-img
@@ -82,44 +82,39 @@
       items: [
         {
           icon: 'mdi-view-dashboard',
-          title: 'dashboard',
+          title: 'Dashboard',
           to: '/',
         },
         {
           icon: 'mdi-account',
-          title: 'user',
+          title: 'Setting System',
           to: '/pages/user',
         },
         {
-          title: 'rtables',
           icon: 'mdi-clipboard-outline',
+          title: 'Sell Products',
           to: '/tables/regular-tables',
         },
         {
-          title: 'typography',
           icon: 'mdi-format-font',
+          title: 'Order',
           to: '/components/typography',
         },
         {
-          title: 'icons',
           icon: 'mdi-chart-bubble',
-          to: '/components/icons',
-        },
-        {
-          title: 'google',
-          icon: 'mdi-map-marker',
+          title: 'Setting Profile',
           to: '/maps/google-maps',
         },
         {
-          title: 'notifications',
-          icon: 'mdi-bell',
-          to: '/components/notifications',
+          icon: 'mdi-map-marker',
+          title: 'Logout',
+          to: 'pages/login',
         },
       ],
     }),
 
     computed: {
-      ...mapState(['barColor', 'barImage']),
+      ...mapState(),
       drawer: {
         get () {
           return this.$store.state.drawer
@@ -165,8 +160,12 @@
     .menu
       margin-top: 10px
 
+    .v-list-item--active
+      background-color: "#ffffff"  !important
+
     .v-list-group__header.v-list-item--active:before
-      opacity: .24
+      // opacity: 1
+      // background-color: "#ffffff"
 
     .v-list-item
       &__icon--text,

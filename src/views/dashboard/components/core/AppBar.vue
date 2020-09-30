@@ -2,10 +2,12 @@
   <v-app-bar
     id="app-bar"
     absolute
+    elevate-on-scroll
     app
     color="transparent"
     flat
-    height="75"
+    height="65"
+    scroll-target="#scrolling-techniques-5"
   >
     <v-btn
       class="mr-3"
@@ -14,12 +16,12 @@
       small
       @click="setDrawer(!drawer)"
     >
-      <v-icon v-if="value">
-        mdi-view-quilt
+      <v-icon v-if="drawer">
+        mdi-arrow-left
       </v-icon>
 
       <v-icon v-else>
-        mdi-dots-vertical
+        mdi-menu
       </v-icon>
     </v-btn>
 
@@ -116,6 +118,10 @@
       color="#629D25"
     >
       <v-icon>mdi-account</v-icon>
+      <v-toolbar-title
+        class="hidden-sm-and-down font-weight-light"
+        v-text="$route.name"
+    />
     </v-btn>
   </v-app-bar>
 </template>

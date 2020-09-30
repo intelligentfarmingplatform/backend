@@ -15,7 +15,7 @@ export default new Router({
         {
           name: 'Dashboard',
           path: '',
-          component: () => import('@/views/dashboard/Dashboard'),
+          component: () => import('@/views/dashboard/pages/Dashboard'),
         },
         // Pages
         {
@@ -27,11 +27,6 @@ export default new Router({
           name: 'Notifications',
           path: 'components/notifications',
           component: () => import('@/views/dashboard/component/Notifications'),
-        },
-        {
-          name: 'Icons',
-          path: 'components/icons',
-          component: () => import('@/views/dashboard/component/Icons'),
         },
         {
           name: 'Typography',
@@ -48,13 +43,12 @@ export default new Router({
         {
           name: 'Google Maps',
           path: 'maps/google-maps',
-          component: () => import('@/views/dashboard/maps/GoogleMaps'),
+          component: () => import('@/views/dashboard/pages/Dashboard'),
         },
-        // Upgrade
         {
-          name: 'Upgrade',
-          path: 'upgrade',
-          component: () => import('@/views/dashboard/Upgrade'),
+          name: 'Login',
+          path: 'pages/login',
+          component: () => import('@/views/Login/Login'),
         },
       ],
     },
