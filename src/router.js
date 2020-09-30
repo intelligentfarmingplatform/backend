@@ -45,11 +45,6 @@ export default new Router({
           path: 'maps/google-maps',
           component: () => import('@/views/dashboard/pages/Dashboard'),
         },
-        {
-          name: 'Login',
-          path: 'pages/login',
-          component: () => import('@/views/Login/Login'),
-        },
       ],
     },
   ],
