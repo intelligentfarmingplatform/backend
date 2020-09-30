@@ -1,3 +1,5 @@
+# update 
+- New version 30/9/2563
 # Readme
 
 ## Deploy Vue.js to Github 
