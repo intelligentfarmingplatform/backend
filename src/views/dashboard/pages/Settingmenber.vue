@@ -156,11 +156,11 @@ import Axios from 'axios'
                this.$swal({
                   title: 'ลบข้อมูลเสร์จสิ้น',
                   text: "ทำการลบข้อมูลสำเร็จ",
-                  icon: 'error'
+                  icon: 'success'
                 }).then((result) => {
                   if(result.value){
-                    const index = this.desserts.indexOf(item) 
-                    this.desserts.splice(index, 1)
+                    const index = this.listusers.indexOf(item) 
+                    this.listusers.splice(index, 1)
                     console.log(response.data.message);
                   }
                 });
