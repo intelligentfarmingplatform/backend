@@ -59,6 +59,8 @@
               :headers="headers"
               :items="listusers"
               :search="search"
+              loading
+              loader-height="1px"
               loading-text="Loading... Please wait"
             >
             <template v-slot:item.edit="{ item }">
