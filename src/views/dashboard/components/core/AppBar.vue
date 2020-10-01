@@ -59,7 +59,7 @@
       class="ml-2"
       min-width="0"
       text
-      color="#629D25"
+      color="#8C450A"
       to="/"
     >
       <v-icon>mdi-view-dashboard</v-icon>
@@ -79,7 +79,7 @@
           text
           v-bind="attrs"
           v-on="on"
-          color="#629D25"
+          color="#8C450A"
         >
           <v-badge
             color="error"
@@ -115,7 +115,7 @@
       min-width="0"
       text
       to="/pages/user"
-      color="#629D25"
+      color="#8C450A"
     >
       <v-icon>mdi-account</v-icon>
       <v-toolbar-title

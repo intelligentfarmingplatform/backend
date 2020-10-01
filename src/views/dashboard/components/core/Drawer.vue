@@ -2,7 +2,7 @@
   <v-navigation-drawer
     id="core-navigation-drawer"
     v-model="drawer"
-    color="#4caf50 "
+    color="info"
     :expand-on-hover="expandOnHover"
     :right="$vuetify.rtl"
     :src="bar"
@@ -10,6 +10,7 @@
     mobile-break-point="960"
     app
     width="250"
+    dark
     v-bind="$attrs"
   >
     <!-- <template v-slot:img="props">
@@ -44,6 +45,7 @@
           v-if="item.children"
           :key="`group-${i}`"
           :item="item"
+          class="menu"
         >
         </base-item-group>
 
@@ -51,7 +53,6 @@
           v-else
           :key="`item-${i}`"
           :item="item"
-          class="menu"
         />
       </template>
 
@@ -88,7 +89,7 @@
         {
           icon: 'mdi-account',
           title: 'Setting System',
-          to: '/pages/user',
+          to: '/pages/settingmenber',
         },
         {
           icon: 'mdi-clipboard-outline',
@@ -109,6 +110,11 @@
           icon: 'mdi-map-marker',
           title: 'Logout',
           to: 'pages/login',
+        },
+        {
+          icon: 'mdi-map-marker',
+          title: 'Notifications',
+          to: '/components/notifications',
         },
       ],
     }),
@@ -159,13 +165,6 @@
 
     .menu
       margin-top: 10px
-
-    .v-list-item--active
-      background-color: "#ffffff"  !important
-
-    .v-list-group__header.v-list-item--active:before
-      // opacity: 1
-      // background-color: "#ffffff"
 
     .v-list-item
       &__icon--text,

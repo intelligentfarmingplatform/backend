@@ -29,6 +29,11 @@ export default new Router({
           component: () => import('@/views/dashboard/component/Notifications'),
         },
         {
+          name: 'Setting Members',
+          path: 'pages/settingmenber',
+          component: () => import('@/views/dashboard/pages/Settingmenber'),
+        },
+        {
           name: 'Typography',
           path: 'components/typography',
           component: () => import('@/views/dashboard/component/Typography'),
@@ -44,6 +49,11 @@ export default new Router({
           name: 'Google Maps',
           path: 'maps/google-maps',
           component: () => import('@/views/dashboard/pages/Dashboard'),
+        },
+        {
+          name: 'Login',
+          path: 'pages/login',
+          component: () => import('@/views/Login/Login'),
         },
       ],
     },
