@@ -141,7 +141,7 @@
               :headers="headers"
               :items="listusers"
               :search="search"
-              loading
+              :loading="loading"
               loader-height="2px"
               loading-text="Loading... Please wait"
             >
@@ -182,6 +182,7 @@ import Axios from 'axios'
         return {
           search: '',
           dialog: false,
+          loading: true,
           passwordRules: [
             v => !!v || 'กรุณากรอกรห้สผ่าน',
             v => (v && v.length == 10) || 'กรุณากรอกรห้สผ่านให้ครบ 10 ตัว',
@@ -253,9 +254,10 @@ import Axios from 'axios'
         formuser
     },
     created() {
-        Axios.get("https://intelligentfarmingplatform.herokuapp.com/api/user")
+       Axios.get("https://intelligentfarmingplatform.herokuapp.com/api/user")
         .then(response => {
             this.listusers = response.data.data;
+            this.loading = false;
         }).catch((err) => {
         console.log(err); 
         })
