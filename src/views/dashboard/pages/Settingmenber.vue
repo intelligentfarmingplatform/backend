@@ -1,8 +1,6 @@
 <template>
   <v-container
-    id="regular-tables"
-    fluid
-    tag="section"
+
   >
         <v-col
         cols="12"
@@ -13,6 +11,7 @@
           title="ระบบจัดการสมาชิก"
           
         >
+        <!-- <formuser /> -->
         <v-card-title>
             <v-row
              align="center"
@@ -67,18 +66,15 @@
                             <v-container>
                             <v-form
                                 ref="form"
-                                v-model="valid"
-                                :lazy-validation="lazy"
                                 @submit.prevent="onsubmit"
-                                value="false"
-                                >
-                                <v-text-field
+                            >
+                                <!-- <v-text-field
                                 v-if="editedIndex != -1"
                                 v-model="editedItem.userName"
                                 label="รห้สซีเรียล"
                                 disabled
                                 required
-                                ></v-text-field>
+                                ></v-text-field> -->
                                  
                                 <v-text-field
                                 v-model="editedItem.userName"
@@ -114,13 +110,9 @@
                                 <v-checkbox
                                 v-model="checkbox"
                                 label="ยืนยันการแก้ไขข้อมูล"
-                                
-                                required
                                 ></v-checkbox>
-
-                                <div class="buttom">
                                     <v-btn
-                                    :disabled="!valid"
+                                    
                                     color="success"
                                     class="mr-4"
                                     type="submit"
@@ -135,14 +127,13 @@
                                     >
                                     ย้อนกลับ
                                     </v-btn>
-                                </div>
+                                
                             </v-form>
                             </v-container>
                         </v-card-text>
                     </v-card>
                 </v-dialog>
                 </v-col>
-                <!-- <formuser /> -->
             </v-row>
           </v-card-title>
           <v-card-text>
@@ -191,7 +182,6 @@ import Axios from 'axios'
         return {
           search: '',
           dialog: false,
-          checkbox: false,
           passwordRules: [
             v => !!v || 'กรุณากรอกรห้สผ่าน',
             v => (v && v.length == 10) || 'กรุณากรอกรห้สผ่านให้ครบ 10 ตัว',
@@ -206,6 +196,7 @@ import Axios from 'axios'
             password:'',
             email:'',
             statususer: null,
+            checkbox: false,
             },
           defaultItem: {
             username:'',
@@ -245,6 +236,15 @@ import Axios from 'axios'
         }
     },
     computed: {
+      formIsValid () {
+        return (
+            this.editedItem.username &&
+            this.editedItem.password &&
+            this.editedItem.email &&
+            this.editedItem.statususer &&
+            this.editedItem.checkbox
+        )
+       },
       formTitle () {
         return this.editedIndex === -1 ? 'เพิ่มสมาชิก' : 'แก้ไขข้อมูล'
       },
@@ -262,7 +262,6 @@ import Axios from 'axios'
     },
     methods: {
     del (item) {
-        console.log(item.id);
         this.$swal({
           title: 'ต้องการลบข้อมูล',
           text: "คุณต้องการลบข้อมูลหรือไม",
@@ -286,6 +285,7 @@ import Axios from 'axios'
                     const index = this.listusers.indexOf(item) 
                     this.listusers.splice(index, 1)
                     console.log(response.data.message);
+                    this.close()
                   }
                 });
               }else{
@@ -327,11 +327,83 @@ import Axios from 'axios'
         this.dialog = true
         
       },
+    onsubmit () {
+        
+        if(this.editedIndex > -1) {
+            this.$swal({
+                        title: 'ต้องการแก้ไขข้อมูล',
+                        text: "คุณต้องการแก้ไขข้อมูลหรือไม",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'ยืนยัน',
+                        cancelButtonText: 'ยกเลิก'
+                    }).then((result) => {
+                        if (result.value) {
+                            console.log(this.editedItem.id);
+                            Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/user/${this.editedItem.id}`, this.editedItem)
+                            .then(response => {
+                                if(response.data.statusCode == 201){
+                                    this.$swal({
+                                        title: 'เสร็จสิ้น',
+                                        text: "ทำการแก้ไขข้อมูลเสร็จสิ้น",
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                        // confirmButtonText: 'ยืนยัน'
+                                    }).then(() => {     
+                                            Object.assign(this.listusers[this.editedIndex], this.editedItem)
+                                            this.close()
+                                    });
+                                }else{
+                                    this.$swal({
+                                        title: 'ไม่สำเร็จ',
+                                        text: "ทำการแก้ไขข้อมูลไม่สำเร็จ",
+                                        icon: 'error'
+                                    });
+                                }
+                            }).catch(err => console.log(err));
+                        }
+                    });
+        }else{
+            this.$swal({
+                        title: 'ต้องการเพิ่มข้อมูล',
+                        text: "คุณต้องการเพิ่มข้อมูลหรือไม",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'ยืนยัน',
+                        cancelButtonText: 'ยกเลิก'
+                    }).then((result) => {
+                        if (result.value) {
+                            Axios.post("https://intelligentfarmingplatform.herokuapp.com/api/user/", this.editedItem)
+                            .then(response => {
+                                if(response.data.statusCode == 201){
+                                     this.$swal({
+                                        title: 'เสร็จสิ้น',
+                                        text: "ทำการเพิ่มข้อมูลเสร็จสิ้น",
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                        // confirmButtonText: 'ยืนยัน'
+                                    }).then(() => {
+                                            this.listusers.push(this.editedItem)
+                                            this.close()
+                                    });
+                                }else{
+                                    this.$swal({
+                                        title: 'ไม่สำเร็จ',
+                                        text: "ทำการเพิ่มข้อมูลไม่สำเร็จ",
+                                        icon: 'error'
+                                    });
+                                }
+                            }).catch(err => console.log(err));
+                        }
+                    });
+        }
+}
   },
-      onsubmit () {
-          if (this.editedIndex > -1) {
-
-          }else{}
-      },
   }
 </script>
