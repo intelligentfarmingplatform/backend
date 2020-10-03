@@ -1,5 +1,5 @@
 <template>
-      <v-container
+  <v-container
     id="regular-tables"
     fluid
     tag="section"
@@ -36,22 +36,113 @@
                  lg="2"
                  md="2"
                 >   
-                    <v-btn
-                     depressed
-                     color="info"
-                     width="100%"
-                     class="rounded-pill"
-                    >
-                     <v-icon>
-                         mdi-plus
-                     </v-icon>
-                     <v-text
-                      class="ml-2 display-1"
-                     >
-                         เพิ่มสมาชิก
-                     </v-text>
-                    </v-btn>
+                <v-dialog
+                  v-model="dialog"
+                  max-width="500px"
+                >
+                    <template v-slot:activator="{ on, attrs }">                
+                        <v-btn
+                        depressed
+                        color="info"
+                        width="100%"
+                        class="rounded-pill"
+                        v-bind="attrs"
+                        v-on="on"
+                        >
+                        <v-icon>
+                            mdi-plus
+                        </v-icon>
+                        <v-text
+                        class="ml-2 display-1"
+                        >
+                            เพิ่มสมาชิก
+                        </v-text>
+                        </v-btn>
+                    </template>
+                    <v-card>
+                        <v-card-title>
+                        <span class="headline">{{ formTitle }}</span>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-container>
+                            <v-form
+                                ref="form"
+                                v-model="valid"
+                                :lazy-validation="lazy"
+                                @submit.prevent="onsubmit"
+                                value="false"
+                                >
+                                <v-text-field
+                                v-if="editedIndex != -1"
+                                v-model="editedItem.userName"
+                                label="รห้สซีเรียล"
+                                disabled
+                                required
+                                ></v-text-field>
+                                 
+                                <v-text-field
+                                v-model="editedItem.userName"
+                                label="Username"
+                                :rules="[v => !!v || 'กรุณาใส่ชื่อผู้ใช้']"
+                                required
+                                ></v-text-field>
+
+                                <v-text-field
+                                v-model="editedItem.password"
+                                label="Password"
+                                :rules="passwordRules"
+                                maxlength="10"
+                                :counter="10"
+                                required
+                                ></v-text-field>
+
+                                <v-text-field
+                                v-model="editedItem.email"
+                                type="email"
+                                label="Email"
+                                required
+                                ></v-text-field>
+
+                                <v-select
+                                v-model="editedItem.status_level"
+                                :items="itemsstatus"
+                                :rules="[v => !!v || 'กรุณาเลือกสถานะ']"
+                                label="สถานะ"
+                                required
+                                ></v-select>
+
+                                <v-checkbox
+                                v-model="checkbox"
+                                label="ยืนยันการแก้ไขข้อมูล"
+                                
+                                required
+                                ></v-checkbox>
+
+                                <div class="buttom">
+                                    <v-btn
+                                    :disabled="!valid"
+                                    color="success"
+                                    class="mr-4"
+                                    type="submit"
+                                    >
+                                    บันทึกข้อมูล
+                                    </v-btn>
+
+                                    <v-btn
+                                    color="error"
+                                    class="mr-4"
+                                    @click="close"
+                                    >
+                                    ย้อนกลับ
+                                    </v-btn>
+                                </div>
+                            </v-form>
+                            </v-container>
+                        </v-card-text>
+                    </v-card>
+                </v-dialog>
                 </v-col>
+                <!-- <formuser /> -->
             </v-row>
           </v-card-title>
           <v-card-text>
@@ -60,19 +151,18 @@
               :items="listusers"
               :search="search"
               loading
-              loader-height="1px"
+              loader-height="2px"
               loading-text="Loading... Please wait"
             >
             <template v-slot:item.edit="{ item }">
-                <router-link :to="`/update/${item.id}`">
                     <v-icon
                     small
                     clas s="mr-2"
                     color="#FFBB29"
+                    @click="editItem(item)"
                     >
                         mdi-pencil
                     </v-icon>
-                </router-link>
             </template>
             <template v-slot:item.del="{ item }">
                 <v-icon
@@ -92,7 +182,7 @@
 
 <script>
 
-import { mapState, mapMutations } from 'vuex'
+import formuser from '../components/core/formuser'
 import Axios from 'axios'
 
   export default {
@@ -100,7 +190,31 @@ import Axios from 'axios'
     data() {
         return {
           search: '',
+          dialog: false,
+          checkbox: false,
+          passwordRules: [
+            v => !!v || 'กรุณากรอกรห้สผ่าน',
+            v => (v && v.length == 10) || 'กรุณากรอกรห้สผ่านให้ครบ 10 ตัว',
+        ],
+          itemsstatus:[
+              'Admin',
+              'members'
+          ],
+          editedIndex: -1,
+          editedItem: {
+            username:'',
+            password:'',
+            email:'',
+            statususer: null,
+            },
+          defaultItem: {
+            username:'',
+            password:'',
+            email:'',
+            statususer:''
+            },
           headers: [
+            {text: 'ลำดับ' , value: 'index' ,width:'10% '},
             {text: 'รห้ส' , value: 'id' ,width:'10% '},
             { text: 'ชื่อผู้ใช้' ,value: 'userName'},
             { text: 'รห้ส' , value: 'password' },
@@ -129,6 +243,14 @@ import Axios from 'axios'
           ],
           listusers: [],
         }
+    },
+    computed: {
+      formTitle () {
+        return this.editedIndex === -1 ? 'เพิ่มสมาชิก' : 'แก้ไขข้อมูล'
+      },
+    },
+    components:{
+        formuser
     },
     created() {
         Axios.get("https://intelligentfarmingplatform.herokuapp.com/api/user")
@@ -177,6 +299,39 @@ import Axios from 'axios'
           }
         })
     },
-  }
+    update(item){
+        Axios.get(`https://intelligentfarmingplatform.herokuapp.com/api/user/${item.id}`)
+            .then(response => {
+            console.log(response.data);
+                
+            const data = response.data.data;
+            this.editedItem.username = data.userName;
+            this.editedItem.password = data.password;
+            this.editedItem.email = data.email;
+            this.editedItem.statususer = data.status_level;
+            }).catch((err) => {
+            console.log(err); 
+            }) 
+    },
+      close () {
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+          this.dialog = false
+          this.$refs.form.reset()
+        })
+      },
+    editItem (item) {
+        this.editedIndex = this.listusers.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+        this.dialog = true
+        
+      },
+  },
+      onsubmit () {
+          if (this.editedIndex > -1) {
+
+          }else{}
+      },
   }
 </script>
