@@ -106,7 +106,7 @@
                                 ></v-text-field>
 
                                 <v-select
-                                v-model="editedItem.status_level"
+                                v-model="editedItem.status"
                                 :items="itemsstatus"
                                 :rules="[v => !!v || 'กรุณาเลือกสถานะ']"
                                 label="สถานะ"
@@ -211,10 +211,10 @@ import Axios from 'axios'
           ],
           editedIndex: -1,
           editedItem: {
-            username:'',
+            userName:'',
             password:'',
             email:'',
-            statususer: null,
+            status: null,
             checkbox: false,
             },
           defaultItem: {
@@ -293,13 +293,16 @@ import Axios from 'axios'
                this.$swal({
                   title: 'ลบข้อมูลเสร์จสิ้น',
                   text: "ทำการลบข้อมูลสำเร็จ",
-                  icon: 'success'
-                }).then((result) => {
+                  icon: 'success',
+                  showConfirmButton: false,
+                  timer: 1000
+                }).then(() => {
                   if(result.value){
+                    this.close()
                     const index = this.listusers.indexOf(item) 
                     this.listusers.splice(index, 1)
                     console.log(response.data.message);
-                    this.close()
+                  
                   }
                 });
               }else{
@@ -403,7 +406,7 @@ import Axios from 'axios'
                                         timer: 1000
                                         // confirmButtonText: 'ยืนยัน'
                                     }).then(() => {
-                                            this.listusers.push(this.editedItem)
+                                            this.listusers.push(response.data.data)
                                             this.close()
                                     });
                                 }else{
