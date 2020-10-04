@@ -38,6 +38,7 @@
                 <v-dialog
                   v-model="dialog"
                   max-width="500px"
+                  w
                 >
                     <template v-slot:activator="{ on, attrs }">                
                         <v-btn
@@ -59,28 +60,30 @@
                         </v-btn>
                     </template>
                     <v-card>
-                        <v-card-title>
-                        <span class="headline">{{ formTitle }}</span>
+                        <v-card-title class="headline">
+                        <span>{{ formTitle }}</span>
                         </v-card-title>
                         <v-card-text>
                             <v-container>
                             <v-form
                                 ref="form"
+                                v-model="isValid"
                                 @submit.prevent="onsubmit"
                             >
-                                <!-- <v-text-field
+                                <v-text-field
                                 v-if="editedIndex != -1"
                                 v-model="editedItem.userName"
                                 label="รห้สซีเรียล"
                                 disabled
                                 required
-                                ></v-text-field> -->
+                                ></v-text-field>
                                  
                                 <v-text-field
                                 v-model="editedItem.userName"
                                 label="Username"
                                 :rules="[v => !!v || 'กรุณาใส่ชื่อผู้ใช้']"
                                 required
+                                prepend-icon="mdi-pencil"
                                 ></v-text-field>
 
                                 <v-text-field
@@ -90,13 +93,16 @@
                                 maxlength="10"
                                 :counter="10"
                                 required
+                                prepend-icon="mdi-key"
                                 ></v-text-field>
 
                                 <v-text-field
                                 v-model="editedItem.email"
                                 type="email"
                                 label="Email"
+                                :rules="[ v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'กรุณาใส่อีเมล์']"
                                 required
+                                prepend-icon="mdi-email"
                                 ></v-text-field>
 
                                 <v-select
@@ -105,29 +111,39 @@
                                 :rules="[v => !!v || 'กรุณาเลือกสถานะ']"
                                 label="สถานะ"
                                 required
+                                prepend-icon="mdi-text-account"
                                 ></v-select>
 
                                 <v-checkbox
                                 v-model="checkbox"
-                                label="ยืนยันการแก้ไขข้อมูล"
+                                :label="[`ยืนยันการ${formTitle}`]"
+                                :rules="[v => !!v || `กรุณากดยืนยันการ${formTitle}`]"
                                 ></v-checkbox>
+                                <v-container>
+                                    <v-col
+                                        cols="12"
+                                        align="center"
+                                    >
                                     <v-btn
-                                    
+                                    :disabled="!isValid"
+                                    depressed
                                     color="success"
-                                    class="mr-4"
+                                    class="mr-4 rounded-pill"
                                     type="submit"
                                     >
                                     บันทึกข้อมูล
                                     </v-btn>
 
                                     <v-btn
+                                    depressed
                                     color="error"
-                                    class="mr-4"
+                                    class="mr-4 rounded-pill"
                                     @click="close"
                                     >
                                     ย้อนกลับ
                                     </v-btn>
-                                
+                                    </v-col>
+                                </v-container>
                             </v-form>
                             </v-container>
                         </v-card-text>
@@ -144,6 +160,7 @@
               :loading="loading"
               loader-height="2px"
               loading-text="Loading... Please wait"
+              color="info"
             >
             <template v-slot:item.edit="{ item }">
                     <v-icon
@@ -183,6 +200,7 @@ import Axios from 'axios'
           search: '',
           dialog: false,
           loading: true,
+          isValid:{},
           passwordRules: [
             v => !!v || 'กรุณากรอกรห้สผ่าน',
             v => (v && v.length == 10) || 'กรุณากรอกรห้สผ่านให้ครบ 10 ตัว',
@@ -237,18 +255,12 @@ import Axios from 'axios'
         }
     },
     computed: {
-      formIsValid () {
-        return (
-            this.editedItem.username &&
-            this.editedItem.password &&
-            this.editedItem.email &&
-            this.editedItem.statususer &&
-            this.editedItem.checkbox
-        )
-       },
       formTitle () {
         return this.editedIndex === -1 ? 'เพิ่มสมาชิก' : 'แก้ไขข้อมูล'
       },
+      formIcom () {
+          return this.editedIndex === -1 ? 'mdi-account-plus' : 'mdi-account-edit'
+      }
     },
     components:{
         formuser
