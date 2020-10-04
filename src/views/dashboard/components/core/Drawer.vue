@@ -87,14 +87,14 @@
           to: '/',
         },
         {
-          icon: 'mdi-account',
-          title: 'Setting System',
+          icon: 'mdi-account-group',
+          title: 'Setting Members',
           to: '/pages/settingmenber',
         },
         {
-          icon: 'mdi-clipboard-outline',
+          icon: 'mdi-store',
           title: 'Sell Products',
-          to: '/tables/regular-tables',
+          to: '/pages/sellproducts',
         },
         {
           icon: 'mdi-format-font',
@@ -109,7 +109,7 @@
         {
           icon: 'mdi-map-marker',
           title: 'Logout',
-          to: 'pages/login',
+          to: '/tables/regular-tables',
         },
         {
           icon: 'mdi-map-marker',

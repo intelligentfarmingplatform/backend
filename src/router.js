@@ -34,6 +34,11 @@ export default new Router({
           component: () => import('@/views/dashboard/pages/Settingmenber'),
         },
         {
+          name: 'Sell Products',
+          path: 'pages/sellproducts',
+          component: () => import('@/views/dashboard/pages/SellProducts'),
+        },
+        {
           name: 'Typography',
           path: 'components/typography',
           component: () => import('@/views/dashboard/component/Typography'),
