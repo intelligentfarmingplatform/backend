@@ -36,7 +36,6 @@
                 <v-dialog
                   v-model="dialog"
                   max-width="500px"
-                  w
                 >
                     <template v-slot:activator="{ on, attrs }">                
                         <v-btn
@@ -188,7 +187,6 @@
 
 <script>
 
-import formuser from '../components/core/formuser'
 import Axios from 'axios'
 
   export default {
@@ -256,12 +254,6 @@ import Axios from 'axios'
       formTitle () {
         return this.editedIndex === -1 ? 'เพิ่มสมาชิก' : 'แก้ไขข้อมูล'
       },
-      formIcom () {
-          return this.editedIndex === -1 ? 'mdi-account-plus' : 'mdi-account-edit'
-      }
-    },
-    components:{
-        formuser
     },
     created() {
        Axios.get("https://intelligentfarmingplatform.herokuapp.com/api/user")

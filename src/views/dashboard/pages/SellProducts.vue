@@ -10,12 +10,16 @@
           
         >
           <v-card-title>
-            <v-card
+              <v-col
+              cols="12"
+              md="3"
                 v-for="items in showproducts "
                 :key="items"
                 :loading="loading"
-                class="mx-5 cardproducts"
-                max-width="250"
+              >
+            <v-card
+                class="cardproducts"
+                width="100%"
                 height="450"
             >
                 <v-img
@@ -41,9 +45,8 @@
                     color="#FFBB29"
                     depressed
                     max-width="50%"
-                    class="mx-0 rounded-pill"
-                    
-                    @click="reserve"
+                    class="mx-auto rounded-pill"
+                    @click="editItem(items.id)"
                 >
                     แก้ไขสินค้า
                 </v-btn>
@@ -51,22 +54,27 @@
                     color="#FF6347"
                     depressed
                     max-width="50%"
-                    class="rounded-pill"
+                    class="mx-auto rounded-pill"
                     @click="reserve"
                 >
                     ลบสินค้า
                 </v-btn>
                 </v-card-actions>
             </v-card>
+            </v-col>
             <!-- ----------------------------------------------------end cardshow----------------------------------- -->
                 <v-dialog
                   v-model="dialog"
                   max-width="500px"
                 >
-                    <template v-slot:activator="{ on, attrs }">                
+                    <template v-slot:activator="{ on, attrs }">  
+                        <v-col
+                            cols="12"
+                            md="3"
+                        >             
                         <v-card
-                            class="mx-5 newcardproducts d-flex "
-                            width="250"
+                            class="newcardproducts d-flex "
+                            width="100%"
                             height="450"
                             color="info"
                             v-bind="attrs"
@@ -86,6 +94,7 @@
                                 </v-card-title>
                             </v-card-text>
                         </v-card>
+                        </v-col> 
                     </template>
                     <v-card>
                         <v-card-title class="headline">
@@ -99,7 +108,6 @@
                                 @submit.prevent="onsubmit"
                             >
                                 <v-text-field
-                                v-if="editedIndex != -1"
                                 label="ชื่อผู้ใช้งาน"
                                 prepend-icon="mdi-pencil"
                                 disabled
@@ -120,7 +128,7 @@
                                 >
                                     <v-text-field
                                     label="Password"
-                                    :rules="passwordRules"
+                                    rules="passwordRules"
                                     maxlength="10"
                                     :counter="10"
                                     required
@@ -198,6 +206,7 @@ export default {
     data() {
         return {
             loading:'',
+            editedIndex: -1,
             dialog: false,
             products:{
                 img:'',
@@ -209,12 +218,16 @@ export default {
             showproducts:[],    
         }
     },
+    computed: {
+      formTitle () {
+        return this.editedIndex === -1 ? 'เพิ่มสินค้า' : 'แก้ไขข้อมูลสินค้า'
+      },
+    },
      created() {
        Axios.get("http://localhost:3000/api/sellproducts",{ responseType: 'arrybuffer'})
         .then(response => {
             this.showproducts = response.data.data ;
             this.loading = false;
-            this.showproducts.img = 'data:image/jpeg;base64,' + btoa(response.data.results[0].image.data);
         }).catch((err) => {
         console.log(err); 
         })
@@ -223,11 +236,18 @@ export default {
     methods:{
         close () {
         this.$nextTick(() => {
-        //   this.editedItem = Object.assign({}, this.defaultItem)
-        //   this.editedIndex = -1
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
           this.dialog = false
           this.$refs.form.reset()
         })
+      },
+        editItem (item) {
+            console.log(item);
+        this.editedIndex = item
+        this.editedItem = Object.assign({}, item)
+        this.dialog = true
+        
       },
     }
 }

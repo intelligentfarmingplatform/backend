@@ -99,7 +99,7 @@
         {
           icon: 'mdi-format-font',
           title: 'Order',
-          to: '/components/typography',
+          to: '/pages/order',
         },
         {
           icon: 'mdi-chart-bubble',
