@@ -24,7 +24,7 @@
             >
                 <v-img
                 height="150"
-                :src="items.productimg"
+                :src="`http://localhost:3000/${items.productimg}`"
                 ></v-img>
 
                 <v-card-title class="mt-5 mx-auto">{{ items.productname }}</v-card-title>
@@ -110,7 +110,7 @@
                                 <v-text-field
                                 label="ชื่อผู้ใช้งาน"
                                 prepend-icon="mdi-pencil"
-                                disabled
+                                
                                 required
                                 ></v-text-field>
                             
@@ -120,7 +120,7 @@
                                 required
                                 prepend-icon="mdi-pencil"
                                 ></v-text-field>
-                            <v-row>
+                            <!-- <v-row>
                                 <v-col
                                     cols="12"
                                     sm="6"
@@ -148,28 +148,36 @@
                                     prepend-icon="mdi-email"
                                     ></v-text-field>
                                 </v-col>
-                            </v-row>
+                            </v-row> -->
                             
-                                <v-select
+                                <!-- <v-select
                                 
                                 :items="itemsstatus"
                                 :rules="[v => !!v || 'กรุณาเลือกสถานะ']"
                                 label="สถานะ"
                                 required
                                 prepend-icon="mdi-text-account"
-                                ></v-select>
+                                ></v-select> -->
 
-                                <v-checkbox
+                            <v-file-input
+                                show-size
+                                counter
+                                multiple
+                                label="File input"
+                                @change="upload"
+                            ></v-file-input>
+
+                                <!-- <v-checkbox
                                 :label="[`ยืนยันการ${formTitle}`]"
                                 :rules="[v => !!v || `กรุณากดยืนยันการ${formTitle}`]"
-                                ></v-checkbox>
+                                ></v-checkbox> -->
                                 <v-container>
                                     <v-col
                                         cols="12"
                                         align="center"
                                     >
                                     <v-btn
-                                    :disabled="!isValid"
+                                    
                                     depressed
                                     color="success"
                                     class="rounded-pill"
@@ -215,6 +223,7 @@ export default {
                 pirec:'',
                 detail:'',
             },
+            slelctedFile: null,
             showproducts:[],    
         }
     },
@@ -224,7 +233,7 @@ export default {
       },
     },
      created() {
-       Axios.get("http://localhost:3000/api/sellproducts",{ responseType: 'arrybuffer'})
+       Axios.get("http://localhost:3000/api/sellproducts")
         .then(response => {
             this.showproducts = response.data.data ;
             this.loading = false;
@@ -249,6 +258,22 @@ export default {
         this.dialog = true
         
       },
+      upload() {
+          this.slelctedFile = event.target.files[0];
+          this.url = URL.createObjectURL(this.slelctedFile)
+      },
+      onsubmit(){
+          console.log(this.$refs.form.validate());
+          const formdata = new FormData();
+          formdata.append("files", this.slelctedFile,  this.slelctedFile.name);
+          console.log(this.slelctedFile);
+          const config = {
+              headers: {
+                  "Content-Type": "multipart/form-data"
+              }
+          };
+          Axios.put('http://localhost:3000/api/sellproducts/img/1',formdata, config )
+      }
     }
 }
 </script>

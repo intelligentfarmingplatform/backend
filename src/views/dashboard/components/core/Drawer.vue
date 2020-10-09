@@ -114,10 +114,10 @@
         {
           icon: 'mdi-map-marker',
           title: 'Notifications',
-          to: '/components/notifications',
+          to: '/pages/login',
         },
       ],
-    }),
+    }), 
 
     computed: {
       ...mapState(),

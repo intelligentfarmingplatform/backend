@@ -9,6 +9,7 @@
           title="ระบบจัดการสมาชิก"
           
         >
+        <p>asasdasdas</p>
         <!-- <formuser /> -->
         <v-card-title>
             <v-col></v-col>
@@ -23,7 +24,7 @@
                     text
                 >
                     <v-icon>
-                        mdi-plus
+                        mdi-clipboard-text
                     </v-icon>
                     <v-text
                     class="ml-2"
@@ -36,12 +37,12 @@
                     text
                 >
                     <v-icon>
-                        mdi-plus
+                        mdi-clipboard-arrow-down-outline
                     </v-icon>
                     <v-text
                     class="ml-2"
                     >
-                        ทั้งหมด
+                        ออเดอร์
                     </v-text>
                 </v-btn>
                 <v-btn
@@ -49,12 +50,12 @@
                     text
                 >
                     <v-icon>
-                        mdi-plus
+                        mdi-car
                     </v-icon>
                     <v-text
                     class="ml-2"
                     >
-                        ทั้งหมด
+                        กำลังจัดส่ง
                     </v-text>
                 </v-btn>
                 <v-btn
@@ -62,12 +63,12 @@
                     text
                 >
                     <v-icon>
-                        mdi-plus
+                        mdi-check-bold
                     </v-icon>
                     <v-text
                     class="ml-2"
                     >
-                        ทั้งหมด
+                        เสร็จสิ้น
                     </v-text>
                 </v-btn>
             </v-col>
@@ -75,31 +76,34 @@
           <v-card-text>
             <v-data-table
               :headers="headers"
-              :items="listusers"
+              :items="listorder"
               :search="search"
               :loading="loading"
               loader-height="2px"
               loading-text="Loading... Please wait"
               color="info"
             >
-            <template v-slot:item.edit="{ item }">
+            <template v-slot:item.status_level="{ item }">
+                <v-select
+                    v-model="select"
+                    :items="items"
+                    item-text="state"
+                    item-value="abbr"
+                    label="Select"
+                    persistent-hint
+                    return-object
+                    single-line
+                    ></v-select>
+            </template>
+            <template v-slot:item.view="{ item }">
                     <v-icon
                     small
                     clas s="mr-2"
                     color="#FFBB29"
-                    @click="editItem(item)"
+                    @click="view(item)"
                     >
-                        mdi-pencil
+                        mdi-eye
                     </v-icon>
-            </template>
-            <template v-slot:item.del="{ item }">
-                <v-icon
-                small
-                @click="del(item)"
-                color="#FF6347"
-                >
-                    mdi-delete
-                </v-icon>
             </template>
             </v-data-table>
           </v-card-text>
@@ -113,12 +117,38 @@ export default {
     name:'order',
     data() {
         return {
+            listorder:[
+                {
+                    index:'1',
+                    id:'0000001',
+                    userName:'Ceo_Ball',
+                    password:[
+                        {list:'sdfdsf'},
+                        {list:'sdfdsf'},
+                        {list:'sdfdsf'}
+                    ],
+                    email:'1,800',
+                    status_level:'กำลังส่ง'
+                },
+                {
+                    index:'1',
+                    id:'0000001',
+                    userName:'Ceo_Ball',
+                    password:[
+                        {list:'sdfdsf'},
+                        {list:'sdfdsf'},
+                        {list:'sdfdsf'}
+                    ],
+                    email:'1,800',
+                    status_level:'กำลังส่ง'
+                },
+            ],
             headers: [
-            {text: 'ลำดับ' , value: 'index' ,width:'10% '},
-            {text: 'รห้สสั่งซื้อ', value: 'id'},
-            { text: 'ชื่อผุ้สั่ง' ,value: 'userName',width:'10%'},
-            { text: 'รายการ' , value: 'password' },
-            { text: 'ราคา' , value: 'email' },
+            {text: 'ลำดับ' , value: 'index' ,align: 'center',sortable: false,},
+            {text: 'รห้สสั่งซื้อ', value: 'id',align: 'center',sortable: false,},
+            { text: 'ชื่อผุ้สั่ง' ,value: 'userName',align: 'center',sortable: false,},
+            { text: 'รายการ' , value: 'password',align: 'center',sortable: false,},
+            { text: 'ราคา' , value: 'email',align: 'center',sortable: false, },
             {
                 text: 'สถานะ', 
                 align: 'center',
@@ -127,19 +157,12 @@ export default {
                 width:'15%'
             },
             {
-                text: 'แก้ไข',
+                text: 'ดูรายละเอียด',
                 align: 'center',
                 sortable: false,
-                value: 'edit', 
-                width:'5%'
+                value: 'view', 
+                width:'10%'
             },
-            {
-                text: 'ลบ',
-                align: 'center',
-                sortable: false,
-                value: 'del', 
-                width:'5%',
-            }
           ],
         }
     },
