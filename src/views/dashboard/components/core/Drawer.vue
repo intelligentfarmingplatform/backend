@@ -103,8 +103,8 @@
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Setting Profile',
-          to: '/maps/google-maps',
+          title: 'User Profile',
+          to: '/pages/UserProfile',
         },
         {
           icon: 'mdi-map-marker',
@@ -117,7 +117,7 @@
           to: '/pages/login',
         },
       ],
-    }), 
+    }),
 
     computed: {
       ...mapState(),

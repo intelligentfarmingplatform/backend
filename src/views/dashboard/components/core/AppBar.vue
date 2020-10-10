@@ -114,15 +114,18 @@
       class="ml-2"
       min-width="0"
       text
-      to="/pages/user"
+      to="/pages/Userprofile"
       color="#8C450A"
+      v-bind="attrs"
+      v-on="on"
     >
       <v-icon>mdi-account</v-icon>
       <v-toolbar-title
         class="hidden-sm-and-down font-weight-light"
-        v-text="$route.name"
+
     />
     </v-btn>
+
   </v-app-bar>
 </template>
 
