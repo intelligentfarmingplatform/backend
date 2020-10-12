@@ -19,7 +19,7 @@ export default new Router({
         },
         // Pages
         {
-          name: 'User Profile',
+          name: 'Profile',
           path: 'pages/user',
           component: () => import('@/views/dashboard/pages/UserProfile'),
         },
@@ -54,16 +54,21 @@ export default new Router({
           path: 'tables/regular-tables',
           component: () => import('@/views/dashboard/tables/RegularTables'),
         },
-        // Maps
-        {
-          name: 'Google Maps',
-          path: 'maps/google-maps',
-          component: () => import('@/views/dashboard/pages/Dashboard'),
-        },
+        // // Maps
+        // {
+        //   name: 'Google Maps',
+        //   path: 'maps/google-maps',
+        //   component: () => import('@/views/dashboard/pages/Dashboard'),
+        // },
         {
           name: 'Login',
           path: 'pages/login',
           component: () => import('@/views/Login/Login'),
+        },
+        {
+          name: 'User Profile',
+          path: 'pages/UserProfile',
+          component: () => import('@/views/dashboard/pages/UserProfile'),
         },
       ],
     },

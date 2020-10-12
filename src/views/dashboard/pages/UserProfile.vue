@@ -1,27 +1,21 @@
 <template>
-  <v-container
-    id="user-profile"
-    fluid
-    tag="section"
-  >
+  <v-container>
+
     <v-row justify="center">
       <v-col
         cols="12"
         md="8"
       >
-        <base-material-card>
-          <template v-slot:heading>
-            <div class="display-2 font-weight-light">
-              Edit Profile
-            </div>
+        <base-material-card
+        color="info"
+        title="แก้ไขโปรไฟล์"
+        icon="mdi mdi-account-edit"
+  >
 
-            <div class="subtitle-1 font-weight-light">
-              Complete your profile
-            </div>
-          </template>
+          <v-card-title>
+                        <v-col></v-col>
+            <v-spacer></v-spacer>
 
-          <v-form>
-            <v-container class="py-0">
               <v-row>
                 <v-col
                   cols="12"
@@ -75,7 +69,7 @@
 
                 <v-col cols="12">
                   <v-text-field
-                    label="Adress"
+                    label="Address"
                     class="purple-input"
                   />
                 </v-col>
@@ -124,15 +118,16 @@
                   class="text-right"
                 >
                   <v-btn
-                    color="success"
+                    color="info"
                     class="mr-0"
                   >
                     Update Profile
                   </v-btn>
                 </v-col>
               </v-row>
-            </v-container>
-          </v-form>
+
+            </v-card-title>
+
         </base-material-card>
       </v-col>
 
@@ -157,13 +152,6 @@
               Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
             </p>
 
-            <v-btn
-              color="success"
-              rounded
-              class="mr-0"
-            >
-              Follow
-            </v-btn>
           </v-card-text>
         </base-material-card>
       </v-col>
