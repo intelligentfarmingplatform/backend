@@ -13,6 +13,7 @@
               <v-col
               cols="12"
               md="3"
+              xl="2"
                 v-for="items in showproducts "
                 :key="items"
                 :loading="loading"
@@ -40,22 +41,24 @@
                 <v-card-text class="mx-0 my-0">
                 <div class="tabproducts">{{ items.producttab }}</div>
                 </v-card-text>
-                <v-card-actions>
+                <v-card-actions
+                    class="boxactions"
+                >
                 <v-btn
                     color="#FFBB29"
                     depressed
                     max-width="50%"
                     class="mx-auto rounded-pill"
-                    @click="editItem(items.id)"
+                    @click="editItem(items)"
                 >
                     แก้ไขสินค้า
                 </v-btn>
                 <v-btn
                     color="#FF6347"
                     depressed
-                    max-width="50%"
+                    max-width="45%"
                     class="mx-auto rounded-pill"
-                    @click="reserve"
+                    @click="del(items)"
                 >
                     ลบสินค้า
                 </v-btn>
@@ -71,6 +74,7 @@
                         <v-col
                             cols="12"
                             md="3"
+                            xl="2"
                         >             
                         <v-card
                             class="newcardproducts d-flex "
@@ -109,30 +113,32 @@
                             >
                                 <v-text-field
                                 label="ชื่อผู้ใช้งาน"
-                                prepend-icon="mdi-pencil"
-                                
+                                prepend-icon="mdi-account"
+                                v-model="products.sell_id"
                                 required
                                 ></v-text-field>
                             
                                 <v-text-field
-                                label="Username"
-                                :rules="[v => !!v || 'กรุณาใส่ชื่อผู้ใช้']"
+                                v-model="products.productname"
+                                label="ชื่่อสินค้า"
+                                :rules="[v => !!v || 'กรุณาใส่ชื่อสินค้า']"
                                 required
-                                prepend-icon="mdi-pencil"
+                                prepend-icon="mdi-tree"
                                 ></v-text-field>
-                            <!-- <v-row>
+                            <v-row>
                                 <v-col
                                     cols="12"
                                     sm="6"
                                     md="6"
                                 >
                                     <v-text-field
-                                    label="Password"
-                                    rules="passwordRules"
-                                    maxlength="10"
-                                    :counter="10"
+                                    v-model="products.productprice"
+                                    label="ราคา"
+                                    type="number"
+                                    :rules="[v => !!v || 'กรุณาใส่ราคาสินค้า']"
                                     required
-                                    prepend-icon="mdi-key"
+                                    prepend-icon="mdi-cash"
+                                    suffix="บาท"
                                     ></v-text-field>
                                 </v-col>
                                 <v-col
@@ -141,36 +147,40 @@
                                     md="6"
                                 >
                                     <v-text-field
-                                    type="email"
-                                    label="Email"
-                                    :rules="[ v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'กรุณาใส่อีเมล์']"
+                                    v-model="products.productnumber"
+                                    label="จำนวน"
+                                    type="number"
+                                    :rules="[v => !!v || 'กรุณาใส่จำนวนสินค้า']"
                                     required
-                                    prepend-icon="mdi-email"
+                                    prepend-icon="mdi-checkbox-multiple-blank"
                                     ></v-text-field>
                                 </v-col>
-                            </v-row> -->
-                            
-                                <!-- <v-select
-                                
-                                :items="itemsstatus"
-                                :rules="[v => !!v || 'กรุณาเลือกสถานะ']"
-                                label="สถานะ"
-                                required
-                                prepend-icon="mdi-text-account"
-                                ></v-select> -->
+                            </v-row>
+                                                
+                            <v-textarea
+                            v-model="products.productdetail"
+                            label="ลายละเอียด"
+                            rows="1"
+                            auto-grow
+                            :rules="[v => !!v || 'กรุณาใส่ลายละเอียดสินค้า']"
+                            required
+                            prepend-icon="mdi-comment"
+                            ></v-textarea>
 
                             <v-file-input
                                 show-size
                                 counter
                                 multiple
-                                label="File input"
+                                label="รูปภาพสินค้า"
+                                required
                                 @change="upload"
+                                prepend-icon="mdi-file-image"
                             ></v-file-input>
 
-                                <!-- <v-checkbox
+                                <v-checkbox
                                 :label="[`ยืนยันการ${formTitle}`]"
                                 :rules="[v => !!v || `กรุณากดยืนยันการ${formTitle}`]"
-                                ></v-checkbox> -->
+                                ></v-checkbox>
                                 <v-container>
                                     <v-col
                                         cols="12"
@@ -202,13 +212,25 @@
                     </v-card>
                 </v-dialog>
           </v-card-title>
+          
         </base-material-card>
       </v-col>
+    <v-snackbar
+      :multi-line="multiLine"
+      :value="alert"
+      color="blue-grey"
+      absolute
+      right
+      top
+    >
+      Lorem ipsum dolor sit amet consectetur.
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
 import Axios from 'axios';
+
 export default {
     name:"sellproducts",
     data() {
@@ -217,14 +239,17 @@ export default {
             editedIndex: -1,
             dialog: false,
             products:{
-                img:'',
-                name:'',
-                stock:'',
-                pirec:'',
-                detail:'',
+                sell_id:'',
+                productname:'',
+                productpice:'',
+                productnumber:'',
+                productdetail:'',
+                producttab:'',
+                productimg:''
             },
             slelctedFile: null,
-            showproducts:[],    
+            showproducts:[],
+            error:[]   
         }
     },
     computed: {
@@ -233,14 +258,13 @@ export default {
       },
     },
      created() {
-       Axios.get("http://localhost:3000/api/sellproducts")
+       Axios.get("https://intelligentfarmingplatform.herokuapp.com/api/sellproducts")
         .then(response => {
             this.showproducts = response.data.data ;
             this.loading = false;
         }).catch((err) => {
         console.log(err); 
         })
-    console.log("SellProducts");
     },
     methods:{
         close () {
@@ -252,9 +276,10 @@ export default {
         })
       },
         editItem (item) {
-            console.log(item);
-        this.editedIndex = item
-        this.editedItem = Object.assign({}, item)
+        console.log(item);
+        this.editedIndex = this.showproducts.indexOf(item)
+        this.products = Object.assign({},item)
+        console.log(item);
         this.dialog = true
         
       },
@@ -263,16 +288,84 @@ export default {
           this.url = URL.createObjectURL(this.slelctedFile)
       },
       onsubmit(){
-          console.log(this.$refs.form.validate());
-          const formdata = new FormData();
-          formdata.append("files", this.slelctedFile,  this.slelctedFile.name);
-          console.log(this.slelctedFile);
-          const config = {
-              headers: {
-                  "Content-Type": "multipart/form-data"
-              }
-          };
-          Axios.put('http://localhost:3000/api/sellproducts/img/1',formdata, config )
+          if(this.$refs.form.validate()){
+              if(this.editedIndex > -1){
+                console.log(this.products.id , this.products);
+                Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/${this.products.id}`, this.products)
+                .then(data => {
+                     if(data.data.statusCode == 201){
+                            const id = response.data.data;
+                            console.log(id);
+                            const formdata = new FormData();
+                            formdata.append("files", this.slelctedFile,  this.slelctedFile.name);
+                            // console.log(this.slelctedFile);
+                            const config = {
+                                headers: {
+                                    "Content-Type": "multipart/form-data"
+                                }
+                            };
+                            Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/img/${id}`,formdata, config )
+                            .then(response => {
+                                if(response.statusCode == 201){
+                                    console.log(response);
+                                }else{
+                                    this.error = response.data.data;
+                                }
+                            }).catch(err => console.log(err));
+                            this.close()
+                        }
+
+                    })
+            }else{
+                Axios.post("https://intelligentfarmingplatform.herokuapp.com/api/sellproducts", this.products)
+                .then(response => {
+                    if(response.data.statusCode == 201){
+                    const id = response.data.data.id
+                    const dataresponse = response.data.data;
+                    const formdata = new FormData();
+                    formdata.append("files", this.slelctedFile,  this.slelctedFile.name);
+                    console.log(this.slelctedFile);
+                    const config = {
+                        headers: {
+                            "Content-Type": "multipart/form-data"
+                        }
+                    };
+                    Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/img/${id}`,formdata, config )
+                        .then(response => {
+                            if(response.data.statusCode == 201){
+                                dataresponse.productimg = response.data.namefile
+                                this.showproducts.push(dataresponse);
+                                this.close()
+                            }
+                        }).catch(err => {
+                            console.log(err);
+                        });
+                    }
+                }).catch(err => console.log(err));
+            }
+          }  
+      },
+      del(item){
+          console.log(item);
+          Axios.delete(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/${item.id}`)
+              .then(response => {
+                  if(response.data.statusCode == 204){
+                     
+                       Axios.delete(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/img/${item.productimg}`)
+                        .then(response => {
+                            if(response.data.statusCode == 204){
+                                console.log("Delete Products Success");
+                                const index = this.showproducts.indexOf(item) 
+                                this.showproducts.splice(index, 1)
+                            }else{
+                                console.log("Delete Img Products Fail");
+                            }
+                        }).catch((err) => console.log(err));
+
+                  }else{
+                      console.log("Delete Products Fail");
+                  }
+              }).catch((err) => console.log(err));
       }
     }
 }
@@ -295,6 +388,12 @@ export default {
     }
     .newcardproducts:hover{
         opacity: 1;
+    }
+
+    .boxactions{
+        position: absolute;
+        bottom: 5px;
+        width: 100%;
     }
 
 

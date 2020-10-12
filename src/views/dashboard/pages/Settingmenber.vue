@@ -331,11 +331,13 @@ import Axios from 'axios'
     editItem (item) {
         this.editedIndex = this.listusers.indexOf(item)
         this.editedItem = Object.assign({}, item)
+        console.log(item);
+        // console.log(this.editItem);
         this.dialog = true
         
       },
     onsubmit () {
-        
+
         if(this.editedIndex > -1) {
             this.$swal({
                         title: 'ต้องการแก้ไขข้อมูล',
@@ -352,6 +354,7 @@ import Axios from 'axios'
                             Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/user/${this.editedItem.id}`, this.editedItem)
                             .then(response => {
                                 if(response.data.statusCode == 201){
+                                  console.log(response);
                                     this.$swal({
                                         title: 'เสร็จสิ้น',
                                         text: "ทำการแก้ไขข้อมูลเสร็จสิ้น",
