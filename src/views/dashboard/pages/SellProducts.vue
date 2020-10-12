@@ -16,19 +16,20 @@
               xl="2"
                 v-for="items in showproducts "
                 :key="items"
-                :loading="loading"
               >
             <v-card
                 class="cardproducts"
                 width="100%"
                 height="450"
+                loading='true'
+                loader-height
             >
                 <v-img
                 height="150"
                 :src="`https://intelligentfarmingplatform.herokuapp.com/${items.productimg}`"
                 ></v-img>
 
-                <v-card-title class="mt-5 mx-auto">{{ items.productname }}</v-card-title>
+                <v-card-title  class="mt-5 mx-auto">{{ items.productname }}</v-card-title>
                     <v-list-item>
                         <v-list-item-title>{{ items.productprice }} บาท</v-list-item-title>
                         <v-list-item-subtitle class="text-right">{{ items.productnumber }}</v-list-item-subtitle>
@@ -276,10 +277,8 @@ export default {
         })
       },
         editItem (item) {
-        console.log(item);
         this.editedIndex = this.showproducts.indexOf(item)
         this.products = Object.assign({},item)
-        console.log(item);
         this.dialog = true
         
       },
@@ -290,12 +289,13 @@ export default {
       onsubmit(){
           if(this.$refs.form.validate()){
               if(this.editedIndex > -1){
-                console.log(this.products.id , this.products);
+                    console.log(this.products.id , this.products);
                 Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/${this.products.id}`, this.products)
-                .then(data => {
-                     if(data.data.statusCode == 201){
-                            const id = response.data.data;
-                            console.log(id);
+                .then(response => {
+                     if(response.data.statusCode == 201){
+                         
+                            const id = response.data.id;
+                            // console.log(id);
                             const formdata = new FormData();
                             formdata.append("files", this.slelctedFile,  this.slelctedFile.name);
                             // console.log(this.slelctedFile);
@@ -306,16 +306,14 @@ export default {
                             };
                             Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/img/${id}`,formdata, config )
                             .then(response => {
-                                if(response.statusCode == 201){
-                                    console.log(response);
-                                }else{
-                                    this.error = response.data.data;
-                                }
+                               if(response.data.statusCode == 201){
+                                   const namefile = response.data.namefile;
+                                   Object.assign(this.showproducts[this.editedIndex], this.products)
+                                   this.products.reset;
+                               }
                             }).catch(err => console.log(err));
-                            this.close()
-                        }
-
-                    })
+                    }
+                })
             }else{
                 Axios.post("https://intelligentfarmingplatform.herokuapp.com/api/sellproducts", this.products)
                 .then(response => {
@@ -342,8 +340,8 @@ export default {
                         });
                     }
                 }).catch(err => console.log(err));
-            }
-          }  
+             }
+           }  
       },
       del(item){
           console.log(item);

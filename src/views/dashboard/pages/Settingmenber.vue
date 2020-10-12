@@ -331,7 +331,6 @@ import Axios from 'axios'
     editItem (item) {
         this.editedIndex = this.listusers.indexOf(item)
         this.editedItem = Object.assign({}, item)
-        console.log(item);
         // console.log(this.editItem);
         this.dialog = true
         
