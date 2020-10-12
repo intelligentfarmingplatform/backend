@@ -25,7 +25,7 @@
             >
                 <v-img
                 height="150"
-                :src="`http://localhost:3000/${items.productimg}`"
+                :src="`https://intelligentfarmingplatform.herokuapp.com/${items.productimg}`"
                 ></v-img>
 
                 <v-card-title class="mt-5 mx-auto">{{ items.productname }}</v-card-title>
