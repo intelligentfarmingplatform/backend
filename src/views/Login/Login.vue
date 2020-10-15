@@ -1,24 +1,17 @@
-<template>
+{<template>
     <div id="login">
         <div class="back"></div>
-        <v-carousel 
-            cycle
-            height="200"
-            hide-delimiter-background
-            show-arrows-on-hover>
-            <v-carousel-item
-            v-for="(sides,i) in side"
-            :key="i"
-            :src="sides.src"
-            ></v-carousel-item>
-        </v-carousel>
+        <!-- <div class="boxbutton">
+            <button @click="res = true">ลงทะเบียน</button>
+            <button @>ลงชื่อเข้าใช้</button>
+        </div> -->
         <div class="boxlogin">
+            <div class="showimg">
+                <img src="/farmer.jpg" alt="">
+            </div>
             <div class="login_wrap">
-                <header>
-                    <img src="/engine.png" />
-                    <h1>LOGIN</h1>
-                    <h3>Intelligent Farming Platform</h3>
-                </header>
+                    <img src="/engine.png" alt="">
+                    <h2>Sing In</h2>
                     <form action="">        
                         <v-text-field v-model="Username" label="Username"></v-text-field> 
                         <v-text-field
@@ -35,11 +28,6 @@
                             type="submit"  
                         >Login</v-btn> 
                     </form>
-                <footer>
-                    <p>asdasdasdadasxzdzxdzxd</p>
-                    <p>asdxzdzxddzxddasd</p>
-                    <p>asdasdasdad</p>
-                </footer>
             </div>
         </div>
     </div>
@@ -53,24 +41,9 @@ export default {
             show1: false,
             password: '',
             rules: {
-                // required: value => !!value || '',
+                required: value => !!value || '',
                 min: v => v.length >= 8 || 'รห้สอย่างน้อย 8 ตัวอักษร',
-                // emailMatch: () => ('The email and password you entered don\'t match'),
-        },
-            side: [
-                    {
-                        src: 'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80',
-                    },
-                    // {
-                    //     src: 'https://www.krungsri.com/bank/getmedia/c0bb4e14-99c8-4d04-9526-c3b0e0ef4ed0/smart-farming-1.jpg.aspx',
-                    // },
-                    // {
-                    //     src: 'https://ak.picdn.net/shutterstock/videos/32394631/thumb/4.jpg',
-                    // },
-                    // {
-                    //     src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSQRA46FZl84B0dB4BhV6d8WoJbbdfn4n8J4A&usqp=CAU',
-                    // },
-                ],
+            },
         }
     },
     
@@ -78,72 +51,84 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .container{
-        padding: 0px;
-        margin: 0px;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Kanit');
     #login{
-        height: 100%;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        
-        .back{
+        font-family: 'Kanit', sans-serif;
             position: absolute;
-            z-index: 1;           
             width: 100%;
             height: 100%;
-            background: #fff;
-            opacity: 10%;
+        .back{
+            height: 100%;
+            background-image: url("https://images.unsplash.com/photo-1472133530746-ae9b21e91c41?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80");
+            background-position: center;
+            // background-repeat: no-repeat;
+            background-size: cover;
         }
-        .v-carousel{
-            height: 100% !important;
 
-            .v-responsive{
-                height: 100% !important;
+        .boxbutton{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);   
+            display: flex;
 
-                .v-responsive__sizer{
-                    padding: 0px !important;
-                }
+            button{
+                height: 50px;
+                width: 200px;
+                border-radius: 100px;
+                background-color: #ffffff;
+                margin: 0px 20px;
+                box-shadow: 2px 3px 34px 4px rgba(0, 0, 0, 0.336);
+                color: #629d25;
+                font-size: 18px;
+                outline: none;
+                transition: 0.5s ease-in-out;
 
-                .v-image__image{
-                    filter: blur(1px);
-                }
             }
-            .v-window__prev,.v-window__next{
-                display: none;
+
+            button:hover{
+                margin-top: -2.5px;
+                color: #ffffff;
+                background: #629d25;
+                
             }
         }
 
         .boxlogin{
-            // width: 100%;
-            position: fixed;
+            position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%,-50%);
-            align-content: center;
-            z-index: 2;
-            .login_wrap{
-                left: 50%;
-                
-                background: #fff;
-                // height: 600px;
-                min-width: 350px;
-                border-radius:15px;
-                padding: 25px;
-                box-shadow: 24px 23px 31px -10px rgba(0, 0, 0, 0.432);
-                header{
-                    text-align: center;
-                    img{
-                        height: auto;
-                        max-width: 250px;
-                        // border-radius:100% ;
-                    }
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;  
+            max-height: 450px;          
+            display: flex;
+            // border-radius: 15px;  
+            box-shadow: 10px 10px 54px -4px rgba(0,0,0,0.75);
+
+            .showimg{
+                max-width: 350px;
+                img{
+                    height: 100%;
+                    width: 100%;
+                    box-shadow: 11px 3px 19px -10px rgba(0,0,0,0.75);
                 }
             }
+            .login_wrap{
+                width: 350px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                    img{
+                        width: 60%;
+                        margin-bottom: 5px;
+                    }
+            }
+        }
+
+
 
             form{
-                margin-top: 30px;
                 padding: 0px 15px 15px 15px;
 
                 label{
@@ -160,11 +145,11 @@ export default {
                 }
 
                 .v-input{
-                    margin-top: 10px;
+                    margin-top: 5px;
                 }
 
                 button[type="submit"]{
-                    margin-top: 10px;
+                    margin-top: 15px;
                     background: #629d25;
                     color: #ffffff;
                     font-weight: 200;
@@ -184,5 +169,11 @@ export default {
                     }
             }
         }
-    }
+
+        @keyframes button {
+            0%{transform: rotateX(0deg)}
+            100%{
+                transform: rotateX(360deg)
+            }
+        }
 </style>

@@ -111,11 +111,6 @@
           title: 'Logout',
           to: '/tables/regular-tables',
         },
-        {
-          icon: 'mdi-map-marker',
-          title: 'Notifications',
-          to: '/pages/login',
-        },
       ],
     }),
 

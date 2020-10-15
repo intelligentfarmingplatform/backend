@@ -61,16 +61,16 @@ export default new Router({
         //   component: () => import('@/views/dashboard/pages/Dashboard'),
         // },
         {
-          name: 'Login',
-          path: 'pages/login',
-          component: () => import('@/views/Login/Login'),
-        },
-        {
           name: 'User Profile',
           path: 'pages/UserProfile',
           component: () => import('@/views/dashboard/pages/UserProfile'),
         },
       ],
+    },
+    {
+      name: 'login',
+      path: '/login',
+      component: () => import('@/views/Login/Login'),
     },
   ],
 })
