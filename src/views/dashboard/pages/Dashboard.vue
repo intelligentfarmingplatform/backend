@@ -26,6 +26,7 @@
             </v-row>
           </v-card-text>
           <v-list-item>
+          <v-icon>mdi-home-thermometer </v-icon>
             <v-list-item-content>
               <v-list-item-title>
                 Temperature
@@ -47,14 +48,17 @@
           <v-card-text>
             <v-row align="center">
               <v-col
+                
                 class="headline"
                 cols="12"
               >
+              
                 {{this.dbrealtime.humi}}  &deg;C
               </v-col>
             </v-row>
           </v-card-text>
           <v-list-item>
+              <v-icon>mdi-water-percent</v-icon>
             <v-list-item-content>
               <v-list-item-title>
                 Humidity
@@ -84,6 +88,7 @@
             </v-row>
           </v-card-text>
           <v-list-item>
+          <v-icon>mdi-virus </v-icon>
             <v-list-item-content>
               <v-list-item-title>
                 Fertilizer intensity
@@ -113,125 +118,13 @@
             </v-row>
           </v-card-text>
           <v-list-item>
+          <v-icon>
+               mdi-lightbulb-on 
+              </v-icon>
             <v-list-item-content>
               <v-list-item-title>
+              
                 Light intensity
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        lg="3"
-      >
-        <v-card
-          class="mx-auto rounded-lg text-center"
-          max-width="100%"
-          color="info"
-        >
-          <v-card-text>
-            <v-row align="center">
-              <v-col
-                class="headline"
-                cols="12"
-              >
-                {{this.dbrealtime.pump_a}}
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>
-                Pump A
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        lg="3"
-      >
-        <v-card
-          class="mx-auto rounded-lg text-center"
-          max-width="100%"
-          color="info"
-        >
-          <v-card-text>
-            <v-row align="center">
-              <v-col
-                class="headline"
-                cols="12"
-              >
-                {{this.dbrealtime.pump_b}}
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>
-                Pump B
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        lg="3"
-      >
-        <v-card
-          class="mx-auto rounded-lg text-center"
-          max-width="100%"
-          color="info"
-        >
-          <v-card-text>
-            <v-row align="center">
-              <v-col
-                class="headline"
-                cols="12"
-              >
-                {{this.dbrealtime.pump_c}}
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>
-                Pump C
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        lg="3"
-      >
-        <v-card
-          class="mx-auto rounded-lg text-center"
-          max-width="100%"
-          color="info"
-        >
-          <v-card-text>
-            <v-row align="center">
-              <v-col
-                class="headline"
-                cols="12"
-              >
-                {{this.dbrealtime.pump_d}}
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>
-                Pump D
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -246,6 +139,7 @@
           color="white"
           class="px-1 py-1"
         >
+
           <v-card-text>
             <v-row>
               <v-col
@@ -253,13 +147,33 @@
                 sm="3"
                 lg="3"
               >
+              
                 <base-material-stats-card
                   color="info"
-                  icon="mdi-twitter"
-                  title="Followers"
-                  value="+245"
+                  icon="mdi-cup-water"
+                  title="Pump A"
+                  :value= dbrealtime.pump_a
                   sub-icon="mdi-clock"
-                  sub-text="Just Updated"
+                  sub-value="aasds"
+                  :sub-text= dbrealtime.updatedAt
+                  
+                />
+                
+          
+              </v-col>
+
+              <v-col
+                cols="12"
+                sm="6"
+                lg="3"
+              >
+                <base-material-stats-card
+                  color="info"
+                  icon="mdi-water"
+                  title="Pump B"
+                  :value= dbrealtime.pump_b
+                  sub-icon="mdi-clock"
+                  :sub-text= dbrealtime.updatedAt
                 />
               </v-col>
               <v-col
@@ -269,11 +183,11 @@
               >
                 <base-material-stats-card
                   color="info"
-                  icon="mdi-twitter"
-                  title="Followers"
-                  value="+245"
+                  icon="mdi-water-plus"
+                  title="Pump C"
+                  :value= dbrealtime.pump_c
                   sub-icon="mdi-clock"
-                  sub-text="Just Updated"
+                  :sub-text= dbrealtime.updatedAt
                 />
               </v-col>
               <v-col
@@ -283,25 +197,11 @@
               >
                 <base-material-stats-card
                   color="info"
-                  icon="mdi-twitter"
-                  title="Followers"
-                  value="+245"
+                  icon="mdi-bitbucket"
+                  title="Pump D"
+                  :value= dbrealtime.pump_d
                   sub-icon="mdi-clock"
-                  sub-text="Just Updated"
-                />
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                lg="3"
-              >
-                <base-material-stats-card
-                  color="info"
-                  icon="mdi-twitter"
-                  title="Followers"
-                  value="+245"
-                  sub-icon="mdi-clock"
-                  sub-text="Just Updated"
+                  :sub-text= dbrealtime.updatedAt
                 />
               </v-col>
             </v-row>
@@ -379,6 +279,11 @@ import Axios from "axios";
           },
         ],
       dbrealtime: [
+      ],
+
+      pump_status:[
+        
+
       ]
 
       }

@@ -87,6 +87,11 @@
           to: '/',
         },
         {
+          icon: 'mdi-tune',
+          title: 'Setting Pump',
+          to: '/pages/settingpump',
+        },
+        {
           icon: 'mdi-account-group',
           title: 'Setting Members',
           to: '/pages/settingmenber',

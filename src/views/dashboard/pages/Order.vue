@@ -24,18 +24,9 @@
               mandatory
               borderless="none"
             >
-              <v-btn
-                depressed
-                text
-                @click="order('all')"
-                class="rounded-pill"
-              >
-                <v-icon>
-                  mdi-clipboard-text
-                </v-icon>
-                <v-text class="ml-2">
-                  ทั้งหมด
-                </v-text>
+              <v-btn depressed text @click="order('all')" class="rounded-pill">
+                <v-icon> mdi-clipboard-text </v-icon>
+                <v-text class="ml-2"> ทั้งหมด </v-text>
               </v-btn>
               <v-btn
                 depressed
@@ -43,28 +34,26 @@
                 @click="order('order')"
                 class="rounded-pill mx-1"
               >
-                <v-icon>
-                  mdi-clipboard-arrow-down-outline
-                </v-icon>
-                <v-text class="ml-2">
-                  ออเดอร์
-                </v-text>
+                <v-icon> mdi-clipboard-arrow-down-outline </v-icon>
+                <v-text class="ml-2"> ออเดอร์ </v-text>
               </v-btn>
-              <v-btn depressed text @click="order('delivery')" class="rounded-pill mx-1">
-                <v-icon>
-                  mdi-car
-                </v-icon>
-                <v-text class="ml-2">
-                  กำลังจัดส่ง
-                </v-text>
+              <v-btn
+                depressed
+                text
+                @click="order('delivery')"
+                class="rounded-pill mx-1"
+              >
+                <v-icon> mdi-car </v-icon>
+                <v-text class="ml-2"> กำลังจัดส่ง </v-text>
               </v-btn>
-              <v-btn depressed text @click="order('success')" class="rounded-pill">
-                <v-icon>
-                  mdi-check-bold
-                </v-icon>
-                <v-text class="ml-2">
-                  เสร็จสิ้น
-                </v-text>
+              <v-btn
+                depressed
+                text
+                @click="order('success')"
+                class="rounded-pill"
+              >
+                <v-icon> mdi-check-bold </v-icon>
+                <v-text class="ml-2"> เสร็จสิ้น </v-text>
               </v-btn>
             </v-btn-toggle>
           </v-col>
@@ -105,32 +94,20 @@
             </v-card-title>
             <v-container>
               <v-row>
-                <v-col cols="3">
-                  รห้สการซื้อ
-                </v-col>
-                <v-col cols="9">
-                  sdasdasda
-                </v-col>
+                <v-col cols="3"> รห้สการซื้อ </v-col>
+                <v-col cols="9"> sdasdasda </v-col>
               </v-row>
               <v-row>
-                <v-col cols="3">
-                  ชื่อผู้สั่ง
-                </v-col>
-                <v-col cols="3">
-                  ชื่อผู้สั่ง
-                </v-col>
+                <v-col cols="3"> ชื่อผู้สั่ง </v-col>
+                <v-col cols="3"> ชื่อผู้สั่ง </v-col>
               </v-row>
               ที่อยู่ที่ต้องจัดส่ง
               <v-col cols="12">
                 adasdasdasdasdasdadsasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
               </v-col>
               <v-row>
-                <v-col cols="3">
-                  เบอร์โทร
-                </v-col>
-                <v-col cols="9">
-                  sdasdasd
-                </v-col>
+                <v-col cols="3"> เบอร์โทร </v-col>
+                <v-col cols="9"> sdasdasd </v-col>
               </v-row>
               รายการสินค้า
               <v-data-table
@@ -169,39 +146,39 @@ export default {
           text: "ชื่อผุ้สั่ง",
           value: "nameuser",
           align: "center",
-          sortable: false
+          sortable: false,
         },
         {
           text: "รายการ",
           value: "lists_order",
           align: "center",
-          sortable: false
+          sortable: false,
         },
         {
           text: "ราคา",
           value: "totalpice_order",
           align: "center",
-          sortable: false
+          sortable: false,
         },
         {
           text: "สถานะ",
           align: "center",
           sortable: false,
           value: "status_order",
-          width: "15%"
+          width: "15%",
         },
         {
           text: "ดูรายละเอียด",
           align: "center",
           sortable: false,
           value: "view",
-          width: "10%"
-        }
-      ]
+          width: "10%",
+        },
+      ],
     };
   },
   created() {
-    Axios.get("http://localhost:3000/api/order").then(response => {
+    Axios.get("http://localhost:3000/api/order").then((response) => {
       this.listorder = response.data.data;
       this.filter = this.listorder;
       this.loading = false;
@@ -220,11 +197,13 @@ export default {
       if (item == "all") {
         this.filter = this.listorder;
       } else {
-        let datafilter = dataall.filter(status => status.status_order == item);
+        let datafilter = dataall.filter(
+          (status) => status.status_order == item
+        );
         this.filter = datafilter;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
