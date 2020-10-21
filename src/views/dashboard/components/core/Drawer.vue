@@ -87,7 +87,7 @@
           to: '/',
         },
         {
-          icon: 'mdi-tune',
+          icon: 'mdi-cogs',
           title: 'Setting Pump',
           to: '/pages/settingpump',
         },

@@ -1,61 +1,18 @@
 <template>
-  <v-container id="settingsystem" fluid tag="section">
+  <v-container id="settingpump" fluid tag="section">
     <v-row>
-      <v-col cols="12" lg="5" class="center">
-        <div class="controlwater">
-          <base-material-card
-            color="info"
-            icon="mdi-card-account-details"
-            title="ระบบจัดการสมาชิก"
-          >
-            <v-switch
-              v-model="ex01"
-              label="ละอองน้ำ"
-              color="success"
-              value="success"
-              hide-details
-            ></v-switch>
-            <v-switch
-              v-model="ex02"
-              label="ถังปุ๋ย"
-              color="success"
-              value="success"
-              hide-details
-            ></v-switch>
-            <v-switch
-              v-model="ex03"
-              label="Pump C"
-              color="success"
-              value="success"
-              hide-details
-            ></v-switch>
-            <v-switch
-              v-model="ex04"
-              label="Pump D"
-              color="success"
-              value="success"
-              hide-details
-            ></v-switch>
-          </base-material-card>
-        </div>
-      </v-col>
-      <v-spacer></v-spacer>
-      <v-col cols="12" lg="6" class="center">
+      <v-col cols="12" lg="7" class="center">
         <!-- --------------------------------------------setsensor---------------------------------- -->
         <div class="setsensor">
-          <base-material-card
-            color="info"
-            icon="mdi-card-account-details"
-            title="Pump Auto Setting"
-          >
+          <base-material-card color="info" icon="mdi-tune" title="Pump Control">
             <v-col cols="12">
               อุณหภูมิ
               <v-slider
-                v-model="ex1.val"
-                :label="ex1.label"
-                :thumb-color="ex1.color"
+                v-model="settingpump.temp"
+                :label="settingpump.temp"
                 prepend-icon="mdi-home-thermometer"
                 thumb-label="ticks"
+                @change="onsubmit()"
                 class="align-center"
                 :max="max"
                 :min="min"
@@ -63,11 +20,11 @@
               />
               ความชื้น
               <v-slider
-                v-model="ex2.val"
-                :label="ex2.label"
-                :thumb-color="ex2.color"
+                v-model="settingpump.humi"
+                :label="settingpump.humi"
                 prepend-icon="mdi-water-percent"
                 thumb-label="ticks"
+                @change="onsubmit()"
                 class="align-center"
                 :max="max"
                 :min="min"
@@ -75,10 +32,10 @@
               />
               ความเข้มของปุ๋ย
               <v-slider
-                v-model="ex3.val"
-                :label="ex3.label"
+                v-model="settingpump.ec"
+                :label="settingpump.ec"
                 prepend-icon="mdi-virus"
-                :thumb-color="ex3.color"
+                @change="onsubmit()"
                 thumb-label="ticks"
                 class="align-center"
                 :max="max"
@@ -86,11 +43,9 @@
                 hide-details
               />
               ระดับน้ำ
-              {{ this.settingpump.water_level }}
               <v-slider
                 v-model="settingpump.water_level"
-                :label="ex4.label"
-                :thumb-color="ex4.color"
+                :label="settingpump.water_level"
                 @change="onsubmit()"
                 prepend-icon="mdi-water-polo"
                 thumb-label="ticks"
@@ -103,6 +58,45 @@
           </base-material-card>
         </div>
       </v-col>
+      <v-spacer></v-spacer>
+
+      <v-col cols="12" lg="5" class="center">
+        <div class="controlwater">
+          <base-material-card color="info" icon="mdi-tune-variant" title="Pump">
+            <v-container fluid>
+              <v-switch
+                v-model="settingpump.pump_a"
+                :label="`Pump A: ${settingpump.pump_a.toString()}`"
+                color="success"
+                @change="onsubmit()"
+                hide-details
+              ></v-switch>
+              <v-switch
+                v-model="settingpump.pump_b"
+                :label="`Pump B: ${settingpump.pump_b.toString()}`"
+                color="success"
+                @change="onsubmit()"
+                hide-details
+              ></v-switch>
+
+              <v-switch
+                v-model="settingpump.pump_c"
+                :label="`Pump C: ${settingpump.pump_c.toString()}`"
+                color="success"
+                @change="onsubmit()"
+                hide-details
+              ></v-switch>
+              <v-switch
+                v-model="settingpump.pump_d"
+                :label="`Pump D: ${settingpump.pump_d.toString()}`"
+                color="success"
+                @change="onsubmit()"
+                hide-details
+              ></v-switch>
+            </v-container>
+          </base-material-card>
+        </div>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -112,13 +106,10 @@ export default {
   name: "settingpump",
   data() {
     return {
+
       type: null,
       elapse: null,
-      settingpump: [],  
-      ex1: { label:"sadas", val: "50" ,color: "success" },
-      ex2: { val: 50, color: "success" },
-      ex3: { val: 50, color: "success" },
-      ex4: { color: "success"},
+      settingpump: []
     };
   },
 
@@ -128,19 +119,18 @@ export default {
       console.log(response.data.data);
     });
   },
-  methods:{
-      onsubmit () {
-            Axios.put(`http://localhost:3000/api/settingpump/1`, this.settingpump)
-            .then(response => {
-                if(response.data.statusCode == 201){
-                    alert(response.data.message);   
-                }
-            })
-            .catch(err => console.log(err));
-        }
+  methods: {
+    onsubmit() {
+      Axios.put(`http://localhost:3000/api/settingpump/1`, this.settingpump)
+        .then(response => {
+          if (response.data.statusCode == 201) {
+            alert(response.data.message);
+          }
+        })
+        .catch(err => console.log(err));
+    }
   }
 };
-
 </script>
 <style lang="scss" scoped>
 .controlwater,
