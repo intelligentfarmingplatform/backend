@@ -33,7 +33,7 @@
               <v-btn
                 depressed
                 text
-                @click="order('order')"
+                @click="order('Order')"
                 class="rounded-pill mx-1"
               >
                 <v-icon> mdi-clipboard-arrow-down-outline </v-icon>

@@ -36,7 +36,7 @@
         <div class="login_wrap">
             <img src="/engine.png" alt="" />
             <h2>Sing In</h2>
-            <form action="">
+            <v-form @submit.prevent="res">
             <v-text-field  label="Username"></v-text-field>
             <v-text-field v-model="formres.username" label="Username"></v-text-field>
             <v-text-field
@@ -49,7 +49,7 @@
                 @click:append="show1 = !show1"
             ></v-text-field>
             <v-btn rounded block type="submit">Login</v-btn>
-            </form>
+            </v-form>
             <footer>
             <p>
                 ยังไม่ได้ลงทะเบียนใช้งาน ? |
@@ -112,7 +112,17 @@ export default {
         })
     },
     res(){
-       
+       Axios.post(`http://localhost:3000/api/login/res`, this.formres)
+        .then(response => {
+          if(response.status == 200){
+          console.log(response.data.token);
+          alert("สมัครสมาชิกเสดแล้วจ้า");
+            localStorage.setItem('token', response.data.token);
+             this.$router.replace("/");
+          }
+        }).catch(err => {
+          alert(err.response.data.message);
+        })
     }
   }
 };

@@ -78,10 +78,10 @@ export default new Router({
         },
       ],
     },
-    // {
-    //   name: 'login',
-    //   path: '/login',
-    //   component: () => import('@/views/Login/Login'),
-    // },
+    {
+      name: 'login',
+      path: '/login',
+      component: () => import('@/views/Login/Login'),
+    },
   ],
 })

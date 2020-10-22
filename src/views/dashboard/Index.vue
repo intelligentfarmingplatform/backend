@@ -23,16 +23,13 @@
       expandOnHover: false,
     }),
 
-    // created(){
-    //   if(localStorage.getItem("username") == "admin") {
-    //      this.$router.replace("/");
-    // created(){
-    //   if(localStorage.getItem("token") != null) {
-
-    //   }else{
-    //     this.$router.replace("/login");
-    //   }
-    // }
+    created(){
+      if(localStorage.getItem("token") != null) {
+        this.$router.replace("/");
+      }else{
+        this.$router.replace("/login");
+      }
+    }
   }
 </script>
 
