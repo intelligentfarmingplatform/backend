@@ -26,31 +26,18 @@
               borderless="none"
               cols="12" md="7"
             >
-              <v-btn
-                depressed
-                text
-                @click="order('all')"
-                class="rounded-pill"
-              >
-                <v-icon>
-                  mdi-clipboard-text
-                </v-icon>
-                <v-text class="ml-2">
-                  ทั้งหมด
-                </v-text>
+              <v-btn depressed text @click="order('all')" class="rounded-pill">
+                <v-icon> mdi-clipboard-text </v-icon>
+                <v-text class="ml-2"> ทั้งหมด </v-text>
               </v-btn>
               <v-btn
                 depressed
                 text
-                @click="order('Order')"
+                @click="order('order')"
                 class="rounded-pill mx-1"
               >
-                <v-icon>
-                  mdi-clipboard-arrow-down-outline
-                </v-icon>
-                <v-text class="ml-2">
-                  ออเดอร์
-                </v-text>
+                <v-icon> mdi-clipboard-arrow-down-outline </v-icon>
+                <v-text class="ml-2"> ออเดอร์ </v-text>
               </v-btn>
               <v-btn depressed text @click="order('Delivery')"  class="rounded-pill mx-1">
                 <v-icon>
@@ -213,19 +200,19 @@ export default {
           text: "ชื่อผุ้สั่ง",
           value: "nameuser",
           align: "center",
-          sortable: false
+          sortable: false,
         },
         {
           text: "รายการ",
           value: "lists_order",
           align: "center",
-          sortable: false
+          sortable: false,
         },
         {
           text: "ราคา",
           value: "totalpice_order",
           align: "center",
-          sortable: false
+          sortable: false,
         },
         {
           text: "สถานะ",
@@ -239,13 +226,13 @@ export default {
           align: "center",
           sortable: false,
           value: "view",
-          width: "10%"
-        }
-      ]
+          width: "10%",
+        },
+      ],
     };
   },
   created() {
-    Axios.get("http://localhost:3000/api/order").then(response => {
+    Axios.get("http://localhost:3000/api/order").then((response) => {
       this.listorder = response.data.data;
       this.filter = this.listorder;
       this.filter.reverse();
@@ -263,7 +250,9 @@ export default {
       if (item == "all") {
         this.filter = this.listorder;
       } else {
-        let datafilter = dataall.filter(status => status.status_order == item);
+        let datafilter = dataall.filter(
+          (status) => status.status_order == item
+        );
         this.filter = datafilter;
       }
     },

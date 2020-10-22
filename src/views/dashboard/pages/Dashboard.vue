@@ -21,11 +21,12 @@
                 class="headline"
                 cols="12"
               >
-                23&deg;C
+                {{this.dbrealtime.temp}}  &deg;C
               </v-col>
             </v-row>
           </v-card-text>
           <v-list-item>
+          <v-icon>mdi-home-thermometer </v-icon>
             <v-list-item-content>
               <v-list-item-title>
                 Temperature
@@ -47,17 +48,20 @@
           <v-card-text>
             <v-row align="center">
               <v-col
+                
                 class="headline"
                 cols="12"
               >
-                23%
+              
+                {{this.dbrealtime.humi}}  &deg;C
               </v-col>
             </v-row>
           </v-card-text>
           <v-list-item>
+              <v-icon>mdi-water-percent</v-icon>
             <v-list-item-content>
               <v-list-item-title>
-                Temperature
+                Humidity
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -79,14 +83,15 @@
                 class="headline"
                 cols="12"
               >
-                23pH
+                {{this.dbrealtime.ec}}
               </v-col>
             </v-row>
           </v-card-text>
           <v-list-item>
+          <v-icon>mdi-virus </v-icon>
             <v-list-item-content>
               <v-list-item-title>
-                Temperature
+                Fertilizer intensity
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -108,14 +113,18 @@
                 class="headline"
                 cols="12"
               >
-                23CE
+                {{this.dbrealtime.light_int}}
               </v-col>
             </v-row>
           </v-card-text>
           <v-list-item>
+          <v-icon>
+               mdi-lightbulb-on 
+              </v-icon>
             <v-list-item-content>
               <v-list-item-title>
-                Temperature
+              
+                Light intensity
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -130,20 +139,41 @@
           color="white"
           class="px-1 py-1"
         >
+
           <v-card-text>
             <v-row>
               <v-col
                 cols="12"
-                sm="3"
+                sm="6"
+                lg="3"
+              >
+              
+                <base-material-stats-card
+                  color="info"
+                  icon="mdi-cup-water"
+                  title="Pump A"
+                  :value= dbrealtime.pump_a
+                  sub-icon="mdi-clock"
+                  sub-value="aasds"
+                  :sub-text= dbrealtime.updatedAt
+                  
+                />
+                
+          
+              </v-col>
+
+              <v-col
+                cols="12"
+                sm="6"
                 lg="3"
               >
                 <base-material-stats-card
                   color="info"
-                  icon="mdi-twitter"
-                  title="ชื่อปั้ม"
-                  value="สถานะ"
+                  icon="mdi-water"
+                  title="Pump B"
+                  :value= dbrealtime.pump_b
                   sub-icon="mdi-clock"
-                  sub-text="Just Updated"
+                  :sub-text= dbrealtime.updatedAt
                 />
               </v-col>
               <v-col
@@ -153,11 +183,11 @@
               >
                 <base-material-stats-card
                   color="info"
-                  icon="mdi-twitter"
-                  title="Followers"
-                  value="+245"
+                  icon="mdi-water-plus"
+                  title="Pump C"
+                  :value= dbrealtime.pump_c
                   sub-icon="mdi-clock"
-                  sub-text="Just Updated"
+                  :sub-text= dbrealtime.updatedAt
                 />
               </v-col>
               <v-col
@@ -167,25 +197,11 @@
               >
                 <base-material-stats-card
                   color="info"
-                  icon="mdi-twitter"
-                  title="Followers"
-                  value="+245"
+                  icon="mdi-bitbucket"
+                  title="Pump D"
+                  :value= dbrealtime.pump_d
                   sub-icon="mdi-clock"
-                  sub-text="Just Updated"
-                />
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                lg="3"
-              >
-                <base-material-stats-card
-                  color="info"
-                  icon="mdi-twitter"
-                  title="Followers"
-                  value="+245"
-                  sub-icon="mdi-clock"
-                  sub-text="Just Updated"
+                  :sub-text= dbrealtime.updatedAt
                 />
               </v-col>
             </v-row>
@@ -225,6 +241,8 @@
 </template>
 
 <script>
+import Axios from "axios";
+
   export default {
     name: 'DashboardDashboard',
 
@@ -260,17 +278,25 @@
             align: 'right',
           },
         ],
-      test : [
-      { text: "sada",  }
+      dbrealtime: [
+      ],
+
+      pump_status:[
+        
+
       ]
 
       }
     }, 
 
-    methods: {
-      complete (index) {
-        this.list[index] = !this.list[index]
-      },
-    },
+    created() {
+    Axios.get("http://localhost:3000/api/dbrealtime/1").then(response => {
+      this.dbrealtime = response.data.data;
+
+    });
+  },
+
+
+
   }
 </script>

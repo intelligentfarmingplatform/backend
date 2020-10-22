@@ -70,12 +70,18 @@ export default new Router({
           path: 'pages/UserProfile',
           component: () => import('@/views/dashboard/pages/UserProfile'),
         },
+
+        {
+          name: 'Setting Pump',
+          path: 'pages/settingpump',
+          component: () => import('@/views/dashboard/pages/Settingpump'),
+        },
       ],
     },
-    {
-      name: 'login',
-      path: '/login',
-      component: () => import('@/views/Login/Login'),
-    },
+    // {
+    //   name: 'login',
+    //   path: '/login',
+    //   component: () => import('@/views/Login/Login'),
+    // },
   ],
 })

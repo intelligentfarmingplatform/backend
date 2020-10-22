@@ -26,6 +26,9 @@
     // created(){
     //   if(localStorage.getItem("username") == "admin") {
     //      this.$router.replace("/");
+    // created(){
+    //   if(localStorage.getItem("token") != null) {
+
     //   }else{
     //     this.$router.replace("/login");
     //   }
