@@ -48,11 +48,11 @@
           <v-card-text>
             <v-row align="center">
               <v-col
-                
+
                 class="headline"
                 cols="12"
               >
-              
+
                 {{this.dbrealtime.humi}}  &deg;C
               </v-col>
             </v-row>
@@ -119,11 +119,11 @@
           </v-card-text>
           <v-list-item>
           <v-icon>
-               mdi-lightbulb-on 
+               mdi-lightbulb-on
               </v-icon>
             <v-list-item-content>
               <v-list-item-title>
-              
+
                 Light intensity
               </v-list-item-title>
             </v-list-item-content>
@@ -147,7 +147,7 @@
                 sm="6"
                 lg="3"
               >
-              
+
                 <base-material-stats-card
                   color="info"
                   icon="mdi-cup-water"
@@ -156,10 +156,10 @@
                   sub-icon="mdi-clock"
                   sub-value="aasds"
                   :sub-text= dbrealtime.updatedAt
-                  
+
                 />
-                
-          
+
+
               </v-col>
 
               <v-col
@@ -221,11 +221,11 @@
         >
           <template v-slot:heading>
             <div class="display-2 font-weight-light">
-              Employees Stats
+              :
             </div>
 
             <div class="subtitle-1 font-weight-light">
-              New employees on 15th September, 2016
+              :
             </div>
           </template>
           <v-card-text>
@@ -282,7 +282,7 @@ import Axios from "axios";
       ],
 
       pump_status:[
-        
+
 
       ]
 
