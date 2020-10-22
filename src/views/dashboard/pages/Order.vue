@@ -18,11 +18,13 @@
             ></v-text-field>
           </v-col>
           <v-spacer></v-spacer>
-          <v-col cols="12" md="7" class="d-flex justify-end mx-0">
+          <v-col cols="12" md="8" >
             <v-btn-toggle
+              class="fittingbutton"
               v-model="toggle_exclusive"
               mandatory
               borderless="none"
+              cols="12" md="7"
             >
               <v-btn
                 depressed
@@ -40,7 +42,7 @@
               <v-btn
                 depressed
                 text
-                @click="order('order')"
+                @click="order('Order')"
                 class="rounded-pill mx-1"
               >
                 <v-icon>
@@ -50,15 +52,15 @@
                   ออเดอร์
                 </v-text>
               </v-btn>
-              <v-btn depressed text @click="order('delivery')" class="rounded-pill mx-1">
+              <v-btn depressed text @click="order('Delivery')"  class="rounded-pill mx-1">
                 <v-icon>
                   mdi-car
                 </v-icon>
                 <v-text class="ml-2">
-                  กำลังจัดส่ง
+                  ระหว่างส่ง
                 </v-text>
               </v-btn>
-              <v-btn depressed text @click="order('success')" class="rounded-pill">
+              <v-btn depressed text @click="order('Success')" class="rounded-pill">
                 <v-icon>
                   mdi-check-bold
                 </v-icon>
@@ -71,6 +73,7 @@
         </v-card-title>
         <v-card-text>
           <v-data-table
+          v-model="selected"
             :headers="headers"
             :items="filter"
             :search="search"
@@ -79,18 +82,6 @@
             loading-text="Loading... Please wait"
             color="info"
           >
-            <template v-slot:item.status_level="{ item }">
-              <v-select
-                v-model="select"
-                :items="items"
-                item-text="state"
-                item-value="abbr"
-                label="Select"
-                persistent-hint
-                return-object
-                single-line
-              ></v-select>
-            </template>
             <template v-slot:item.view="{ item }">
               <v-icon small clas s="mr-2" color="#FFBB29" @click="view(item)">
                 mdi-eye
@@ -100,49 +91,87 @@
         </v-card-text>
         <v-dialog v-model="dialog" max-width="500px">
           <v-card>
-            <v-card-title class="headline">
-              <span>ข้อมูลออเดอร์</span>
-            </v-card-title>
-            <v-container>
+   <v-card-title>
+      <v-icon>
+        mdi-clipboard-arrow-down-outline
+      </v-icon>
+      <span>รายละเอียด</span>
+    </v-card-title>
+            <v-container >
+              <v-row class="d-flex align-center">
+                <v-col cols="3" class="font-weight-bold py-2" >
+                  สถานะ
+                </v-col>
+                  <v-chip
+                    :color=" onelistorder.status_order === 'Order' ? '#F05347' : onelistorder.status_order === 'Delivery' ? '#fb8c00' : '#4CAF50' "
+                    dark
+                    small
+
+                  >
+                    {{ onelistorder.status_order }}
+                  </v-chip>
+              </v-row>
               <v-row>
-                <v-col cols="3">
+                <v-col cols="3" class="font-weight-bold py-2">
                   รห้สการซื้อ
                 </v-col>
-                <v-col cols="9">
-                  sdasdasda
+                <v-col cols="9" class="py-2"> 
+                  {{onelistorder.id}}
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="3">
+                <v-col cols="3" class="font-weight-bold py-2">
                   ชื่อผู้สั่ง
                 </v-col>
-                <v-col cols="3">
-                  ชื่อผู้สั่ง
+                <v-col cols="3" class="py-2">
+                  {{onelistorder.nameuser}}
                 </v-col>
               </v-row>
-              ที่อยู่ที่ต้องจัดส่ง
-              <v-col cols="12">
-                adasdasdasdasdasdadsasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+              <v-row >
+                <v-col class="font-weight-bold py-2">
+                  ที่อยู่ที่ต้องจัดส่ง
+                </v-col>
+              </v-row>
+              <v-col cols="12" class="py-2">
+                {{onelistorder.addressuser}}
               </v-col>
               <v-row>
-                <v-col cols="3">
+                <v-col cols="3" class="font-weight-bold py-2">
                   เบอร์โทร
                 </v-col>
-                <v-col cols="9">
-                  sdasdasd
+                <v-col cols="9" class="py-2">
+                  {{onelistorder.teluser}}
+                </v-col>
+              </v-row >
+              <v-row>
+                <v-col class="font-weight-bold py-2">
+                  รายการสินค้า
                 </v-col>
               </v-row>
-              รายการสินค้า
               <v-data-table
-                :headers="headers"
-                :items="listusers"
+                :headers="headerview"
+                :items="listorder.list"
                 :search="search"
                 :loading="loading"
                 loader-height="2px"
                 loading-text="Loading... Please wait"
                 color="info"
                 hide-default-footer
-              />
+                class="pa-0 table"
+              /> 
+            <div class="text-center my-5">
+              <v-btn
+                v-if="onelistorder.status_order === 'Order'"
+                class="mx-0"
+                color="primary"
+                @click="changestatus(onelistorder.id)"
+              >
+                <v-icon>
+                  mdi-car
+                </v-icon>
+                ยืนยันการจัดส่ง
+              </v-btn>
+            </div>
             </v-container>
           </v-card>
         </v-dialog>
@@ -159,10 +188,25 @@ export default {
   data() {
     return {
       loading: true,
+      arryitem:'',
+      onelistorder:{
+      },
       filter: [],
       dialog: false,
       listorder: [],
       search: "",
+      items:[
+        'Delivery',
+        'Success',
+        'Order'
+      ],
+      headerview:[
+        { text:"ลำดับ", sortable: false},
+        { text:"รายการ", sortable: false},
+        { text:"จำนวน", sortable: false},
+        { text:"ราคา", sortable: false},
+
+      ],
       headers: [
         { text: "รห้สสั่งซื้อ", value: "id", align: "center", sortable: false },
         {
@@ -186,9 +230,9 @@ export default {
         {
           text: "สถานะ",
           align: "center",
-          sortable: false,
           value: "status_order",
-          width: "15%"
+          width: "15%",
+          sortable: false
         },
         {
           text: "ดูรายละเอียด",
@@ -204,15 +248,14 @@ export default {
     Axios.get("http://localhost:3000/api/order").then(response => {
       this.listorder = response.data.data;
       this.filter = this.listorder;
+      this.filter.reverse();
       this.loading = false;
     });
   },
-  //   mounted(){
-  //       this.order("all")
-  //       this.filter = this.listorder
-  //   },
   methods: {
     view(item) {
+      this.arryitem = this.filter.indexOf(item)
+      this.onelistorder = Object.assign({}, item);
       this.dialog = true;
     },
     order(item) {
@@ -223,9 +266,99 @@ export default {
         let datafilter = dataall.filter(status => status.status_order == item);
         this.filter = datafilter;
       }
+    },
+    changestatus(item){
+      console.log(item);
+      Axios.put(`http://localhost:3000/api/order/${item}`)
+      .then(response => {
+        if (response.data.statusCode == 201) {
+          this.$swal({
+            title: "เสร็จสิ้น",
+            text: "ทำการเพิ่มข้อมูลเสร็จสิ้น",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1000
+            // confirmButtonText: 'ยืนยัน'
+          })
+          this.dialog = false;
+          Object.assign(this.filter[this.arryitem].status_order = "Delivery")
+          // location.reload();
+          console.log(this.arryitem);
+        }else {
+          this.$swal({
+            title: "ไม่สำเร็จ",
+            text: "ทำการเพิ่มข้อมูลไม่สำเร็จ",
+            icon: "error"
+          });
+        }
+      })
     }
   }
 };
 </script>
 
-<style></style>
+<style lang="css" scope>
+
+  .fittingbutton{
+    display: flex;
+    justify-content: flex-end !important; 
+  }
+
+  .v-btn-toggle:not(.v-btn-toggle--dense) .v-btn.v-btn.v-size--default{
+    width: 20%;
+  }
+
+  .v-dialog .v-card .v-card__title .v-icon{
+    position: relative;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    color: #000000;
+    margin-right:2px ;
+    font-size: 25px;
+  }
+
+  .v-ripple__content{
+    display: none;
+  }
+
+  .fittingbutton .theme--light.v-btn--active::before, .fittingbutton .theme--light.v-btn--active::before{
+    opacity: 1;
+    background-color: #00b3ca;
+    transition: 1s;
+  }
+  .fittingbutton .theme--light.v-btn--active .v-btn__content{
+    color: #fff;
+  }
+
+  .theme--light.v-btn-toggle:not(.v-btn-toggle--group) .v-btn.v-btn--active .v-icon {
+  color: #fff;
+}
+
+  .fittingbutton .theme--light.v-btn::before{
+    transition: 0.5s;
+  }
+  .fittingbutton .theme--light.v-btn:active::before{
+    opacity: 0.2;
+    background-color: #00b3ca;
+  }
+
+@media only screen and (max-width: 960px) {
+    .fittingbutton{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around !important; 
+    max-width: 100%;
+    
+  }
+ .v-btn-toggle:not(.v-btn-toggle--dense) .v-btn.v-btn.v-size--default{
+    width: 150px;
+  }
+}
+
+@media only screen and (max-width: 440px) {
+ .v-btn-toggle:not(.v-btn-toggle--dense) .v-btn.v-btn.v-size--default{
+    width: 100%;
+  }
+}
+</style>

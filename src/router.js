@@ -31,7 +31,7 @@ export default new Router({
         {
           name: 'Setting Members',
           path: 'pages/settingmenber',
-          component: () => import('@/views/dashboard/pages/Settingmenber'),
+          component: () => import('@/views/dashboard/pages/Settingmember'),
         },
         {
           name: 'Sell Products',
@@ -60,6 +60,11 @@ export default new Router({
         //   path: 'maps/google-maps',
         //   component: () => import('@/views/dashboard/pages/Dashboard'),
         // },
+        {
+          name: 'Setting System',
+          path: 'pages/Settingsystem',
+          component: () => import('@/views/dashboard/pages/Settingsystem'),
+        },
         {
           name: 'User Profile',
           path: 'pages/UserProfile',

@@ -115,7 +115,8 @@
                                 <v-text-field
                                 label="ชื่อผู้ใช้งาน"
                                 prepend-icon="mdi-account"
-                                v-model="products.sell_id"
+                                v-model="products.serial_number"
+                                disabled
                                 required
                                 ></v-text-field>
                             
@@ -169,14 +170,14 @@
                             ></v-textarea>
 
                             <v-file-input
-                                :text-value="products.productimg"
+                                accept="image/*"
                                 show-size
                                 counter
-                                multiple
                                 label="รูปภาพสินค้า"
                                 required
                                 @change="upload"
                                 prepend-icon="mdi-file-image"
+                                :rules="this.editedIndex > -1 ? rulesimgedit : rulesimg "
                             ></v-file-input>
 
                                 <v-checkbox
@@ -241,17 +242,26 @@ export default {
             editedIndex: -1,
             dialog: false,
             products:{
-                sell_id:'',
+                serial_number:'',
                 productname:'',
                 productpice:'',
                 productnumber:'',
                 productdetail:'',
                 producttab:'',
-                productimg:''
+                productimg:[],
             },
             slelctedFile: null,
             showproducts:[],
-            error:[]   
+            error:[],
+            rulesimg:[
+                v => !!v || 'กรุณาเพิ่มรูปภาพ',
+                value => !value || value.size < 20000000 || 'ไฟลืมีขนาดเกิน 20 MB',
+                value => !value || value.type.startsWith("image") || 'กรุณาเลือกไฟล์รูปภาพ',
+            ],   
+            rulesimgedit:[
+                value => !value || value.size < 20000000 || 'ไฟลืมีขนาดเกิน 20 MB',
+                value => !value || value.type.startsWith("image") || 'กรุณาเลือกไฟล์รูปภาพ',
+            ]   
         }
     },
     computed: {
@@ -260,7 +270,7 @@ export default {
       },
     },
      created() {
-       Axios.get("http://localhost:3000/api/sellproducts")
+       Axios.get(`http://localhost:3000/api/sellproducts/`)
         .then(response => {
             this.showproducts = response.data.data ;
             this.loading = false;
@@ -313,63 +323,124 @@ export default {
                                    console.log(response);
                                    const namefile = response.data.namefile;
                                    Object.assign(this.showproducts[this.editedIndex], this.products)
-                                   this.products.reset;
-                                   this.close()
+                                   this.close();
+                                   location.reload();
                                 //    เพิ่มเติมให้มันเปลี่ยนรูป #ff0000
                                }
-                            }).catch(err => console.log(err));
+                            }).catch(err => {
+                                this.$swal({
+                                title: "ไม่สำเร็จ",
+                                text: err.response.data.message,
+                                icon: "error",
+                                showConfirmButton: true,
+                                confirmButtonText: 'ยืนยัน'
+                                }).then(() => {
+                                    this.slelctedFile = null;
+                                    this.products.productimg.value = '';
+                                })
+                            });
                     }
                 })
             }else{
-                Axios.post("http://localhost:3000/api/sellproducts", this.products)
-                .then(response => {
-                    if(response.data.statusCode == 201){
-                    const id = response.data.data.id
-                    const dataresponse = response.data.data;
-                    const formdata = new FormData();
-                    formdata.append("files", this.slelctedFile,  this.slelctedFile.name);
-                    const config = {
-                        headers: {
-                            "Content-Type": "multipart/form-data"
-                        }
-                    };
-                    Axios.put(`http://localhost:3000/api/sellproducts/img/${id}`,formdata, config )
-                        .then(response => {
-                            if(response.data.statusCode == 201){
-                                dataresponse.productimg = response.data.namefile //dataresponse คืออะไร #ff0000
-                                this.showproducts.push(dataresponse);
-                                this.close()
+                    Axios.post("http://localhost:3000/api/sellproducts", this.products)
+                    .then(response => {
+                        if(response.data.statusCode == 201){
+                        const id = response.data.data.id
+                        const dataresponse = response.data.data;
+                        const formdata = new FormData();
+                        formdata.append("files", this.slelctedFile,  this.slelctedFile.name);
+                        const config = {
+                            headers: {
+                                "Content-Type": "multipart/form-data"
                             }
-                        }).catch(err => {
-                            console.log(err.response.data.message);
-                            // *****เก็บลายเอียด****************#ff0000
-                        });
-                    }
-                }).catch(err => console.log(err));
+                        };
+                        Axios.put(`http://localhost:3000/api/sellproducts/img/${id}`,formdata, config )
+                            .then(response => {
+                                if(response.data.statusCode == 201){
+                                    this.$swal({
+                                    title: "สำเร็จ",
+                                    text: "ทำการเพิ่มสินค้าสำเร็จ",
+                                    icon: "success"
+                                    });
+                                    dataresponse.productimg = response.data.namefile //dataresponse คืออะไร #ff0000
+                                    this.showproducts.push(dataresponse);
+                                    this.close()
+                                }
+                            }).catch(err => {
+                                this.$swal({
+                                title: "ไม่สำเร็จ",
+                                text: err.response.data.message,
+                                icon: "error",
+                                showConfirmButton: true,
+                                 // timer: 1000
+                                confirmButtonText: 'ยืนยัน'
+                                })
+                                this.slelctedFile = null
+                            });
+                        }
+                    }).catch(err => console.log(err));  
              }
            }  
       },
       del(item){
-          console.log(item);
-          Axios.delete(`http://localhost:3000/api/sellproducts/${item.id}`)
-              .then(response => {
-                  if(response.data.statusCode == 204){
-                     
-                       Axios.delete(`http://localhost:3000/api/sellproducts/img/${item.productimg}`)
-                        .then(response => {
-                            if(response.data.statusCode == 204){
-                                console.log("Delete Products Success");
-                                const index = this.showproducts.indexOf(item) 
-                                this.showproducts.splice(index, 1)
-                            }else{
-                                console.log("Delete Img Products Fail");
-                            }
-                        }).catch((err) => console.log(err));
+        this.$swal({
+          title: 'ต้องการลบข้อมูล',
+          text: "คุณต้องการลบข้อมูลหรือไม",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'ยืนยัน',
+          cancelButtonText: 'ยกเลิก'
+          })
+          .then((result) => {
+              if (result.value) {
+                Axios.delete(`http://localhost:3000/api/sellproducts/${item.id}`)
+                    .then(response => {
+                        if(response.data.statusCode == 204){
+                            console.log(response);
+                                this.$swal({
+                                title: "เสร็จสิ้น",
+                                text: "ทำการลบสินค้าเสร็จสิ้น",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1000
+                                })
+                            Axios.delete(`http://localhost:3000/api/sellproducts/img/${item.productimg}`)
+                                .then(response => {
+                                    if(response.data.statusCode == 204){
+                                        this.$swal({
+                                        title: "เสร็จสิ้น",
+                                        text: "ทำการลบสินค้าเสร็จสิ้น",
+                                        icon: "success",
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                        })
+                                        const index = this.showproducts.indexOf(item) 
+                                        this.showproducts.splice(index, 1)
+                                    }
+                                }).catch((err) => {
+                                    this.$swal({
+                                    title: "ไม่สำเร็จ",
+                                    text: "ไม่สามารถลบสินค้าได้",
+                                    icon: "error",
+                                    showConfirmButton: true,
+                                    confirmButtonText: 'ยืนยัน'
+                                    })
+                                });
 
-                  }else{
-                      console.log("Delete Products Fail");
-                  }
-              }).catch((err) => console.log(err));
+                        }
+                    }).catch((err) => {
+                        this.$swal({
+                            title: "ไม่สำเร็จ",
+                            text: "ไม่สามารถลบสินค้าได้",
+                            icon: "error",
+                            showConfirmButton: true,
+                            confirmButtonText: 'ยืนยัน'
+                            })
+                    });
+              }
+          })
       }
     }
 }

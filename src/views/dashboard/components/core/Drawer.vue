@@ -87,6 +87,11 @@
           to: '/',
         },
         {
+          icon: 'mdi-view-dashboard',
+          title: 'Setting System',
+          to: '/pages/Settingsystem',
+        },
+        {
           icon: 'mdi-account-group',
           title: 'Setting Members',
           to: '/pages/settingmenber',

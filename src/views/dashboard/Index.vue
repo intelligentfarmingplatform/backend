@@ -22,12 +22,19 @@
     data: () => ({
       expandOnHover: false,
     }),
+    
     created(){
-      if(localStorage.getItem("token") != null) {
-        
+      if(localStorage.getItem("username") == "admin") {
+         this.$router.replace("/");
       }else{
         this.$router.replace("/login");
       }
     }
   }
 </script>
+
+<style lang="scss">
+    body{
+      padding: 0 !important;
+    }
+</style>
