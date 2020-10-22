@@ -22,14 +22,14 @@
     data: () => ({
       expandOnHover: false,
     }),
-    
-    created(){
-      if(localStorage.getItem("username") == "admin") {
-         this.$router.replace("/");
-      }else{
-        this.$router.replace("/login");
-      }
-    }
+
+    // created(){
+    //   if(localStorage.getItem("username") == "admin") {
+    //      this.$router.replace("/");
+    //   }else{
+    //     this.$router.replace("/login");
+    //   }
+    // }
   }
 </script>
 

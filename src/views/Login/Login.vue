@@ -37,10 +37,10 @@
             <img src="/engine.png" alt="" />
             <h2>Sing In</h2>
             <form action="">
-            <v-text-field v-model="formlogin.username" label="Username"></v-text-field>
-            <v-text-field v-model="formlogin.username" label="Username"></v-text-field>
+            <v-text-field  label="Username"></v-text-field>
+            <v-text-field v-model="formres.username" label="Username"></v-text-field>
             <v-text-field
-                v-model="formlogin.username"
+                v-model="formres.password"
                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                 :rules="[rules.required, rules.min]"
                 :type="show1 ? 'text' : 'password'"
@@ -67,13 +67,17 @@
 
 <script>
 import Axios from 'axios';
-import { mapState, mapMutations } from 'vuex'
 export default {
   name: "Login",
   data() {
     return {
       show1: false,
       formlogin:{
+        username:'',
+        password:''
+      },
+      formres:{
+        serial:'',
         username:'',
         password:''
       },
@@ -100,12 +104,15 @@ export default {
         .then(response => {
           if(response.data.statusCode == 200){
             console.log(response.data.data);
-            localStorage.setItem('username', response.data.data);
+            localStorage.setItem('username', JSON.stringify(response.data.data));
              this.$router.replace("/");
           }
         }).catch(err => {
           alert(err.response.data.message);
         })
+    },
+    res(){
+       
     }
   }
 };
