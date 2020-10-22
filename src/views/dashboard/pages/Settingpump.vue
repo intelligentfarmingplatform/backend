@@ -64,35 +64,43 @@
         <div class="controlwater">
           <base-material-card color="info" icon="mdi-tune-variant" title="Pump">
             <v-container fluid>
+
+                <!-- :label="`Pump A: ${pumpa.toString()}`" -->
               <v-switch
-                v-model="settingpump.pump_a"
-                :label="`Pump A: ${settingpump.pump_a.toString()}`"
-                color="success"
-                @change="onsubmit()"
-                hide-details
-              ></v-switch>
-              <v-switch
-                v-model="settingpump.pump_b"
-                :label="`Pump B: ${settingpump.pump_b.toString()}`"
+                v-model="pumpa"
+                label="Pump A: ON"
                 color="success"
                 @change="onsubmit()"
                 hide-details
               ></v-switch>
 
+                <!-- :label="`Pump B: ${pumpb.toString()}`" -->
               <v-switch
-                v-model="settingpump.pump_c"
-                :label="`Pump C: ${settingpump.pump_c.toString()}`"
+                v-model="pumpb"
+                label="Pump B: OFF"
                 color="success"
                 @change="onsubmit()"
                 hide-details
               ></v-switch>
+
+                <!-- :label="`Pump C: ${pumpc.toString()}`" -->
               <v-switch
-                v-model="settingpump.pump_d"
-                :label="`Pump D: ${settingpump.pump_d.toString()}`"
+                v-model="pumpc"
+                label="Pump C: OFF"
                 color="success"
                 @change="onsubmit()"
                 hide-details
               ></v-switch>
+
+                <!-- :label="`Pump D: ${pumpd.toString()}`" -->
+              <v-switch
+                v-model="pumpd"
+                label="Pump D: ON"
+                color="success"
+                @change="onsubmit()"
+                hide-details
+              ></v-switch>
+
             </v-container>
           </base-material-card>
         </div>
@@ -106,7 +114,10 @@ export default {
   name: "settingpump",
   data() {
     return {
-
+      pumpa: true,
+      pumpb: false,
+      pumpc: true,
+      pumpd: false,
       type: null,
       elapse: null,
       settingpump: []
