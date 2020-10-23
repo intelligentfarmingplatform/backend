@@ -100,7 +100,7 @@ export default {
         }
     },
     login(){
-      Axios.post(`http://localhost:3000/api/login/`, this.formlogin)
+      Axios.post(`https://intelligentfarmingplatform.herokuapp.com/api/login/`, this.formlogin)
         .then(response => {
           if(response.data.statusCode == 200){
             console.log(response.data.data);
@@ -112,7 +112,7 @@ export default {
         })
     },
     res(){
-       Axios.post(`http://localhost:3000/api/login/res`, this.formres)
+       Axios.post(`https://intelligentfarmingplatform.herokuapp.com/api/login/res`, this.formres)
         .then(response => {
           if(response.status == 200){
           console.log(response.data.token);

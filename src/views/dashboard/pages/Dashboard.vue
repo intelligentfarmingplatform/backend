@@ -290,7 +290,7 @@ import Axios from "axios";
     }, 
 
     created() {
-    Axios.get("http://localhost:3000/api/dbrealtime/1").then(response => {
+    Axios.get("https://intelligentfarmingplatform.herokuapp.com/api/dbrealtime/1").then(response => {
       this.dbrealtime = response.data.data;
 
     });

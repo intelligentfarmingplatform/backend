@@ -26,7 +26,7 @@
             >
                 <v-img
                 height="150"
-                :src="`http://localhost:3000/${items.productimg}`"
+                :src="`https://intelligentfarmingplatform.herokuapp.com://localhost:3000/${items.productimg}`"
                 ></v-img>
 
                 <v-card-title  class="mt-5 mx-auto">{{ items.productname }}</v-card-title>
@@ -270,7 +270,7 @@ export default {
       },
     },
      created() {
-       Axios.get(`http://localhost:3000/api/sellproducts/`)
+       Axios.get(`https://intelligentfarmingplatform.herokuapp.com://localhost:3000/api/sellproducts/`)
         .then(response => {
             this.showproducts = response.data.data ;
             this.loading = false;
@@ -301,7 +301,7 @@ export default {
           if(this.$refs.form.validate()){
               if(this.editedIndex > -1){
                 console.log(this.products.id , this.products);
-                Axios.put(`http://localhost:3000/api/sellproducts/${this.products.id}`, this.products)
+                Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/${this.products.id}`, this.products)
                 .then(response => {
                      if(response.data.statusCode == 201){
                          if(this.slelctedFile == null){
@@ -317,7 +317,7 @@ export default {
                                     "Content-Type": "multipart/form-data"
                                 }
                             };
-                            Axios.put(`http://localhost:3000/api/sellproducts/img/${id}`,formdata, config )
+                            Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/img/${id}`,formdata, config )
                             .then(response => {
                                if(response.data.statusCode == 201){
                                    console.log(response);
@@ -342,7 +342,7 @@ export default {
                     }
                 })
             }else{
-                    Axios.post("http://localhost:3000/api/sellproducts", this.products)
+                    Axios.post("https://intelligentfarmingplatform.herokuapp.com/api/sellproducts", this.products)
                     .then(response => {
                         if(response.data.statusCode == 201){
                         const id = response.data.data.id
@@ -354,7 +354,7 @@ export default {
                                 "Content-Type": "multipart/form-data"
                             }
                         };
-                        Axios.put(`http://localhost:3000/api/sellproducts/img/${id}`,formdata, config )
+                        Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/img/${id}`,formdata, config )
                             .then(response => {
                                 if(response.data.statusCode == 201){
                                     this.$swal({
@@ -395,7 +395,7 @@ export default {
           })
           .then((result) => {
               if (result.value) {
-                Axios.delete(`http://localhost:3000/api/sellproducts/${item.id}`)
+                Axios.delete(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/${item.id}`)
                     .then(response => {
                         if(response.data.statusCode == 204){
                             console.log(response);
@@ -406,7 +406,7 @@ export default {
                                 showConfirmButton: false,
                                 timer: 1000
                                 })
-                            Axios.delete(`http://localhost:3000/api/sellproducts/img/${item.productimg}`)
+                            Axios.delete(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/img/${item.productimg}`)
                                 .then(response => {
                                     if(response.data.statusCode == 204){
                                         this.$swal({

@@ -232,7 +232,7 @@ export default {
     };
   },
   created() {
-    Axios.get("http://localhost:3000/api/order").then((response) => {
+    Axios.get("https://intelligentfarmingplatform.herokuapp.com/api/order").then((response) => {
       this.listorder = response.data.data;
       this.filter = this.listorder;
       this.filter.reverse();
@@ -258,7 +258,7 @@ export default {
     },
     changestatus(item){
       console.log(item);
-      Axios.put(`http://localhost:3000/api/order/${item}`)
+      Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/order/${item}`)
       .then(response => {
         if (response.data.statusCode == 201) {
           this.$swal({
