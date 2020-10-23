@@ -24,7 +24,7 @@
     }),
 
     created(){
-      if(localStorage.getItem("token") != null) {
+      if(localStorage.getItem("status") == "true") {
         this.$router.replace("/");
       }else{
         this.$router.replace("/login");

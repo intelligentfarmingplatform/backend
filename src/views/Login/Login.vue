@@ -18,7 +18,7 @@
                 v-model="formlogin.password"
                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                 :rules="[rules.required, rules.min]"
-                :type="show1 ? 'text' : 'password'"
+                :type="show1? 'text' : 'password'"
                 label="Password"
                 @click:append="show1 = !show1"
             ></v-text-field>
@@ -35,19 +35,19 @@
         <div class="boxregister">
         <div class="login_wrap">
             <img src="/engine.png" alt="" />
-            <h2>Sing In</h2>
+            <h2>Sing Up</h2>
             <v-form @submit.prevent="res">
-            <v-text-field  label="Username"></v-text-field>
+            <v-text-field v-model="formres.serial"  label="SerialNumber "></v-text-field>
             <v-text-field v-model="formres.username" label="Username"></v-text-field>
             <v-text-field
-                v-model="formres.password"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rules.required, rules.min]"
-                :type="show1 ? 'text' : 'password'"
-                name="input-10-1"
-                label="Password"
-                @click:append="show1 = !show1"
-            ></v-text-field>
+            v-model="password"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show1 ? 'text' : 'password'"
+            name="input-10-1"
+            label="Paaword"
+            @click:append="show1 = !show1"
+          ></v-text-field>
             <v-btn rounded block type="submit">Login</v-btn>
             </v-form>
             <footer>
@@ -71,7 +71,7 @@ export default {
   name: "Login",
   data() {
     return {
-      show1: false,
+      show1:'',
       formlogin:{
         username:'',
         password:''
@@ -104,7 +104,7 @@ export default {
         .then(response => {
           if(response.data.statusCode == 200){
             console.log(response.data.data);
-            localStorage.setItem('username', JSON.stringify(response.data.data));
+            localStorage.setItem('status', true);
              this.$router.replace("/");
           }
         }).catch(err => {
@@ -135,6 +135,8 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
+
+  
   .back {
     height: 100%;
     background-image: url("https://images.unsplash.com/photo-1472133530746-ae9b21e91c41?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80");
