@@ -218,16 +218,6 @@
           
         </base-material-card>
       </v-col>
-    <!-- <v-snackbar
-      :multi-line="multiLine"
-      :value="alert"
-      color="blue-grey"
-      absolute
-      right
-      top
-    >
-      Lorem ipsum dolor sit amet consectetur.
-    </v-snackbar> -->
   </v-container>
 </template>
 

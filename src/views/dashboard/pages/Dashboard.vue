@@ -290,12 +290,15 @@ import Axios from "axios";
     }, 
 
     created() {
-    Axios.get("https://intelligentfarmingplatform.herokuapp.com/api/dbrealtime/1").then(response => {
-      this.dbrealtime = response.data.data;
-
+      let serial = localStorage.getItem("token");
+      setInterval(() => {
+        Axios.get(`https://intelligentfarmingplatform.herokuapp.com/api/dbrealtime/${serial}`).then(response => {
+        this.dbrealtime = response.data.data;
     });
+	}, 3000)
   },
-
+  methods:{
+  }
 
 
   }

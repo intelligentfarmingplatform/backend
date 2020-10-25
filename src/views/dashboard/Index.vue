@@ -22,9 +22,8 @@
     data: () => ({
       expandOnHover: false,
     }),
-
     created(){
-      if(localStorage.getItem("status") == "true") {
+      if(localStorage.getItem("token")) {
         this.$router.replace("/");
       }else{
         this.$router.replace("/login");

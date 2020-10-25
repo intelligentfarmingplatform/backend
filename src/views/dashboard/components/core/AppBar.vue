@@ -123,10 +123,9 @@ export default {
       setDrawer: "SET_DRAWER"
     }),
     logout(){
-      const _ = this;
       console.log("SDsdfds");
        window.localStorage.clear();
-       this.$router.push("/login");
+       this.$router.push("/");
     }
   }
 };

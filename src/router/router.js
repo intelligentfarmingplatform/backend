@@ -6,6 +6,7 @@ Vue.use(Router)
 export default new Router({
   mode: 'hash',
   base: process.env.BASE_URL,
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -48,12 +49,6 @@ export default new Router({
           path: 'components/typography',
           component: () => import('@/views/dashboard/component/Typography'),
         },
-        // Tables
-        {
-          name: 'Regular Tables',
-          path: 'tables/regular-tables',
-          component: () => import('@/views/dashboard/tables/RegularTables'),
-        },
         // // Maps
         // {
         //   name: 'Google Maps',
@@ -76,12 +71,18 @@ export default new Router({
           path: 'pages/settingpump',
           component: () => import('@/views/dashboard/pages/Settingpump'),
         },
+
       ],
     },
     {
       name: 'login',
       path: '/login',
       component: () => import('@/views/Login/Login'),
+    },
+    {
+      name: 'login',
+      path: '*',
+      component: () => import('@/views/Login/test'),
     },
   ],
 })

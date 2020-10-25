@@ -1,6 +1,6 @@
 {<template>
   <div id="login">
-    <!-- <div class="back"></div>
+    <div class="back"></div>
     <div class="box">
       <div class="boxlogin">
         <div class="showimg">
@@ -59,7 +59,7 @@
           </footer>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
