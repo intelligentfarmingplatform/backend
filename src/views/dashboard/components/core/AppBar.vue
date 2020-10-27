@@ -125,7 +125,7 @@ export default {
     logout(){
       console.log("SDsdfds");
        window.localStorage.clear();
-       this.$router.push("/");
+       this.$router.push("/login");
     }
   }
 };

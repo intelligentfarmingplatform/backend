@@ -278,13 +278,9 @@ import Axios from "axios";
             align: 'right',
           },
         ],
-      dbrealtime: [
-      ],
-
-      pump_status:[
-
-
-      ]
+      dbrealtime: [],
+      pump_status:[],
+      items:[],
 
       }
     }, 

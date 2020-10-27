@@ -8,7 +8,7 @@
         </div>
         <div class="login_wrap">
           <img src="/engine.png" alt="" />
-          <h2>Sing In</h2>
+          <h2>Sign In</h2>
           <v-form ref="form" v-model="isValid" @submit.prevent="login">
             <v-text-field
               v-model="formlogin.username"
@@ -48,7 +48,7 @@
               label="Username"
             ></v-text-field>
             <v-text-field
-              v-model="password"
+              v-model="formres.password"
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[rules.required, rules.min]"
               :type="show1 ? 'text' : 'password'"
@@ -90,14 +90,13 @@
       </div>
     </div>
     <!-- -----------end loder------------------------------------------------------ -->
-              <base-material-alert
-              color="info"
-              dark
-              dismissible
-              icon="mdi-bell"
-            >
-              This is a notification with close button and icon and have many lines. You can see that the icon and the close button are always vertically aligned. This is a beautiful notification. So you don't have to worry about the style.
-            </base-material-alert>
+    <v-snackbar
+      v-model="snackbar"
+      :color="color"
+      timeout= 1000
+    >
+      {{ this.message }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -109,6 +108,9 @@ export default {
     return {
       show1: false,
       isloaded:false,
+      snackbar: false,
+      message:'',
+      color:'',
       formlogin: {
         username: "",
         password: ""
@@ -139,9 +141,13 @@ export default {
     },
     login() {
       this.isloaded = true;
+      console.log(this.formlogin);
       Axios.post(`http://localhost:3000/api/login/`, this.formlogin)
         .then(response => {
           if (response.data.statusCode == 200) {
+            this.snackbar = true;
+            this.color = "#4CAF50"
+            this.message = response.data.message;
             console.log(response.data.serial);
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("token", response.data.serial);
@@ -149,25 +155,34 @@ export default {
           }
         })
         .catch(err => {
+          this.color = "#cd1205"
           this.isloaded = false;
-          // alert(err.response.data.message);
+          this.message = err.response.data.message;
+          this.snackbar = true;
         });
     },
     res() {
+      this.isloaded = true;
+      console.log(this.formres);
       Axios.post(
-        `https://intelligentfarmingplatform.herokuapp.com/api/login/res`,
-        this.formres
+        `https://intelligentfarmingplatform.herokuapp.com/api/login/res`,this.formres
       )
         .then(response => {
           if (response.status == 200) {
-            console.log(response.data.token);
-            alert("สมัครสมาชิกเสดแล้วจ้า");
+            // console.log(response.data.token);
+            this.snackbar = true;
+            this.color = "#4CAF50"
+            this.message = response.data.message;
             localStorage.setItem("token", response.data.token);
             this.$router.replace("/");
           }
         })
         .catch(err => {
-          alert(err.response.data.message);
+          console.log(err.response);
+          this.color = "#cd1205"
+          this.isloaded = false;
+          this.message = err.response.data.message;
+          this.snackbar = true;
         });
     }
   }
@@ -182,6 +197,7 @@ $colors: #8CC271, #69BEEB, #F5AA39, #E9643B, #8CC271, #69BEEB,;
   position: absolute;
   width: 100%;
   height: 100%;
+
 
   .back {
     height: 100%;
@@ -310,7 +326,7 @@ $colors: #8CC271, #69BEEB, #F5AA39, #E9643B, #8CC271, #69BEEB,;
     width: 100vw;
     height: 100vh;
     background-color: #1f1f1fcb;
-    z-index: 999;
+    z-index: 99;
   }
   // -----------------------------------------------------
   .logo{
