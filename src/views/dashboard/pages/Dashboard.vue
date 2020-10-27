@@ -4,132 +4,60 @@
     fluid
     tag="section"
   >
-    <v-row>
+    <v-row class="showdata">
+      <v-col 
+        cols="12"
+        sm="5"
+        lg="5"
+      >
+        <div class="datawater">
+          <card>
+            <h1>Water</h1>
+            <div class="data">
+              <img src="/water.png" alt="">
+              <h1>95%</h1>
+            </div>
+          </card>
+        </div>
+      </v-col>
+      <v-spacer />
       <v-col
         cols="12"
-        lg="3"
-        class="center"
+        sm="7"
+        lg="7"
       >
-        <v-card
-          class="mx-auto rounded-lg text-center"
-          max-width="100%"
-          color="info"
-        >
-          <v-card-text>
-            <v-row align="center">
-              <v-col
-                class="headline"
-                cols="12"
-              >
-                {{this.dbrealtime.temp}}  &deg;C
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-list-item>
-          <v-icon>mdi-home-thermometer </v-icon>
-            <v-list-item-content>
-              <v-list-item-title>
-                Temperature
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
+        <div class="datasensor">
+          <card>
+            <v-icon>
+              mdi-water-percent
+            </v-icon>
+            <h1>64%</h1>
+            <p>Tamptem</p>
+          </card>
+          <card>
+            <v-icon>
+              mdi-water-percent
+            </v-icon>
+            <h1>64%</h1>
+            <p>Tamptem</p>
+          </card>
+          <card>
+            <v-icon>
+              mdi-water-percent
+            </v-icon>
+            <h1>64%</h1>
+            <p>Tamptem</p>
+          </card>
+          <card>
+            <v-icon>
+              mdi-water-percent
+            </v-icon>
+            <h1>64%</h1>
+            <p>Tamptem</p>
+          </card>
+        </div>
       </v-col>
-
-      <v-col
-        cols="12"
-        lg="3"
-      >
-        <v-card
-          class="mx-auto rounded-lg text-center"
-          max-width="100%"
-          color="info"
-        >
-          <v-card-text>
-            <v-row align="center">
-              <v-col
-
-                class="headline"
-                cols="12"
-              >
-
-                {{this.dbrealtime.humi}}  &deg;C
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-list-item>
-              <v-icon>mdi-water-percent</v-icon>
-            <v-list-item-content>
-              <v-list-item-title>
-                Humidity
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        lg="3"
-      >
-        <v-card
-          class="mx-auto rounded-lg text-center"
-          max-width="100%"
-          color="info"
-        >
-          <v-card-text>
-            <v-row align="center">
-              <v-col
-                class="headline"
-                cols="12"
-              >
-                {{this.dbrealtime.ec}}
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-list-item>
-          <v-icon>mdi-virus </v-icon>
-            <v-list-item-content>
-              <v-list-item-title>
-                Fertilizer intensity
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        lg="3"
-      >
-        <v-card
-          class="mx-auto rounded-lg text-center"
-          max-width="100%"
-          color="info"
-        >
-          <v-card-text>
-            <v-row align="center">
-              <v-col
-                class="headline"
-                cols="12"
-              >
-                {{this.dbrealtime.light_int}}
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-list-item>
-          <v-icon>
-               mdi-lightbulb-on
-              </v-icon>
-            <v-list-item-content>
-              <v-list-item-title>
-
-                Light intensity
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-      </v-col>
+    </v-row>
 
       <!-- --------------------------end showsirsor----------------- -->
       <v-col
@@ -286,16 +214,98 @@ import Axios from "axios";
     }, 
 
     created() {
-      let serial = localStorage.getItem("token");
-      setInterval(() => {
-        Axios.get(`https://intelligentfarmingplatform.herokuapp.com/api/dbrealtime/${serial}`).then(response => {
-        this.dbrealtime = response.data.data;
-    });
-	}, 3000)
+        let serial = localStorage.getItem("token");
+        setInterval(() => {
+          Axios.get(`https://intelligentfarmingplatform.herokuapp.com/api/dbrealtime/${serial}`).then(response => {
+          this.dbrealtime = response.data.data;
+      });
+    }, 3000)
   },
   methods:{
-  }
 
-
+    }
   }
 </script>
+<style lang="scss" scoped>
+    card{
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 
+        0px 3px 1px -2px rgba(0, 0, 0, 0.2), 
+        0px 2px 2px 0px rgba(0, 0, 0, 0.14), 
+        0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    }
+    .showdata{
+      padding: 14px;
+
+      .datawater{
+          height: 100%;
+
+        card{
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          width: 100%;
+          height: 100%;
+
+          .data{
+            position: relative;
+            img{
+              width: 200px;
+              height: 200px;
+              opacity: 0.5;
+              animation: 60s img infinite;
+            }
+            h1{
+              font-size: 35px;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+
+            }
+          }
+        }
+      }
+      .datasensor{
+        display: flex;
+        flex-wrap: wrap;
+        margin:-10px;
+        height: 100%;
+
+
+        card{
+          width: 50%;
+          flex: 1 1 200px;
+          margin: 10px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: center;
+          padding: 10px;
+
+          .v-icon{
+            font-size: 45px;
+          }
+
+          h1{
+            margin-top: 10px;
+          }
+
+          p{
+            margin: 10px 0px 0px 0px;
+          }
+        }
+      }
+    }
+
+    @keyframes img {
+      0%{
+        transform: rotateZ(0deg);
+      }
+      100%{
+        transform: rotateZ(360deg);
+      }
+    }
+</style>

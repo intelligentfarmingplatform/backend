@@ -25,7 +25,7 @@
     />
     <v-spacer />
       <v-toolbar-title
-      class="hidden-sm-and-down font-weight-light"
+      class="hidden-sm-and-down font-weight-light mx-4"
       v-text="$route.name"
     />
     <v-menu nudge-bottom="45px" nudge-leftt="1050px"  origin="top right">

@@ -164,8 +164,7 @@ export default {
     res() {
       this.isloaded = true;
       console.log(this.formres);
-      Axios.post(
-        `https://intelligentfarmingplatform.herokuapp.com/api/login/res`,this.formres
+      Axios.post(`http://localhost:3000/api/login/res`,this.formres
       )
         .then(response => {
           if (response.status == 200) {
