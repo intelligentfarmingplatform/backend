@@ -79,10 +79,9 @@ export default new Router({
       path: '/login',
       component: () => import('@/views/Login/Login'),
     },
-    // {
-    //   name: 'login',
-    //   path: '*',
-    //   component: () => import('@/views/Login/test'),
-    // },
+    {
+      path: '*',
+      component: () => import('@/views/Error/Error404'),
+    },
   ],
 })
