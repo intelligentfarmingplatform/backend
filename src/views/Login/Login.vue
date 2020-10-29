@@ -141,6 +141,7 @@ export default {
     },
     login() {
       this.isloaded = true;
+      // console.log(process.env.VUE_APP_URL);
       Axios.post(`http://localhost:3000/api/login/`, this.formlogin)
         .then(response => {
           console.log(response);
