@@ -107,7 +107,7 @@
           to: '/pages/order',
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-account-edit',
           title: 'User Profile',
           to: '/pages/UserProfile',
         },

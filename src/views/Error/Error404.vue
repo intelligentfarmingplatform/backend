@@ -8,12 +8,12 @@
 			</div>
 			<h1>oops!</h1>
 			<h2>Error 404 : Page Not Found</h2>
-			<a href="#">go back</a>
+			<button @click="$router.go(-1)">go Back</button>
 			<div class="notfound-social">
-				<a href="#">F</a>
-				<a href="#">fon</a>
-				<a href="#">dsfd</a>
-				<a href="#">sdfd</a>
+				<a><v-icon>fab fa-facebook</v-icon></a>
+				<a><v-icon>fab fa-twitter</v-icon></a>
+				<a><v-icon>fab fa-pinterest</v-icon></a>
+				<a><v-icon>fab fa-google-plus</v-icon></a>
 			</div>
 		</div>
 	</div>
@@ -116,7 +116,7 @@ body {
   color: #4CAF50;
 }
 
-.notfound a {
+.notfound button {
   font-family: 'Quicksand', sans-serif;
   font-size: 14px;
   text-decoration: none;
@@ -124,6 +124,7 @@ body {
   background: #4CAF50;
   display: inline-block;
   padding: 15px 30px;
+  outline: none;
   border-radius: 5px;
   color: #fff;
   font-weight: 700;
@@ -142,13 +143,19 @@ body {
   font-size: 14px;
   color: #fff;
   background-color: #dedede;
-  margin: 3px;
+  margin: 5px;
   padding: 0px;
+  border-radius: 5px;
   -webkit-transition: 0.2s all;
-  transition: 0.2s all;
+  transition: .5s all;
 }
 .notfound-social>a:hover {
   background-color: #4CAF50;
+  box-shadow: -1px 2px 10px -2px rgba(0,0,0,0.38);
+}
+
+.notfound-social a:hover >.v-icon {
+  color: #ffffff;
 }
 
 @media only screen and (max-width: 767px) {

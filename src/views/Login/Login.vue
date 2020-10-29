@@ -56,7 +56,7 @@
               label="Paaword"
               @click:append="show1 = !show1"
             ></v-text-field>
-            <v-btn rounded block type="submit">Login</v-btn>
+            <v-btn rounded block type="submit">Sing Up</v-btn>
           </v-form>
           <footer>
             <p>
@@ -141,18 +141,14 @@ export default {
     },
     login() {
       this.isloaded = true;
-      console.log(this.formlogin);
       Axios.post(`http://localhost:3000/api/login/`, this.formlogin)
         .then(response => {
-          if (response.data.statusCode == 200) {
-            this.snackbar = true;
-            this.color = "#4CAF50"
-            this.message = response.data.message;
-            console.log(response.data.serial);
+          console.log(response);
+          if (response.status == 200) {
+            console.log(response.data.token);
             localStorage.setItem("token", response.data.token);
-            localStorage.setItem("token", response.data.serial);
              this.$router.replace("/");
-          }
+          } 
         })
         .catch(err => {
           this.color = "#cd1205"
