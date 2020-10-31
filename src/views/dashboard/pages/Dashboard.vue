@@ -31,7 +31,7 @@
             <v-icon>
               mdi-water-percent
             </v-icon>
-            <h1>64%</h1>
+            <h1>{{ this.dbrealtime.temp }}%</h1>
             <p>Tamptem</p>
           </card>
           <card>
@@ -62,6 +62,7 @@
       <!-- --------------------------end showsirsor----------------- -->
       <v-col
         cols="12"
+        class="statuspump"
       >
         <v-card
           color="white"
@@ -170,7 +171,6 @@
 
 <script>
 import Axios from "axios";
-
   export default {
     name: 'DashboardDashboard',
 
@@ -214,10 +214,12 @@ import Axios from "axios";
     }, 
 
     created() {
+        console.log(process.env.VUE_APP_APIURL);
         let serial = localStorage.getItem("token");
         setInterval(() => {
-          Axios.get(`https://intelligentfarmingplatform.herokuapp.com/api/dbrealtime/${serial}`).then(response => {
+          Axios.get(`${process.env.VUE_APP_APIURL}/api/dbrealtime/2`).then(response => {
           this.dbrealtime = response.data.data;
+          
       });
     }, 3000)
   },
@@ -236,7 +238,7 @@ import Axios from "axios";
         0px 1px 5px 0px rgba(0, 0, 0, 0.12);
     }
     .showdata{
-      padding: 14px;
+      padding: 0px 14px;
 
       .datawater{
           height: 100%;
@@ -277,8 +279,8 @@ import Axios from "axios";
 
         card{
           width: 50%;
-          flex: 1 1 200px;
-          margin: 10px;
+          flex: 1 1 250px;
+          margin:  10px;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -299,6 +301,20 @@ import Axios from "axios";
         }
       }
     }
+
+    .statuspump{
+      padding: 0px 14px;
+    } 
+
+    // @media screen and (min-width: 1864px){
+    //   .datasensor{
+    //     margin: 0px !important;
+
+    //       card{
+    //         margin: 0px 10px !important;
+    //       }
+    //   }
+    // }
 
     @keyframes img {
       0%{

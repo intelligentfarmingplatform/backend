@@ -26,7 +26,7 @@
             >
                 <v-img
                 height="150"
-                :src="`https://intelligentfarmingplatform.herokuapp.com://localhost:3000/${items.productimg}`"
+                :src="`https://intelligentfarmingplatform.herokuapp.com/${items.productimg}`"
                 ></v-img>
 
                 <v-card-title  class="mt-5 mx-auto">{{ items.productname }}</v-card-title>
@@ -225,6 +225,7 @@
 import Axios from 'axios';
 
 export default {
+
     name:"sellproducts",
     data() {
         return {
@@ -260,7 +261,7 @@ export default {
       },
     },
      created() {
-       Axios.get(`https://intelligentfarmingplatform.herokuapp.com://localhost:3000/api/sellproducts/`)
+       Axios.get(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/`)
         .then(response => {
             this.showproducts = response.data.data ;
             this.loading = false;
@@ -314,7 +315,7 @@ export default {
                                    const namefile = response.data.namefile;
                                    Object.assign(this.showproducts[this.editedIndex], this.products)
                                    this.close();
-                                   location.reload();
+                                   this.$forceUpdate();
                                 //    เพิ่มเติมให้มันเปลี่ยนรูป #ff0000
                                }
                             }).catch(err => {
