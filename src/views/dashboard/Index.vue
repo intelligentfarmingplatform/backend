@@ -24,7 +24,7 @@
     }),
     mounted(){
       if(localStorage.getItem("token")) {
-        this.$router.replace("/");
+        // this.$router.replace("/");
       }else{
         this.$router.replace("/login");
       }

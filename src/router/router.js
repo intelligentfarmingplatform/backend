@@ -49,12 +49,6 @@ export default new Router({
           path: 'components/typography',
           component: () => import('@/views/dashboard/component/Typography'),
         },
-        // // Maps
-        // {
-        //   name: 'Google Maps',
-        //   path: 'maps/google-maps',
-        //   component: () => import('@/views/dashboard/pages/Dashboard'),
-        // },
         {
           name: 'Setting System',
           path: 'pages/Settingsystem',
@@ -65,13 +59,6 @@ export default new Router({
           path: 'pages/UserProfile',
           component: () => import('@/views/dashboard/pages/UserProfile'),
         },
-
-        {
-          name: 'Setting Pump',
-          path: 'pages/settingpump',
-          component: () => import('@/views/dashboard/pages/Settingpump'),
-        },
-
       ],
     },
     {

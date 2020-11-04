@@ -172,7 +172,6 @@ export default {
       settingpump: ["On", "Off"],
     };
   },
-
   created() {
     Axios.get("http://localhost:3000/api/settingpump/1").then((response) => {
       this.settingpump = response.data.data;

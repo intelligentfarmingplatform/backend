@@ -26,7 +26,7 @@
             >
                 <v-img
                 height="150"
-                :src="`https://intelligentfarmingplatform.herokuapp.com/${items.productimg}`"
+                :src="`http://localhost:3000/${items.productimg}`"
                 ></v-img>
 
                 <v-card-title  class="mt-5 mx-auto">{{ items.productname }}</v-card-title>
@@ -107,19 +107,18 @@
                         </v-card-title>
                         <v-card-text>
                             <v-container>
+                            <v-text-field
+                                label="ชื่อผู้ใช้งาน"
+                                prepend-icon="mdi-account"
+                                v-model="products.nameseller"
+                                disabled
+                                required
+                            ></v-text-field>
                             <v-form
                                 ref="form"
                                 v-model="isValid"
                                 @submit.prevent="onsubmit"
-                            >
-                                <v-text-field
-                                label="ชื่อผู้ใช้งาน"
-                                prepend-icon="mdi-account"
-                                v-model="products.name"
-                                disabled
-                                required
-                                ></v-text-field>
-                            
+                            >       
                                 <v-text-field
                                 v-model="products.productname"
                                 label="ชื่่อสินค้า"
@@ -232,17 +231,17 @@ export default {
             editedIndex: -1,
             dialog: false,
             products:{
-                serial_number:'',
+                nameseller: '',
                 productname:'',
-                productpice:'',
+                productprice:'',
                 productnumber:'',
                 productdetail:'',
                 producttab:'',
                 productimg:[],
-                name:''
             },
             slelctedFile: null,
-            showproducts:[],
+            showproducts:[
+            ],
             error:[],
             rulesimg:[
                 v => !!v || 'กรุณาเพิ่มรูปภาพ',
@@ -260,35 +259,44 @@ export default {
         return this.editedIndex === -1 ? 'เพิ่มสินค้า' : 'แก้ไขข้อมูลสินค้า'
       },
     },
-     created() {
+    
+     mounted() {
+         console.log("sdfsdfsdfds");
         const config = {
-          headers: {
+        headers: {
             Authorization:`Bearer ${localStorage.getItem("token")}`
-          }
+        }
         };
-       Axios.get(`${process.env.VUE_APP_APIURL}/api/sellproducts/`,config)
+        Axios.get(`${process.env.VUE_APP_APIURL}/api/sellproducts/`,config)
         .then(response => {
-            this.showproducts = response.data.data ;
-            this.showproducts.name = response.data.name;
+            this.showproducts = response.data.data;
+            this.products.nameseller = response.data.name;
             this.loading = false;
         }).catch((err) => {
-        console.log(err); 
+            console.log(err); 
         })
     },
     methods:{
+
         close () {
         this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-          this.dialog = false
-          this.$refs.form.reset()
+            this.editedItem = Object.assign({}, this.defaultItem)
+            this.editedIndex = -1
+            this.dialog = false
+            this.$refs.form.reset()
+            // this.products.productname =''
+            // this.products.productpice =''
+            // this.products.this.products.productnumber =''
+            // this.products.productdetail = ''
+            // this.products.producttab =''
+            // this.products.productimg = null  
+          
         })
       },
         editItem (item) {
         this.editedIndex = this.showproducts.indexOf(item);
         this.products = Object.assign({},item);
-        this.dialog = true;
-        
+        this.dialog = true;   
       },
       upload() {
           this.slelctedFile = event.target.files[0];
@@ -313,10 +321,11 @@ export default {
                          }
                             const id = response.data.id;
                             const formdata = new FormData();
+                            // console.log(this.slelctedFile);
                             formdata.append("files", this.slelctedFile,  this.slelctedFile.name);
                             const config = {
                             headers: {
-                                    Authorization:`Bearer ${localStorage.getItem("token")}`,
+                                    // Authorization:`Bearer ${localStorage.getItem("token")}`,
                                     "Content-Type": "multipart/form-data"
                                 }
                             };

@@ -177,13 +177,15 @@ export default {
     };
   },
 
-  created() {
+  mounted() {
+    console.log(this.$route.name);
+    if(this.$route.name == "Dashboard"){
     const config = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     };
-    setInterval(async () => {
+    let showdata = setInterval(async () => {
       Axios.get(`${process.env.VUE_APP_APIURL}/api/dbrealtime/`, config).then(
         (response) => {
           this.dbrealtime = response.data.data[0];
@@ -201,7 +203,10 @@ export default {
           this.loading = false;
         }
       );
-    }, 3000);
+    }, 10000);
+    }else{
+      clearInterval(showdata)
+    }
   },
   methods: {
     formatDate(value) {
