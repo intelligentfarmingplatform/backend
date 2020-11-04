@@ -123,7 +123,6 @@ export default {
       setDrawer: "SET_DRAWER"
     }),
     logout(){
-      console.log("SDsdfds");
        window.localStorage.clear();
        this.$router.push("/login");
     }

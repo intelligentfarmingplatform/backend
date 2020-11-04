@@ -22,7 +22,7 @@
     data: () => ({
       expandOnHover: false,
     }),
-    created(){
+    mounted(){
       if(localStorage.getItem("token")) {
         this.$router.replace("/");
       }else{

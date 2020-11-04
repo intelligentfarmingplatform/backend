@@ -127,6 +127,10 @@ export default {
     };
   },
   
+  created(){
+    
+  },
+
   methods: {
     trigger(item) {
       const boxlogin = document.querySelector(".boxlogin");
@@ -142,14 +146,14 @@ export default {
     login() {
       this.isloaded = true;
       // console.log(process.env.VUE_APP_URL);
-      Axios.post(`http://localhost:3000/api/login/`, this.formlogin)
+      Axios.post(`${process.env.VUE_APP_APIURL}/api/login/`, this.formlogin)
         .then(response => {
           console.log(response);
           if (response.status == 200) {
             console.log(response.data.token);
             localStorage.setItem("token", response.data.token);
-             this.$router.replace("/");
-          } 
+            this.$router.replace("/");
+          }
         })
         .catch(err => {
           this.color = "#cd1205"
@@ -161,7 +165,7 @@ export default {
     res() {
       this.isloaded = true;
       console.log(this.formres);
-      Axios.post(`http://localhost:3000/api/login/res`,this.formres
+      Axios.post(`${process.env.VUE_APP_APIURL}/api/login/res`,this.formres
       )
         .then(response => {
           if (response.status == 200) {
@@ -170,7 +174,7 @@ export default {
             this.color = "#4CAF50"
             this.message = response.data.message;
             localStorage.setItem("token", response.data.token);
-            this.$router.replace("/");
+            // this.$router.replace("/");
           }
         })
         .catch(err => {

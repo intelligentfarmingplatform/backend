@@ -13,44 +13,15 @@
   >
 
           <v-card-title>
-                        <v-col></v-col>
-            <v-spacer></v-spacer>
-
               <v-row>
                 <v-col
                   cols="12"
-                  md="4"
+                  md="6"
                 >
                   <v-text-field
                     label="Company (disabled)"
-                    disabled
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-          <v-text-field
-            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min]"
-            :type="show1 ? 'text' : 'password'"
-            name="input-10-2"
-            label="Not visible"
-            hint="At least 8 characters"
-            value="wqfasds"
-            class="input-group--focused"
-            @click:append="show1 = !show1"
-          ></v-text-field>
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Email Address"
-                    class="purple-input"
+                    :readonly='!this.update'
+                    value="wqfasds"
                   />
                 </v-col>
 
@@ -58,26 +29,29 @@
                   cols="12"
                   md="6"
                 >
-                  <v-text-field
-                    label="First Name"
-                    class="purple-input"
-                  />
+                <v-text-field
+                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                  :rules="[rules.required, rules.min]"
+                  :type="show1 ? 'text' : 'password'"
+                  name="input-10-2"
+                  label="Not visible"
+                  hint="At least 8 characters"
+                  value="wqfasds"
+                  class="input-group--focused"
+                  @click:append="show1 = !show1"
+                  :readonly='!this.update'
+                ></v-text-field>
                 </v-col>
-
                 <v-col
                   cols="12"
-                  md="6"
                 >
-                  <v-text-field
-                    label="Last Name"
-                    class="purple-input"
-                  />
+                  <h4>ข้อมูลที่อยุ่</h4>
                 </v-col>
-
                 <v-col cols="12">
                   <v-text-field
                     label="Address"
                     class="purple-input"
+                    :readonly='!this.update'
                   />
                 </v-col>
 
@@ -88,6 +62,7 @@
                   <v-text-field
                     label="City"
                     class="purple-input"
+                    :readonly='!this.update'
                   />
                 </v-col>
 
@@ -98,6 +73,7 @@
                   <v-text-field
                     label="Country"
                     class="purple-input"
+                    :readonly='!this.update'
                   />
                 </v-col>
 
@@ -109,14 +85,28 @@
                     class="purple-input"
                     label="Postal Code"
                     type="number"
+                    :readonly='!this.update'
                   />
                 </v-col>
-
-                <v-col cols="12">
-                  <v-textarea
+                <v-col
+                  cols="12"
+                >
+                  <h4>ช่องทางการรับเงิน</h4>
+                </v-col>
+                <v-col cols="3">
+                  <v-text-field
                     class="purple-input"
-                    label="About Me"
-                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                    label="Postal Code"
+                    type="number"
+                    :readonly='!this.update'
+                  />
+                </v-col>
+                <v-col cols="9">
+                  <v-text-field
+                    class="purple-input"
+                    label="Postal Code"
+                    type="number"
+                    :readonly='!this.update'
                   />
                 </v-col>
 
@@ -125,10 +115,11 @@
                   class="text-right"
                 >
                   <v-btn
-                    color="info"
+                    :color="this.update === true ? 'info': 'rgb(255, 187, 41)'"
                     class="mr-0"
+                    @click="this.password = 'type'"
                   >
-                    Update Profile
+                    {{this.update === true ? 'Update UserProfile':'Edit UserProfile'}}
                   </v-btn>
                 </v-col>
               </v-row>
@@ -148,7 +139,7 @@
         >
           <v-card-text class="text-center">
             <h6 class="display-1 mb-1 grey--text">
-              CEO / CO-FOUNDER
+              CEO / CO-FOUNDER <v-icon>mdi-user</v-icon>
             </h6>
 
             <h4 class="display-2 font-weight-light mb-3 black--text">
@@ -161,6 +152,18 @@
 
           </v-card-text>
         </base-material-card>
+        <v-card>
+          sdasdsad
+        </v-card>
+        <v-card>
+          sdasdsad
+        </v-card>
+        <v-card>
+          sdasdsad
+        </v-card>
+        <v-card>
+          sdasdsad
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -171,6 +174,7 @@
     data() {
       return {
         show1:'',
+        update: null,
         password: 'Password',
         rules: {
           required: value => !!value || 'Required.',
@@ -179,5 +183,16 @@
         },
       }
     },
+    methods:{
+      update(){
+        this.profileupdate = true
+      }
+    }
   }
 </script>
+<style scoped>
+.container {
+    padding-left: 50px !important;
+    padding-right: 50px !important;
+}
+</style>

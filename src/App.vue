@@ -5,7 +5,7 @@
 <script>
   export default {
     name: 'App',
-    // created(){
+    // mounted(){
     //   if(localStorage.getItem("token")) {
     //     this.$router.replace("/");
     //   }else{

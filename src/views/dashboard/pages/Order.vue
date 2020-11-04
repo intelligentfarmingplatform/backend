@@ -232,7 +232,13 @@ export default {
     };
   },
   created() {
-    Axios.get("https://intelligentfarmingplatform.herokuapp.com/api/order").then((response) => {
+      const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    };
+    Axios.get(`${process.env.VUE_APP_APIURL}/api/order`,config)
+    .then((response) => {
       this.listorder = response.data.data;
       this.filter = this.listorder;
       this.filter.reverse();
@@ -257,8 +263,7 @@ export default {
       }
     },
     changestatus(item){
-      console.log(item);
-      Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/order/${item}`)
+      Axios.put(`${process.env.VUE_APP_APIURL}/api/order/${item}`)
       .then(response => {
         if (response.data.statusCode == 201) {
           this.$swal({

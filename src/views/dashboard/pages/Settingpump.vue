@@ -125,14 +125,14 @@ export default {
   },
 
   created() {
-    Axios.get("http://localhost:3000/api/settingpump/1").then(response => {
+    Axios.get(`${process.env.VUE_APP_APIURL}/api/settingpump/1`).then(response => {
       this.settingpump = response.data.data;
       console.log(response.data.data);
     });
   },
   methods: {
     onsubmit() {
-      Axios.put(`http://localhost:3000/api/settingpump/1`, this.settingpump)
+      Axios.put(`${process.env.VUE_APP_APIURL}/api/settingpump/1`, this.settingpump)
         .then(response => {
           if (response.data.statusCode == 201) {
             alert(response.data.message);

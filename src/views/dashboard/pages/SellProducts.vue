@@ -115,7 +115,7 @@
                                 <v-text-field
                                 label="ชื่อผู้ใช้งาน"
                                 prepend-icon="mdi-account"
-                                v-model="products.serial_number"
+                                v-model="products.name"
                                 disabled
                                 required
                                 ></v-text-field>
@@ -214,8 +214,7 @@
                         </v-card-text>
                     </v-card>
                 </v-dialog>
-          </v-card-title>
-          
+          </v-card-title>     
         </base-material-card>
       </v-col>
   </v-container>
@@ -240,6 +239,7 @@ export default {
                 productdetail:'',
                 producttab:'',
                 productimg:[],
+                name:''
             },
             slelctedFile: null,
             showproducts:[],
@@ -261,9 +261,15 @@ export default {
       },
     },
      created() {
-       Axios.get(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/`)
+        const config = {
+          headers: {
+            Authorization:`Bearer ${localStorage.getItem("token")}`
+          }
+        };
+       Axios.get(`${process.env.VUE_APP_APIURL}/api/sellproducts/`,config)
         .then(response => {
             this.showproducts = response.data.data ;
+            this.showproducts.name = response.data.name;
             this.loading = false;
         }).catch((err) => {
         console.log(err); 
@@ -289,10 +295,15 @@ export default {
           this.url = URL.createObjectURL(this.slelctedFile)
       },
       onsubmit(){
+        const config = {
+          headers: {
+            Authorization:`Bearer ${localStorage.getItem("token")}`
+          }
+        };
           if(this.$refs.form.validate()){
               if(this.editedIndex > -1){
                 console.log(this.products.id , this.products);
-                Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/${this.products.id}`, this.products)
+                Axios.put(`${process.env.VUE_APP_APIURL}/api/sellproducts/${this.products.id}`, this.products,config)
                 .then(response => {
                      if(response.data.statusCode == 201){
                          if(this.slelctedFile == null){
@@ -304,18 +315,19 @@ export default {
                             const formdata = new FormData();
                             formdata.append("files", this.slelctedFile,  this.slelctedFile.name);
                             const config = {
-                                headers: {
+                            headers: {
+                                    Authorization:`Bearer ${localStorage.getItem("token")}`,
                                     "Content-Type": "multipart/form-data"
                                 }
                             };
-                            Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/img/${id}`,formdata, config )
+                            Axios.put(`${process.env.VUE_APP_APIURL}/api/sellproducts/img/${id}`,config,formdata )
                             .then(response => {
                                if(response.data.statusCode == 201){
                                    console.log(response);
                                    const namefile = response.data.namefile;
                                    Object.assign(this.showproducts[this.editedIndex], this.products)
                                    this.close();
-                                   this.$forceUpdate();
+                                //    this.$forceUpdate();
                                 //    เพิ่มเติมให้มันเปลี่ยนรูป #ff0000
                                }
                             }).catch(err => {
@@ -333,7 +345,7 @@ export default {
                     }
                 })
             }else{
-                    Axios.post("https://intelligentfarmingplatform.herokuapp.com/api/sellproducts", this.products)
+                    Axios.post(`${process.env.VUE_APP_APIURL}/api/sellproducts`, this.products,config)
                     .then(response => {
                         if(response.data.statusCode == 201){
                         const id = response.data.data.id
@@ -345,7 +357,7 @@ export default {
                                 "Content-Type": "multipart/form-data"
                             }
                         };
-                        Axios.put(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/img/${id}`,formdata, config )
+                        Axios.put(`${process.env.VUE_APP_APIURL}/api/sellproducts/img/${id}`,formdata, config )
                             .then(response => {
                                 if(response.data.statusCode == 201){
                                     this.$swal({
@@ -374,6 +386,11 @@ export default {
            }  
       },
       del(item){
+        const config = {
+          headers: {
+            Authorization:`Bearer ${localStorage.getItem("token")}`
+          }
+        };
         this.$swal({
           title: 'ต้องการลบข้อมูล',
           text: "คุณต้องการลบข้อมูลหรือไม",
@@ -386,7 +403,7 @@ export default {
           })
           .then((result) => {
               if (result.value) {
-                Axios.delete(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/${item.id}`)
+                Axios.delete(`${process.env.VUE_APP_APIURL}/api/sellproducts/${item.id}`,config)
                     .then(response => {
                         if(response.data.statusCode == 204){
                             console.log(response);
@@ -397,7 +414,7 @@ export default {
                                 showConfirmButton: false,
                                 timer: 1000
                                 })
-                            Axios.delete(`https://intelligentfarmingplatform.herokuapp.com/api/sellproducts/img/${item.productimg}`)
+                            Axios.delete(`${process.env.VUE_APP_APIURL}/api/sellproducts/img/${item.productimg}`,config)
                                 .then(response => {
                                     if(response.data.statusCode == 204){
                                         this.$swal({

@@ -199,7 +199,7 @@ export default {
         // { text: "ลำดับ", value: "index", width: "6% ",sortable: false,  align: "center" },
         { text: "รห้ส", value: "id", width: "10% ", sortable: false, align: "center" },
         { text: "ชื่อผู้ใช้", value: "userName" },
-        { text: "รห้ส", value: "password" },
+        // { text: "รห้ส", value: "password" },
         { text: "อีเมล์", value: "email" },
         {
           text: "สถานะ",
@@ -232,7 +232,12 @@ export default {
     }
   },
   created() {
-    Axios.get("https://intelligentfarmingplatform.herokuapp.com/api/user")
+      const config = {
+      headers: {
+        Authorization:`Bearer ${localStorage.getItem("token")}`
+      }
+    };
+    Axios.get(`${process.env.VUE_APP_APIURL}/api/user`,config)
       .then(response => {
         this.listusers = response.data.data;
         this.loading = false;
@@ -242,7 +247,13 @@ export default {
       });
   },
   methods: {
+
     del(item) {
+      const config = {
+        headers: {
+          Authorization:`Bearer ${localStorage.getItem("token")}`
+        }
+      };
       this.$swal({
         title: "ต้องการลบข้อมูล",
         text: "คุณต้องการลบข้อมูลหรือไม",
@@ -255,8 +266,7 @@ export default {
       }).then(result => {
         if (result.value) {
           Axios.delete(
-            `https://intelligentfarmingplatform.herokuapp.com/api/user/${item.id}`
-          )
+            `${process.env.VUE_APP_APIURL}/api/user/${item.id}`,config)
             .then(response => {
               if (response.data.statusCode == 204) {
                 this.$swal({
@@ -285,12 +295,14 @@ export default {
       });
     },
     update(item) {
+      const config = {
+        headers: {
+          Authorization:`Bearer ${localStorage.getItem("token")}`
+        }
+      };
       Axios.get(
-        `https://intelligentfarmingplatform.herokuapp.com/api/user/${item.id}`
-      )
+        `${process.env.VUE_APP_APIURL}/api/user/${item.id}`,config)
         .then(response => {
-          console.log(response.data);
-
           const data = response.data.data;
           this.editedItem.username = data.userName;
           this.editedItem.password = data.password;
@@ -318,6 +330,11 @@ export default {
       this.dialog = true;
     },
     onsubmit() {
+      const config = {
+        headers: {
+          Authorization:`Bearer ${localStorage.getItem("token")}`
+        }
+      };
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
           this.$swal({
@@ -333,9 +350,7 @@ export default {
             if (result.value) {
               console.log(this.editedItem.id);
               Axios.put(
-                `https://intelligentfarmingplatform.herokuapp.com/api/user/${this.editedItem.id}`,
-                this.editedItem
-              )
+                `${process.env.VUE_APP_APIURL}/api/user/${this.editedItem.id}`,this.editedItem,config)
                 .then(response => {
                   if (response.data.statusCode == 201) {
                     console.log(response);
@@ -376,10 +391,7 @@ export default {
             cancelButtonText: "ยกเลิก"
           }).then(result => {
             if (result.value) {
-              Axios.post( 
-                "https://intelligentfarmingplatform.herokuapp.com/api/user/",
-                this.editedItem
-              )
+              Axios.post(  `${process.env.VUE_APP_APIURL}/api/user/`,this.editedItem,config)
                 .then(response => {
                   if (response.data.statusCode == 201) {
                     this.$swal({
