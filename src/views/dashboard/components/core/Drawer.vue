@@ -34,31 +34,76 @@
     <v-list
       expand
       nav
+      shaped
       class="list_menu"
     >
       <!-- Style cascading bug  -->
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <!-- <div /> -->
-
-      <template v-for="(item, i) in computedItems">
-        <base-item-group
-          v-if="item.children"
-          :key="`group-${i}`"
-          :item="item"
-          class="menu"
-        >
-        </base-item-group>
-
-        <base-item
-          v-else
-          :key="`item-${i}`"
-          :item="item"
-        />
-      </template>
-
-      <!-- Style cascading bug  -->
-      <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
-      <div />
+      <div class="system hader">
+        <h2 class="hader">
+          <v-icon>fas fa-tractor</v-icon>จัดการฟาร์ม
+        </h2>
+          <template v-for="(item, i) in computedItems[0].system">
+            <base-item-group
+              v-if="item.children"
+              :key="`group-${i}`"
+              :item="item"
+              class="menu"
+            >
+            </base-item-group>
+      
+            <base-item
+              v-else
+              :key="`item-${i}`"
+              :item="item"
+              :v-if="items.check"
+            />
+          </template>
+      </div>
+      <div class="sellproduct hader">
+        <h2 class="hader">
+          <v-icon>fas fa-cash-register</v-icon>จัดการขาย
+        </h2>
+          <template v-for="(item, i) in computedItems[0].sellproduct">
+            <base-item-group
+              v-if="item.children"
+              :key="`group-${i}`"
+              :item="item"
+              class="menu"
+            >
+            </base-item-group>
+      
+            <base-item
+              v-else
+              :key="`item-${i}`"
+              :item="item"
+              :v-if="items.check"
+            />
+          </template>
+      </div>
+      <div class="system hader">
+        <h2 class="hader">
+          <v-icon>far fa-id-badge</v-icon>ตั้งค่าส่วนตัว
+        </h2>
+          <template v-for="(item, i) in computedItems[0].setting">
+            <base-item-group
+              v-if="item.children"
+              :key="`group-${i}`"
+              :item="item"
+              class="menu"
+            >
+            </base-item-group>
+      
+            <base-item
+              v-else
+              :key="`item-${i}`"
+              :item="item"
+              :v-if="items.check"
+            />
+          </template>
+      </div>
+    <div/>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -81,40 +126,44 @@
 
     data: () => ({
       items: [
-        {
-          icon: 'mdi-view-dashboard',
-          title: 'Dashboard',
-          to: '/',
-        },
-        {
-          icon: 'mdi-view-dashboard',
-          title: 'Setting System',
-          to: '/pages/Settingsystem',
-        },
-        {
-          icon: 'mdi-account-group',
-          title: 'Setting Members',
-          to: '/pages/settingmenber',
-        },
-        {
-          icon: 'mdi-store',
-          title: 'Sell Products',
-          to: '/pages/sellproducts',
-        },
-        {
-          icon: 'mdi-format-font',
-          title: 'Order',
-          to: '/pages/order',
-        },
-        {
-          icon: 'mdi-account-edit',
-          title: 'User Profile',
-          to: '/pages/UserProfile',
-        },
-        {
-          icon: 'mdi-map-marker',
-          title: 'Logout',
-          to: '/tables/regular-tables',
+        { 
+          system:[
+            {
+              icon: 'mdi-view-dashboard',
+              title: 'Dashboard',
+              to: '/',
+            },
+            {
+              icon: 'mdi-view-dashboard',
+              title: 'Setting System',
+              to: '/pages/Settingsystem',
+            },
+          ],
+          sellproduct:[
+            {
+              icon: 'mdi-account-group',
+              title: 'Setting Members',
+              to: '/pages/settingmenber',
+            },
+            {
+              icon: 'mdi-store',
+              title: 'Sell Products',
+              to: '/pages/sellproducts',
+            },
+            {
+              icon: 'mdi-format-font',
+              title: 'Order',
+              to: '/pages/order',
+            },
+          ],
+          setting:[
+            {
+              icon: 'mdi-account-edit',
+              title: 'User Profile',
+              to: '/pages/UserProfile',
+            },
+          ]
+          
         },
       ],
     }),
@@ -166,7 +215,12 @@
     .menu
       margin-top: 10px
 
+    .hader
+      margin-bottom: 15px
+
     .v-list-item
+      width: 80%
+      justify-content: center
       &__icon--text,
       &__icon:first-child
         justify-content: center

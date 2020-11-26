@@ -10,6 +10,9 @@
 </template>
 
 <script>
+import Axios from 'axios';
+import { mapState, mapMutations } from "vuex";
+
   export default {
     name: 'DashboardIndex',
 
@@ -24,10 +27,27 @@
     }),
     mounted(){
       if(localStorage.getItem("token")) {
-        // this.$router.replace("/");
+          const config = {
+            headers: {
+              Authorization:`Bearer ${localStorage.getItem("token")}`
+            }
+          };
+          Axios.get(`${process.env.VUE_APP_APIURL}/api/user/userone`,config)
+          .then((response) => {
+            let datauser = response.data.data;
+            this.set_datauser(datauser);
+          })
       }else{
         this.$router.replace("/login");
       }
+    }, 
+    computed: {
+    ...mapState(["datauser"]),
+    },
+    methods:{
+      ...mapMutations({
+        set_datauser:"SET_DATAUSER"
+      })
     }
   }
 </script>

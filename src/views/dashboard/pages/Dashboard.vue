@@ -177,37 +177,37 @@ export default {
     };
   },
 
-  mounted() {
-    console.log(this.$route.name);
-    if(this.$route.name == "Dashboard"){
-    const config = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
-    let showdata = setInterval(async () => {
-      Axios.get(`${process.env.VUE_APP_APIURL}/api/dbrealtime/`, config).then(
-        (response) => {
-          this.dbrealtime = response.data.data[0];
-          this.dateConvert = MOMENT(this.dbrealtime.updatedAt).format(
-            "DD/MM/YYYY  HH:mm:ss"
-          );
-        }
-      );
-      Axios.get(`${process.env.VUE_APP_APIURL}/api/dblist/`, config).then(
-        (response) => {
-          this.dblist = response.data.data;
-          this.createdAtConvert = MOMENT(this.dblist.updatedAt).format(
-            "YYYY-MM-DD  HH:mm:ss"
-          );
-          this.loading = false;
-        }
-      );
-    }, 10000);
-    }else{
-      clearInterval(showdata)
-    }
-  },
+  // mounted() {
+  //   console.log(this.$route.name);
+  //   if(this.$route.name == "Dashboard"){
+  //   const config = {
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //     },
+  //   };
+  //   let showdata = setInterval(async () => {
+  //     Axios.get(`${process.env.VUE_APP_APIURL}/api/dbrealtime/`, config).then(
+  //       (response) => {
+  //         this.dbrealtime = response.data.data[0];
+  //         this.dateConvert = MOMENT(this.dbrealtime.updatedAt).format(
+  //           "DD/MM/YYYY  HH:mm:ss"
+  //         );
+  //       }
+  //     );
+  //     Axios.get(`${process.env.VUE_APP_APIURL}/api/dblist/`, config).then(
+  //       (response) => {
+  //         this.dblist = response.data.data;
+  //         this.createdAtConvert = MOMENT(this.dblist.updatedAt).format(
+  //           "YYYY-MM-DD  HH:mm:ss"
+  //         );
+  //         this.loading = false;
+  //       }
+  //     );
+  //   }, 10000);
+  //   }else{
+  //     clearInterval(showdata)
+  //   }
+  // },
   methods: {
     formatDate(value) {
        return  MOMENT(value).format(

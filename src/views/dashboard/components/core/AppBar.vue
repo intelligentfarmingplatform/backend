@@ -24,9 +24,18 @@
       v-text="$route.name"
     />
     <v-spacer />
+    <v-badge
+        color="error"
+        bordered
+        overlap
+        left
+        dot
+      >
+        <v-icon>fas fa-bell</v-icon>
+      </v-badge>
       <v-toolbar-title
       class="hidden-sm-and-down font-weight-light mx-4"
-      v-text="$route.name"
+      v-text="datauser.userName"
     />
     <v-menu nudge-bottom="45px" nudge-leftt="1050px"  origin="top right">
       <template v-slot:activator="{ attrs, on }">
@@ -60,13 +69,11 @@
 <script>
 // Components
 import { VHover, VListItem } from "vuetify/lib";
-
 // Utilities
 import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "DashboardCoreAppBar",
-
   components: {
     AppBarItem: {
       render(h) {
@@ -111,11 +118,12 @@ export default {
       "You're now friends with Andrew",
       "Another Notification",
       "Another one"
-    ]
+    ],
   }),
-
   computed: {
-    ...mapState(["drawer"])
+    ...mapState(["drawer"]),
+    ...mapState(["datauser"]),
+
   },
 
   methods: {

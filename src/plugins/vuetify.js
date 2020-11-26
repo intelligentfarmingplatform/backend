@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import i18n from '@/i18n'
 import '@/sass/overrides.sass'
+import '@fortawesome/fontawesome-free/css/all.css'
 
 Vue.use(Vuetify)
 
@@ -14,6 +15,9 @@ const theme = {
 }
 
 export default new Vuetify({
+  icons: {
+    iconfont: 'fa',
+  },
   lang: {
     t: (key, ...params) => i18n.t(key, params),
   },

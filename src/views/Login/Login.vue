@@ -93,7 +93,8 @@
     <v-snackbar
       v-model="snackbar"
       :color="color"
-      timeout= 1000
+      timeout= 2000
+      transition
     >
       {{ this.message }}
     </v-snackbar>
@@ -143,16 +144,16 @@ export default {
         boxregister.style.transform = "perspective(10000px) rotateY(0deg)";
       }
     },
-    login() {
+     login() {
       this.isloaded = true;
-      // console.log(process.env.VUE_APP_URL);
-      Axios.post(`${process.env.VUE_APP_APIURL}/api/login/`, this.formlogin)
-        .then(response => {
-          console.log(response);
+        Axios.post(`${process.env.VUE_APP_APIURL}/api/login/`, this.formlogin)
+        .then (response => {
           if (response.status == 200) {
-            console.log(response.data.token);
+            this.snackbar = true;
+            this.color = "#4CAF50"
+            this.message = "เข้าสู่ระบบสำเร็จ";
             localStorage.setItem("token", response.data.token);
-            this.$router.replace("/");
+            setTimeout(() => { this.$router.replace("/"); }, 2000);    
           }
         })
         .catch(err => {
@@ -164,21 +165,19 @@ export default {
     },
     res() {
       this.isloaded = true;
-      console.log(this.formres);
       Axios.post(`${process.env.VUE_APP_APIURL}/api/login/res`,this.formres
       )
         .then(response => {
           if (response.status == 200) {
-            // console.log(response.data.token);
             this.snackbar = true;
             this.color = "#4CAF50"
-            this.message = response.data.message;
+            this.message = "ทำการสมัครสมาชิกสำเร็จ";
             localStorage.setItem("token", response.data.token);
-            // this.$router.replace("/");
+            setTimeout(() => { this.$router.replace("/"); }, 2000);    
           }
         })
         .catch(err => {
-          console.log(err.response);
+          console.log(err.response);  
           this.color = "#cd1205"
           this.isloaded = false;
           this.message = err.response.data.message;

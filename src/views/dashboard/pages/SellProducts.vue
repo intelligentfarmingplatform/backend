@@ -221,6 +221,7 @@
 
 <script>
 import Axios from 'axios';
+import { mapState, mapMutations } from "vuex";
 
 export default {
 
@@ -231,7 +232,7 @@ export default {
             editedIndex: -1,
             dialog: false,
             products:{
-                nameseller: '',
+                nameseller:'',
                 productname:'',
                 productprice:'',
                 productnumber:'',
@@ -255,13 +256,13 @@ export default {
         }
     },
     computed: {
+    ...mapState(["datauser"]),
       formTitle () {
         return this.editedIndex === -1 ? 'เพิ่มสินค้า' : 'แก้ไขข้อมูลสินค้า'
       },
     },
     
      mounted() {
-         console.log("sdfsdfsdfds");
         const config = {
         headers: {
             Authorization:`Bearer ${localStorage.getItem("token")}`
@@ -269,8 +270,9 @@ export default {
         };
         Axios.get(`${process.env.VUE_APP_APIURL}/api/sellproducts/`,config)
         .then(response => {
+            console.log(response);
             this.showproducts = response.data.data;
-            this.products.nameseller = response.data.name;
+            this.products.nameseller = this.datauser.tbl_userdetail.name;
             this.loading = false;
         }).catch((err) => {
             console.log(err); 
@@ -284,12 +286,6 @@ export default {
             this.editedIndex = -1
             this.dialog = false
             this.$refs.form.reset()
-            // this.products.productname =''
-            // this.products.productpice =''
-            // this.products.this.products.productnumber =''
-            // this.products.productdetail = ''
-            // this.products.producttab =''
-            // this.products.productimg = null  
           
         })
       },
@@ -304,13 +300,12 @@ export default {
       },
       onsubmit(){
         const config = {
-          headers: {
-            Authorization:`Bearer ${localStorage.getItem("token")}`
-          }
+        headers: {
+                Authorization:`Bearer ${localStorage.getItem("token")}`,
+            }
         };
           if(this.$refs.form.validate()){
               if(this.editedIndex > -1){
-                console.log(this.products.id , this.products);
                 Axios.put(`${process.env.VUE_APP_APIURL}/api/sellproducts/${this.products.id}`, this.products,config)
                 .then(response => {
                      if(response.data.statusCode == 201){
@@ -318,26 +313,25 @@ export default {
                             Object.assign(this.showproducts[this.editedIndex], this.products)
                             this.products.reset;
                             this.close()
-                         }
+                            return;
+                         } 
                             const id = response.data.id;
                             const formdata = new FormData();
-                            // console.log(this.slelctedFile);
                             formdata.append("files", this.slelctedFile,  this.slelctedFile.name);
-                            const config = {
+                            const configimg = {
                             headers: {
-                                    // Authorization:`Bearer ${localStorage.getItem("token")}`,
                                     "Content-Type": "multipart/form-data"
                                 }
                             };
-                            Axios.put(`${process.env.VUE_APP_APIURL}/api/sellproducts/img/${id}`,config,formdata )
+                            console.log(configimg);
+                            Axios.put(`${process.env.VUE_APP_APIURL}/api/sellproducts/img/${id}`,formdata,configimg  )
                             .then(response => {
                                if(response.data.statusCode == 201){
                                    console.log(response);
                                    const namefile = response.data.namefile;
                                    Object.assign(this.showproducts[this.editedIndex], this.products)
                                    this.close();
-                                //    this.$forceUpdate();
-                                //    เพิ่มเติมให้มันเปลี่ยนรูป #ff0000
+                                   location.reload();
                                }
                             }).catch(err => {
                                 this.$swal({
@@ -352,7 +346,16 @@ export default {
                                 })
                             });
                     }
-                })
+                }).catch(err => {
+                    this.$swal({
+                    title: "ไม่สำเร็จ",
+                    text: err.response.data.message,
+                    icon: "error",
+                    showConfirmButton: true,
+                    confirmButtonText: 'ยืนยัน'
+                    })
+                    this.slelctedFile = null
+                });
             }else{
                     Axios.post(`${process.env.VUE_APP_APIURL}/api/sellproducts`, this.products,config)
                     .then(response => {
@@ -361,12 +364,12 @@ export default {
                         const dataresponse = response.data.data;
                         const formdata = new FormData();
                         formdata.append("files", this.slelctedFile,  this.slelctedFile.name);
-                        const config = {
-                            headers: {
+                        const configimg = {
+                        headers: {
                                 "Content-Type": "multipart/form-data"
                             }
                         };
-                        Axios.put(`${process.env.VUE_APP_APIURL}/api/sellproducts/img/${id}`,formdata, config )
+                        Axios.put(`${process.env.VUE_APP_APIURL}/api/sellproducts/img/${id}`,formdata, configimg )
                             .then(response => {
                                 if(response.data.statusCode == 201){
                                     this.$swal({
@@ -390,7 +393,17 @@ export default {
                                 this.slelctedFile = null
                             });
                         }
-                    }).catch(err => console.log(err));  
+                    }).catch(err => {
+                    this.$swal({
+                    title: "ไม่สำเร็จ",
+                    text: err.response.data.message,
+                    icon: "error",
+                    showConfirmButton: true,
+                        // timer: 1000
+                    confirmButtonText: 'ยืนยัน'
+                    })
+                    this.slelctedFile = null
+                }); 
              }
            }  
       },

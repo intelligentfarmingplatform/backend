@@ -237,7 +237,7 @@ export default {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
     };
-    Axios.get(`${process.env.VUE_APP_APIURL}/api/order`,config)
+    Axios.get(`https://intelligentfarmingplatform.herokuapp.com/api/customer/orders`,config)
     .then((response) => {
       this.listorder = response.data.data;
       this.filter = this.listorder;
