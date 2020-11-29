@@ -415,7 +415,7 @@ export default {
         };
         this.$swal({
           title: 'ต้องการลบข้อมูล',
-          text: "คุณต้องการลบข้อมูลหรือไม",
+          text: "คุณต้องการลบข้อมูลหรือไม่",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',

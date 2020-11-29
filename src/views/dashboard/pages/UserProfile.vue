@@ -7,94 +7,22 @@
           title="แก้ไขข้อมูลส่วนตัว"
           icon="mdi mdi-account-edit"
         >
-          <v-card-title>
-            <div class="haderpeng">
-              <h2>ข้อมูลของฉัน</h2>
-              <span>จัดการข้อมูลส่วนตัวคุณเพื่อความปลอดภัยของบัญชีผู้ใช้นี้</span>
-            </div>
-            <v-row class="editprofile">
-                <v-col md="3" cols="12 haderlist">
-                  <label for="">ชื่อผู้ช้งาน</label>
-                </v-col>
-                <v-col md="8" cols="12">
-                  <label for="">{{datauser.userName}}</label>
-                </v-col>
-                <v-col md="3" cols="12 haderlist">
-                  <label for="">ชื่อร้านค้า</label>
-                </v-col>
-                <v-col md="8" cols="12">
-                  <v-text-field
-                    v-model="datauser.tbl_userdetail.name"
-                   :clearable="update"
-                   :readonly="!update"
-                  ></v-text-field>
-                </v-col>
-                <v-col md="3" cols="12 haderlist">
-                  <label for="">อีเมล์</label>
-                </v-col>
-                <v-col md="8" cols="12">
-                  <label for="">{{datauser.tbl_userdetail.email}}</label>
-                </v-col>
-                <v-col md="3" cols="12 haderlist">
-                  <label for="">ที่อยู่</label>
-                </v-col>
-                <v-col md="8" cols="12">
-                  <v-textarea
-                    auto-grow
-                    rows="1"
-                    v-model="datauser.tbl_userdetail.address"
-                    :clearable="update"
-                    :readonly="!update"
-                  ></v-textarea>
-                </v-col>
-                <v-col md="3" cols="12 haderlist">
-                  <label for="">รายละเอียดร้าน</label>
-                </v-col>
-                <v-col md="8" cols="12">
-                  <v-textarea
-                    auto-grow
-                    rows="1"
-                    v-model="datauser.tbl_userdetail.address"
-                    :clearable="update"
-                    :readonly="!update"
-                  ></v-textarea>
-                </v-col>
-                <v-col md="3" cols="12 haderlist">
-                  <label for="">ชื่อผู้ช้งาน</label>
-                </v-col>
-                <v-col md="8" cols="12">
-                  <label for="">{{datauser.userName}}</label>
-                </v-col>
-                <v-col md="3" cols="12 haderlist" justify-end>
-                  <label for="">ชื่อผู้ช้งาน</label>
-                </v-col>
-                <v-col md="8" cols="12" justify-end>
-                  <label for="">{{datauser.userName}}</label>
-                </v-col>
-
-              <v-col cols="12" class="text-right">
-                <v-btn
-                  :color="this.update === true ? 'info' : 'rgb(255, 187, 41)'"
-                  class="mr-0"
-                  @click="up()"
-                >
-                  {{
-                    this.update === true
-                      ? "Update UserProfile"
-                      : "Edit UserProfile"
-                  }}
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-card-title>
+          <router-view/>
         </base-material-card>
       </v-col>
 
       <v-col cols="12" md="4">
-        <base-material-card
-          class="v-card-profile"
-          avatar="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
-        >
+        <v-card class="v-card-profile">
+          <div class="img">
+            <img
+            src="https://www.lnwshop.com/system/application/modules/lnwshopweb/_images/lnwshop_why/shop.png"
+            >
+            <v-btn
+              small
+            >
+              เปลี่ยนรูป
+            </v-btn>
+          </div>
           <v-card-text>
             <h4
               class="display-2 font-weight-light mb-3 black--text text-center"
@@ -102,11 +30,11 @@
               {{datauser.tbl_userdetail.name}}
             </h4>
             <p class="my-5">
-             เปิดร้านวันที่
+            รายละเอียดร้าน<br>
+            {{datauser.tbl_userdetail.detail}}
             </p>
-            <p>{{datauser.createdAt}}</p>
           </v-card-text>
-        </base-material-card>
+        </v-card>
         <div class="serial">
           <div class="addserial">
             <v-card class="my-5  pa-3 d-flex justify-center">
@@ -127,24 +55,10 @@
               </v-col>
             </v-card>
           </div>
-          <div class="showserial" v-for="serial in datauser.  s" :key="serial.id">
-            <v-card class="my-5  pa-3 d-flex justify-center">
-             <v-col
-              cols="8"
-              class="text-center"
-             >
-               {{serial.serial}}
-             </v-col>
-              <v-col
-                cols="2"
-              >
-                <v-icon>fas fa-eye</v-icon>
-              </v-col>
-              <v-col
-                cols="2"
-              >
-                <v-icon>fas fa-trash</v-icon>
-              </v-col>
+          <div class="showserial" v-for="serial in datauser.tbl_userserials" :key="serial.id" >
+            <v-card class="my-5  pa-3 ">
+               <label for="">ชื่อ: {{serial.name}}</label><br>
+               <label for="">รห้สเครื่อง: {{serial.serial}}</label>
             </v-card>
           </div>
         </div>
@@ -162,6 +76,7 @@ export default {
       show1: "",
       update: false,
       password: "Password",
+      search:"ifp_2020",
       rules: {
         required: (value) => !!value || "Required.",
         min: (v) => v.length >= 8 || "Min 8 characters",
@@ -188,43 +103,28 @@ export default {
   padding-left: 50px !important;
   padding-right: 50px !important;
 
-  .v-card__title {
-    padding: 10px auto;
+  .v-card-profile{
 
-    .haderpeng{
-      padding: 15px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.11);
-      width: 100%;
-    }
-
-    .editprofile{
-      margin: 20px auto;
-      font-size: 16px;
-
-      .col-12 {
-         text-align: left;
-      } 
-
-      .col-md-3{
-        text-align: right;
+    .img{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      button{
+        margin: auto !important;
+        width: 20%;
+        text-align: center;
       }
-      .haderlist{
-        color: #868686;
-        font-weight: bold;
-      }
-
-      .v-input{
-        height: 100%;
-      }
-
-      .v-text-field {
-        padding: 0;
-        margin: 0;
+      img{
+        object-fit: cover;
+        height: 100px;
+        width: 100px;
+        border-radius: 100%;
+        margin: 20px auto;
       }
     }
+  }
 
-  }
-  }
+}
 
 .addserial{
   .v-card{

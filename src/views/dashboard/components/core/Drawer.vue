@@ -34,76 +34,35 @@
     <v-list
       expand
       nav
-      shaped
       class="list_menu"
+      rounded
     >
-      <!-- Style cascading bug  -->
-      <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
-      <!-- <div /> -->
-      <div class="system hader">
-        <h2 class="hader">
-          <v-icon>fas fa-tractor</v-icon>จัดการฟาร์ม
-        </h2>
-          <template v-for="(item, i) in computedItems[0].system">
-            <base-item-group
-              v-if="item.children"
-              :key="`group-${i}`"
-              :item="item"
-              class="menu"
-            >
-            </base-item-group>
-      
+      <v-list-group
+        v-for="item in items"
+        :key="item.title"
+        :prepend-icon="item.icon"
+        no-action
+        color="#fff"
+      >
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title class="haderlist" v-text="item.title"></v-list-item-title>
+          </v-list-item-content>
+        </template>
+
+        <v-list-item
+          v-for="child in item.link"
+          :key="child.title"
+          class="listitem"
+        >
+          <v-list-item-content>
             <base-item
-              v-else
-              :key="`item-${i}`"
-              :item="item"
+              :item="child"
               :v-if="items.check"
             />
-          </template>
-      </div>
-      <div class="sellproduct hader">
-        <h2 class="hader">
-          <v-icon>fas fa-cash-register</v-icon>จัดการขาย
-        </h2>
-          <template v-for="(item, i) in computedItems[0].sellproduct">
-            <base-item-group
-              v-if="item.children"
-              :key="`group-${i}`"
-              :item="item"
-              class="menu"
-            >
-            </base-item-group>
-      
-            <base-item
-              v-else
-              :key="`item-${i}`"
-              :item="item"
-              :v-if="items.check"
-            />
-          </template>
-      </div>
-      <div class="system hader">
-        <h2 class="hader">
-          <v-icon>far fa-id-badge</v-icon>ตั้งค่าส่วนตัว
-        </h2>
-          <template v-for="(item, i) in computedItems[0].setting">
-            <base-item-group
-              v-if="item.children"
-              :key="`group-${i}`"
-              :item="item"
-              class="menu"
-            >
-            </base-item-group>
-      
-            <base-item
-              v-else
-              :key="`item-${i}`"
-              :item="item"
-              :v-if="items.check"
-            />
-          </template>
-      </div>
-    <div/>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -126,44 +85,73 @@
 
     data: () => ({
       items: [
-        { 
-          system:[
-            {
-              icon: 'mdi-view-dashboard',
-              title: 'Dashboard',
-              to: '/',
-            },
-            {
-              icon: 'mdi-view-dashboard',
-              title: 'Setting System',
-              to: '/pages/Settingsystem',
-            },
-          ],
-          sellproduct:[
+        {
+          title: 'จัดการระบบ',
+          icon: 'fas fa-sliders-h',
+          link: [
+              {
+                icon: 'mdi-view-dashboard',
+                title: 'Dashboard',
+                to: '/',
+              },
+              {
+                icon: 'mdi-view-dashboard',
+                title: 'Setting System',
+                to: '/pages/Settingsystem',
+              },
+            ],
+        },
+        {
+          title: 'จัดการขาย',
+          icon: 'fas fa-shopping-cart',
+          link: [
             {
               icon: 'mdi-account-group',
               title: 'Setting Members',
               to: '/pages/settingmenber',
             },
             {
+              icon: 'mdi-account-group',
+              title: 'ยอดการขาย',
+              to: '/pages/settingmenber',
+            },
+            {
               icon: 'mdi-store',
-              title: 'Sell Products',
+              title: 'ขายสินค้า',
               to: '/pages/sellproducts',
             },
             {
               icon: 'mdi-format-font',
-              title: 'Order',
+              title: 'ออเดอร์สินค้า',
               to: '/pages/order',
             },
-          ],
-          setting:[
+            ],
+        },
+        {
+          title: 'บัญชีของฉัน',
+          icon: 'fas fa-users-cog',
+          link: [
             {
               icon: 'mdi-account-edit',
-              title: 'User Profile',
-              to: '/pages/UserProfile',
+              title: 'ข้อมูลส่วนตัว',
+              to: '/pages/UserProfile/profile',
             },
-          ]
-          
+            {
+              icon: 'mdi-account-edit',
+              title: 'รห้สซีเรียล',
+              to: '/pages/UserProfile/serial',
+            },
+            {
+              icon: 'mdi-account-edit',
+              title: 'บัญชีธนาคาร',
+              to: '/pages/UserProfile/backaccount',
+            },
+            {
+              icon: 'mdi-account-edit',
+              title: 'ตั้งค่ารห้สผ่าน',
+              to: '/pages/UserProfile/password',
+            },
+            ],
         },
       ],
     }),
@@ -205,7 +193,29 @@
   @import '~vuetify/src/styles/tools/_rtl.sass'
 
   #core-navigation-drawer
+    .haderlist
+      font-weight: bold
+
+    a
+      height: 5px
+
+    .v-list-item__icon
+      margin: auto
+    
+    i
+      font-size: 16px
+
+    .v-list-item__content
+      padding: 0
+
+    .v-list-group--no-action > .v-list-group__items > .v-list-item
+      padding-left:20px
+
+    .v-list-item
+      width: 100% !important
+
     .logo_img
+      width: 100% !important
       justify-content: center
       margin-top: 10px
 

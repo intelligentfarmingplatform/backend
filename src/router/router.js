@@ -55,9 +55,30 @@ export default new Router({
           component: () => import('@/views/dashboard/pages/Settingsystem'),
         },
         {
-          name: 'User Profile',
           path: 'pages/UserProfile',
           component: () => import('@/views/dashboard/pages/UserProfile'),
+          children: [
+            {
+              name:'ข้อมูลส่วนตัว',
+              path:'/pages/UserProfile/profile',
+              component: () => import('@/views/dashboard/component/Profile')
+            },
+            {
+              name:'เปลี่ยนรห้สผ่าน',
+              path:'/pages/UserProfile/password',
+              component: () => import('@/views/dashboard/component/Password')
+            },
+            {
+              name:'บัญชีธนาคาร',
+              path:'/pages/UserProfile/backaccount',
+              component: () => import('@/views/dashboard/component/Bankaccount')
+            },
+            {
+              name:'รห้สซีเรียล',
+              path:'/pages/UserProfile/serial',
+              component: () => import('@/views/dashboard/component/Serial')
+            },
+          ],
         },
       ],
     },
