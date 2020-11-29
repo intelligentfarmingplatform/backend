@@ -39,7 +39,7 @@
           </div>
             <v-dialog
                 v-model="dialog"
-                max-width="350"
+                max-width="450"
             >
             <v-card>
                 <div class="add">
@@ -172,7 +172,8 @@ name:'Backaccount',
                         text: "ทำการเพิ่มข้อมูลสำเร็จ",
                         icon: "success"
                     });
-                    this.datauser.tbl_userserial.push(serial);
+                    this.datauser.tbl_userserial.push(this.serial);
+                    this.close()
                 }).catch(err => {
                     this.$swal({
                         title: "ไม่สำเร็จ",

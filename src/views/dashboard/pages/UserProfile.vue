@@ -15,10 +15,12 @@
         <v-card class="v-card-profile">
           <div class="img">
             <img
-            src="https://www.lnwshop.com/system/application/modules/lnwshopweb/_images/lnwshop_why/shop.png"
+            :src="`http://localhost:3000/profile/${datauser.tbl_userdetail.img}`"
             >
             <v-btn
               small
+              @click="onButtonClick()"
+              :loading="show1"
             >
               เปลี่ยนรูป
             </v-btn>
@@ -70,11 +72,12 @@
 <script>
 import Axois from 'axios'
 import { mapState, mapMutations } from "vuex";
+import Axios from 'axios';
 export default {
   data() {
     return {
-      show1: "",
-      update: false,
+      show1: false,
+      selectedFile:null,
       password: "Password",
       search:"ifp_2020",
       rules: {
@@ -88,13 +91,17 @@ export default {
   ...mapState(["datauser"]),
   },
   methods: {
-    up() {
-      if (!this.update) {
-        this.update = true;
-      } else if (this.update) {
-        this.update = false;
-      }
+      onButtonClick() {
+      this.show1 = true
+      window.addEventListener('focus', () => {
+        this.show = false
+      }, { once: true })
+
+      this.$refs.uploader.click()
     },
+    onFileChanged(e) {
+      this.selectedFile = e.target.files[0]
+    }
   },
 };
 </script>
