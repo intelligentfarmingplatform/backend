@@ -98,7 +98,6 @@ name:'Password',
             };
             Axios.put(`${process.env.VUE_APP_APIURL}/api/user/changepassword`,this.changepassword, config )
             .then(response => {
-                console.log(response);
                     this.$swal({
                     title: "สำเร็จ",
                     text: response.data.message,

@@ -214,7 +214,7 @@ name:'Backaccount',
                         title: "สำเร็จ",
                         text: "ทำการเพิ่มข้อมูลสำเร็จ",
                         icon: "success"
-                    });
+                    });F
                     this.datauser.tbl_useraccountbanks.push(this.accountbank);
                     this.close()
                 }).catch(err => {

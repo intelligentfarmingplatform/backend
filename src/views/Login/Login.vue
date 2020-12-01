@@ -177,7 +177,6 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err.response);  
           this.color = "#cd1205"
           this.isloaded = false;
           this.message = err.response.data.message;

@@ -276,8 +276,7 @@ export default {
           })
           this.dialog = false;
           Object.assign(this.filter[this.arryitem].status_order = "Delivery")
-          // location.reload();
-          console.log(this.arryitem);
+
         }else {
           this.$swal({
             title: "ไม่สำเร็จ",

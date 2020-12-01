@@ -113,7 +113,7 @@
             {
               icon: 'mdi-account-group',
               title: 'ยอดการขาย',
-              to: '/pages/settingmenber',
+              to: '/pages/dashboardsell',
             },
             {
               icon: 'mdi-store',

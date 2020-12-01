@@ -1,102 +1,127 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-row class="showdata">
-      <v-col cols="12" sm="5" lg="5">
-        <div class="datawater">
-          <card>
-            <h1>Water</h1>
-            <div class="data">
-              <img src="/water.png" alt="" />
-              <h1>{{ this.dbrealtime.water_level }}%</h1>
+      <v-col> 
+        <v-row>
+          <v-col cols="12" sm="5" lg="5">
+            <div class="datawater">
+              <card>
+                <h1>Water</h1>
+                <div class="data">
+                  <img src="/water.png" alt="" />
+                  <h1>{{ this.dbrealtime.water_level }}%</h1>
+                </div>
+              </card>
             </div>
-          </card>
-        </div>
+        </v-col>
+        <v-spacer />
+        <v-col cols="12" sm="7" lg="7">
+          <div class="datasensor">
+            <card>
+              <v-icon> mdi-water-percent </v-icon>
+              <h1>{{ this.dbrealtime.temp }}%</h1>
+              <p>Temp</p>
+            </card>
+
+            <card>
+              <v-icon> mdi-water-percent </v-icon>
+              <h1>{{ this.dbrealtime.humi }}%</h1>
+              <p>Humi</p>
+            </card>
+
+            <card>
+              <v-icon> mdi-water-percent </v-icon>
+              <h1>
+                {{ this.dbrealtime.light_int }}
+              </h1>
+              <p>light</p>
+            </card>
+
+            <card>
+              <v-icon> mdi-water-percent </v-icon>
+              <h1>
+                {{ this.dbrealtime.ec }}
+              </h1>
+              <p>ec</p>
+            </card>
+          </div>
       </v-col>
-      <v-spacer />
-      <v-col cols="12" sm="7" lg="7">
-        <div class="datasensor">
-          <card>
-            <v-icon> mdi-water-percent </v-icon>
-            <h1>{{ this.dbrealtime.temp }}%</h1>
-            <p>Temp</p>
-          </card>
+      </v-row> 
 
-          <card>
-            <v-icon> mdi-water-percent </v-icon>
-            <h1>{{ this.dbrealtime.humi }}%</h1>
-            <p>Humi</p>
-          </card>
+<!----------------------------end showsirsor----------------- -->
+        <v-col cols="12" class="statuspump">
+          <v-card color="white" >
+            <v-card-text>
+              <v-row>
+                <v-col cols="12" sm="6" lg="3">
+                  <base-material-stats-card
+                    color="info"
+                    icon="mdi-cup-water"
+                    title="Pump A"
+                    :value="dbrealtime.pump_a"
+                    sub-icon="mdi-clock"
+                    sub-value="aasds"
+                    :sub-text="dateConvert"
+                  />
+                </v-col>
 
-          <card>
-            <v-icon> mdi-water-percent </v-icon>
-            <h1>
-              {{ this.dbrealtime.light_int }}
-            </h1>
-            <p>light</p>
-          </card>
-
-          <card>
-            <v-icon> mdi-water-percent </v-icon>
-            <h1>
-              {{ this.dbrealtime.ec }}
-            </h1>
-            <p>ec</p>
-          </card>
-        </div>
+                <v-col cols="12" sm="6" lg="3">
+                  <base-material-stats-card
+                    color="info"
+                    icon="mdi-water"
+                    title="Pump B"
+                    :value="dbrealtime.pump_b"
+                    sub-icon="mdi-clock"
+                    :sub-text="dateConvert"
+                  />
+                </v-col>
+                <v-col cols="12" sm="6" lg="3">
+                  <base-material-stats-card
+                    color="info"
+                    icon="mdi-water-plus"
+                    title="Pump C"
+                    :value="dbrealtime.pump_c"
+                    sub-icon="mdi-clock"
+                    :sub-text="dateConvert"
+                  />
+                </v-col>
+                <v-col cols="12" sm="6" lg="3">
+                  <base-material-stats-card
+                    color="info"
+                    icon="mdi-bitbucket"
+                    title="Pump D"
+                    :value="dbrealtime.pump_d"
+                    sub-icon="mdi-clock"
+                    :sub-text="dateConvert"
+                  />
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-col>
+      <v-col
+        cols="2"
+        class="showserial"
+      >
+        <v-card>
+          <v-card-title class="align-center">
+            Serial
+          </v-card-title>
+          <v-list >
+            <v-list-item
+              v-for="item in datauser.tbl_userserials"
+              :key="item.id"
+              class="justify-center"
+            >
+              <v-btn class="ma-0" @click="filter(item)">
+                {{item.name}}
+              </v-btn>
+            </v-list-item>
+          </v-list>
+        </v-card>
       </v-col>
     </v-row>
-
-    <!-- --------------------------end showsirsor----------------- -->
-    <v-col cols="12" class="statuspump">
-      <v-card color="white" class="px-1 py-1">
-        <v-card-text>
-          <v-row>
-            <v-col cols="12" sm="6" lg="3">
-              <base-material-stats-card
-                color="info"
-                icon="mdi-cup-water"
-                title="Pump A"
-                :value="dbrealtime.pump_a"
-                sub-icon="mdi-clock"
-                sub-value="aasds"
-                :sub-text="dateConvert"
-              />
-            </v-col>
-
-            <v-col cols="12" sm="6" lg="3">
-              <base-material-stats-card
-                color="info"
-                icon="mdi-water"
-                title="Pump B"
-                :value="dbrealtime.pump_b"
-                sub-icon="mdi-clock"
-                :sub-text="dateConvert"
-              />
-            </v-col>
-            <v-col cols="12" sm="6" lg="3">
-              <base-material-stats-card
-                color="info"
-                icon="mdi-water-plus"
-                title="Pump C"
-                :value="dbrealtime.pump_c"
-                sub-icon="mdi-clock"
-                :sub-text="dateConvert"
-              />
-            </v-col>
-            <v-col cols="12" sm="6" lg="3">
-              <base-material-stats-card
-                color="info"
-                icon="mdi-bitbucket"
-                title="Pump D"
-                :value="dbrealtime.pump_d"
-                sub-icon="mdi-clock"
-                :sub-text="dateConvert"
-              />
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
-    </v-col>
 
     <!-- --------------------------end สถานะปั้ม ------------------------- -->
     <v-col cols="12">
@@ -151,7 +176,7 @@
 
 <script>
 import Axios from "axios";
-import moment, * as MOMENT from "moment";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "DashboardDashboard",
 
@@ -176,39 +201,17 @@ export default {
       updatedAtConvert:"",
     };
   },
+  computed: {
+  ...mapState(["datauser"]),
+  },
 
-  // mounted() {
-  //   console.log(this.$route.name);
-  //   if(this.$route.name == "Dashboard"){
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //     },
-  //   };
-  //   let showdata = setInterval(async () => {
-  //     Axios.get(`${process.env.VUE_APP_APIURL}/api/dbrealtime/`, config).then(
-  //       (response) => {
-  //         this.dbrealtime = response.data.data[0];
-  //         this.dateConvert = MOMENT(this.dbrealtime.updatedAt).format(
-  //           "DD/MM/YYYY  HH:mm:ss"
-  //         );
-  //       }
-  //     );
-  //     Axios.get(`${process.env.VUE_APP_APIURL}/api/dblist/`, config).then(
-  //       (response) => {
-  //         this.dblist = response.data.data;
-  //         this.createdAtConvert = MOMENT(this.dblist.updatedAt).format(
-  //           "YYYY-MM-DD  HH:mm:ss"
-  //         );
-  //         this.loading = false;
-  //       }
-  //     );
-  //   }, 10000);
-  //   }else{
-  //     clearInterval(showdata)
-  //   }
-  // },
+  mounted() {
+   
+  },
   methods: {
+    filter(item){
+      console.log(item);
+    },
     formatDate(value) {
        return  MOMENT(value).format(
             "DD/MM/YYYY  HH:mm:ss"
@@ -219,7 +222,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-card {
+card{
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
@@ -230,7 +233,6 @@ card {
 
   .datawater {
     height: 100%;
-
     card {
       text-align: center;
       display: flex;
@@ -245,8 +247,8 @@ card {
           width: 200px;
           height: 200px;
           opacity: 0.5;
-          animation: 60s img infinite;
         }
+
         h1 {
           font-size: 35px;
           position: absolute;
@@ -254,6 +256,7 @@ card {
           left: 50%;
           transform: translate(-50%, -50%);
         }
+
       }
     }
   }
@@ -286,10 +289,18 @@ card {
       }
     }
   }
+  .showserial{
+    padding: 25px 10px;
+    .v-card {
+      margin-top: 0px;
+      // margin: 0px;
+      height: 100%;
+    }
+  }
 }
 
 .statuspump {
-  padding: 0px 14px;
+  padding: 0px;
 }
 
 @media screen and (min-width: 2200px) {
@@ -302,12 +313,12 @@ card {
   }
 }
 
-@keyframes img {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  100% {
-    transform: rotateZ(360deg);
-  }
-}
+// @keyframes img {
+//   0% {
+//     transform: rotateZ(0deg);
+//   }
+//   100% {
+//     transform: rotateZ(360deg);
+//   }
+// }
 </style>

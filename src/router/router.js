@@ -35,6 +35,11 @@ export default new Router({
           component: () => import('@/views/dashboard/pages/Settingmember'),
         },
         {
+          name: 'ยอดรวมการขาย',
+          path: 'pages/dashboardsell',
+          component: () => import('@/views/dashboard/pages/Dashboardsell'),
+        },
+        {
           name: 'Sell Products',
           path: 'pages/sellproducts',
           component: () => import('@/views/dashboard/pages/SellProducts'),

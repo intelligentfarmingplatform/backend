@@ -26,7 +26,6 @@ import { mapState, mapMutations } from "vuex";
       expandOnHover: false,
     }),
     mounted(){
-      if(localStorage.getItem("token")) {
           const config = {
             headers: {
               Authorization:`Bearer ${localStorage.getItem("token")}`
@@ -37,9 +36,6 @@ import { mapState, mapMutations } from "vuex";
             let datauser = response.data.data;
             this.set_datauser(datauser);
           })
-      }else{
-        this.$router.replace("/login");
-      }
     }, 
     computed: {
     ...mapState(["datauser"]),
