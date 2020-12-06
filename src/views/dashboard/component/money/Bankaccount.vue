@@ -1,5 +1,5 @@
 <template>
-    <v-card-title>
+    <v-card-title class="box">
         <div class="haderpeng">
             <span>บัญชีธนาคารของฉัน</span><br>
             <span class="subtitle">จัดการบัญชีธนาคารเพื่อเป็นบัญชีในการถอนเงินจากระบบ</span>
@@ -22,23 +22,25 @@
                 </v-icon>
                 เพิ่มบัญชีธนาคาร
                 </v-btn>
+            </v-col> 
+            <v-row class="boxaccountbank">
+                <v-col cols="12" md="6" v-for="accountbank in datauser.tbl_useraccountbanks" :key="accountbank.id" >
+                    <v-card class="my-5  pa-3 showaccountbank ">
+                        <v-col cols="12" md="9">
+                            <div class="data">
+                                <label for="">ธนาคาร: {{accountbank.namebank}}</label><br>
+                                <label for="">ชื่อบัญชี(ภาษาไทย): {{accountbank.nameaccountTH}}</label><br>
+                                <label for="">ชื่อบัญชี(ภาษาอังกฤษ): {{accountbank.nameaccountEN}}</label><br>
+                                <label for="">เลขบัญชี: {{accountbank.numberaccount}}</label>
+                            </div>
+                        </v-col>
+                        <v-col cols="12" md="3" class="active">
+                            <v-icon @click="editItem(accountbank)" color="#FFBB29" >mdi-pencil</v-icon>
+                            <v-icon @click="del(accountbank)" color="#FF6347" >mdi-delete</v-icon>
+                        </v-col>
+                    </v-card>
             </v-col>
-            <div class="haderpeng" v-for="accountbank in datauser.tbl_useraccountbanks" :key="accountbank.id" >
-            <v-card class="my-5  pa-3 showaccountbank ">
-                <v-col cols="12" md="9">
-                    <div class="data">
-                        <label for="">ธนาคาร: {{accountbank.namebank}}</label><br>
-                        <label for="">ชื่อบัญชี(ภาษาไทย) {{accountbank.nameaccountTH}}</label><br>
-                        <label for="">ชื่อบัญชี(ภาษาอังกฤษ) {{accountbank.nameaccountEN}}</label><br>
-                        <label for="">เลขบัญชี: {{accountbank.numberaccount}}</label>
-                    </div>
-                </v-col>
-                <v-col cols="12" md="3" class="active">
-                    <v-icon @click="editItem(accountbank)" color="#FFBB29" >mdi-pencil</v-icon>
-                    <v-icon @click="del(accountbank)" color="#FF6347" >mdi-delete</v-icon>
-                </v-col>
-            </v-card>
-          </div>
+            </v-row>
             <v-dialog
                 v-model="dialog"
                 max-width="450"
@@ -268,19 +270,24 @@ name:'Backaccount',
 };
 </script>
 <style lang="scss" scoped>
-.haderpeng{
-      padding: 15px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.11);
-      width: 100%;
-
-        .subtitle{
-          font-size: 1rem;
-        }
-
+.box{
+    margin: 48px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+.boxaccountbank{
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+    
+    
         .showaccountbank{
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
+            margin: auto 10px;
 
             .active{
                 display: flex;
@@ -299,6 +306,16 @@ name:'Backaccount',
                 }
             }
         }
+}
+.haderpeng{
+      padding: 15px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+      width: 100%;
+
+        .subtitle{
+          font-size: 1rem;
+        }
+
     }
 
     .edit{

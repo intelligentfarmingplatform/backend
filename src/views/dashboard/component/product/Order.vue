@@ -3,8 +3,8 @@
     <v-col cols="12">
       <base-material-card
         color="info"
-        icon="mdi-card-account-details"
-        title="ระบบจัดการสมาชิก"
+        icon="fas fa-clipboard-list"
+        title="คำสั่งซื้อสินค้า"
       >
         <!-- <formuser /> -->
         <v-card-title>

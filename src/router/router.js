@@ -20,42 +20,7 @@ export default new Router({
         },
         // Pages
         {
-          name: 'Profile',
-          path: 'pages/user',
-          component: () => import('@/views/dashboard/pages/UserProfile'),
-        },
-        {
-          name: 'Notifications',
-          path: 'components/notifications',
-          component: () => import('@/views/dashboard/component/Notifications'),
-        },
-        {
-          name: 'Setting Members',
-          path: 'pages/settingmenber',
-          component: () => import('@/views/dashboard/pages/Settingmember'),
-        },
-        {
-          name: 'ยอดรวมการขาย',
-          path: 'pages/dashboardsell',
-          component: () => import('@/views/dashboard/pages/Dashboardsell'),
-        },
-        {
-          name: 'Sell Products',
-          path: 'pages/sellproducts',
-          component: () => import('@/views/dashboard/pages/SellProducts'),
-        },
-        {
-          name: 'Sell Products',
-          path: 'pages/order',
-          component: () => import('@/views/dashboard/pages/Order'),
-        },
-        {
-          name: 'Typography',
-          path: 'components/typography',
-          component: () => import('@/views/dashboard/component/Typography'),
-        },
-        {
-          name: 'Setting System',
+          name: 'ตั้งค่าระบบ',
           path: 'pages/Settingsystem',
           component: () => import('@/views/dashboard/pages/Settingsystem'),
         },
@@ -66,22 +31,68 @@ export default new Router({
             {
               name:'ข้อมูลส่วนตัว',
               path:'/pages/UserProfile/profile',
-              component: () => import('@/views/dashboard/component/Profile')
+              component: () => import('@/views/dashboard/component/userprofile/Profile')
             },
             {
               name:'เปลี่ยนรห้สผ่าน',
               path:'/pages/UserProfile/password',
-              component: () => import('@/views/dashboard/component/Password')
-            },
-            {
-              name:'บัญชีธนาคาร',
-              path:'/pages/UserProfile/backaccount',
-              component: () => import('@/views/dashboard/component/Bankaccount')
+              component: () => import('@/views/dashboard/component/userprofile/Password')
             },
             {
               name:'รห้สซีเรียล',
               path:'/pages/UserProfile/serial',
-              component: () => import('@/views/dashboard/component/Serial')
+              component: () => import('@/views/dashboard/component/userprofile/Serial')
+            },
+          ],
+        },
+
+        {
+          path: 'pages/money',
+          component: () => import('@/views/dashboard/pages/money'),
+          children: [
+            {
+              name: 'ยอดรวมการขาย',
+              path: '/pages/money/Dashboardsell',
+              component: () => import('@/views/dashboard/component/money/Dashboardsell'),
+            },
+            {
+              name:'บัญชีธนาคาร',
+              path:'/pages/money/bankaccount',
+              component: () => import('@/views/dashboard/component/money/Bankaccount')
+            },
+          ],
+        },
+        
+        {
+          path: 'pages/product',
+          component: () => import('@/views/dashboard/pages/product'),
+          children: [
+            {
+              name: 'สินค้าทั้งหมด',
+              path: '/pages/product/listproduct',
+              component: () => import('@/views/dashboard/component/product/Listproduct'),
+            },
+            {
+              name: 'Sell Products',
+              path: '/pages/product/addproduct',
+              component: () => import('@/views/dashboard/component/product/AddProducts'),
+            },
+            {
+              name: 'คำสั่งซื้อ',
+              path: '/pages/product/order',
+              component: () => import('@/views/dashboard/component/product/Order'),
+            },
+          ],
+        },
+
+        {
+          path: 'pages/admin',
+          component: () => import('@/views/dashboard/pages/admin'),
+          children: [
+            {
+              name: 'Setting Members',
+              path: '/pages/admin/settingmenber',
+              component: () => import('@/views/dashboard/pages/Settingmember'),
             },
           ],
         },

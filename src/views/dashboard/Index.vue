@@ -42,7 +42,7 @@ import { mapState, mapMutations } from "vuex";
     },
     methods:{
       ...mapMutations({
-        set_datauser:"SET_DATAUSER"
+        set_datauser:"SET_DATAUSER",
       })
     }
   }

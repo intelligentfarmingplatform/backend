@@ -51,6 +51,7 @@
         </template>
 
         <v-list-item
+          :v-if="items.lavel = 'admin' "
           v-for="child in item.link"
           :key="child.title"
           class="listitem"
@@ -87,7 +88,7 @@
       items: [
         {
           title: 'จัดการระบบ',
-          icon: 'fas fa-sliders-h',
+          icon: 'fas fa-cogs',
           link: [
               {
                 icon: 'mdi-view-dashboard',
@@ -95,7 +96,7 @@
                 to: '/',
               },
               {
-                icon: 'mdi-view-dashboard',
+                icon: 'fas fa-sliders-h',
                 title: 'Setting System',
                 to: '/pages/Settingsystem',
               },
@@ -106,58 +107,77 @@
           icon: 'fas fa-shopping-cart',
           link: [
             {
-              icon: 'mdi-account-group',
-              title: 'Setting Members',
-              to: '/pages/settingmenber',
+              icon: 'fas fa-store',
+              title: 'สินค้าของฉัน',
+              to: '/pages/product/listproduct',
             },
             {
-              icon: 'mdi-account-group',
-              title: 'ยอดการขาย',
-              to: '/pages/dashboardsell',
+              icon: 'fas fa-store',
+              title: 'เพิ่มสินค้าใหม่',
+              to: '/pages/product/addproduct',
             },
             {
-              icon: 'mdi-store',
-              title: 'ขายสินค้า',
-              to: '/pages/sellproducts',
+              icon: 'fas fa-clipboard-list',
+              title: 'คำสั่งซื้อสินค้า',
+              to: '/pages/product/order',
             },
-            {
-              icon: 'mdi-format-font',
-              title: 'ออเดอร์สินค้า',
-              to: '/pages/order',
-            },
+            ],
+        },
+        {
+          title: 'การเงิน',
+          icon: 'fas fa-shopping-cart',
+          link: [
+              {
+                icon: 'fas fa-hand-holding-usd',
+                title: 'ยอดการขาย',
+                to: '/pages/money/Dashboardsell',
+              },
+              {
+              icon: 'fas fa-money-check',
+              title: 'บัญชีธนาคาร',
+              to: '/pages/money/bankaccount',
+              },
             ],
         },
         {
           title: 'บัญชีของฉัน',
           icon: 'fas fa-users-cog',
+          lavel: 'number',
           link: [
             {
-              icon: 'mdi-account-edit',
+              icon: 'fas fa-user-edit',
               title: 'ข้อมูลส่วนตัว',
               to: '/pages/UserProfile/profile',
             },
             {
-              icon: 'mdi-account-edit',
+              icon: 'fas fa-key',
               title: 'รห้สซีเรียล',
               to: '/pages/UserProfile/serial',
             },
             {
-              icon: 'mdi-account-edit',
-              title: 'บัญชีธนาคาร',
-              to: '/pages/UserProfile/backaccount',
-            },
-            {
-              icon: 'mdi-account-edit',
+              icon: 'fas fa-user-lock',
               title: 'ตั้งค่ารห้สผ่าน',
               to: '/pages/UserProfile/password',
             },
             ],
         },
+        // {
+        //   title: 'บริหารจัดการ',
+        //   icon: 'fas fa-users-cog',
+        //   lavel: 'admin',
+        //   link: [
+        //     {
+        //       icon: 'mdi-account-group',
+        //       title: 'ตั้งค่าผู้ใช้งาน',
+        //       to: '/pages/admin/settingmenber',
+        //     },
+        //     ],
+        // },
       ],
     }),
 
     computed: {
-      ...mapState(),
+      ...mapState(["datauser"]),
       drawer: {
         get () {
           return this.$store.state.drawer

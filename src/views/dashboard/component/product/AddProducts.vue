@@ -10,6 +10,9 @@
           
         >
           <v-card-title>
+            <v-col cols="12">
+                สินค้าทั้งหมด
+            </v-col>
               <v-col
               cols="12"
               md="3"
@@ -224,8 +227,7 @@ import Axios from 'axios';
 import { mapState, mapMutations } from "vuex";
 
 export default {
-
-    name:"sellproducts",
+    name:"Addproducts",
     data() {
         return {
             loading:'',

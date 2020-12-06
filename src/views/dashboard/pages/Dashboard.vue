@@ -5,45 +5,45 @@
         <v-row>
           <v-col cols="12" sm="5" lg="5">
             <div class="datawater">
-              <card>
+              <v-card>
                 <h1>Water</h1>
                 <div class="data">
                   <img src="/water.png" alt="" />
                   <h1>{{ this.dbrealtime.water_level }}%</h1>
                 </div>
-              </card>
+              </v-card>
             </div>
         </v-col>
         <v-spacer />
         <v-col cols="12" sm="7" lg="7">
           <div class="datasensor">
-            <card>
+            <v-card>
               <v-icon> mdi-water-percent </v-icon>
               <h1>{{ this.dbrealtime.temp }}%</h1>
               <p>Temp</p>
-            </card>
+            </v-card>
 
-            <card>
+            <v-card>
               <v-icon> mdi-water-percent </v-icon>
               <h1>{{ this.dbrealtime.humi }}%</h1>
               <p>Humi</p>
-            </card>
+            </v-card>
 
-            <card>
+            <v-card>
               <v-icon> mdi-water-percent </v-icon>
               <h1>
                 {{ this.dbrealtime.light_int }}
               </h1>
               <p>light</p>
-            </card>
+            </v-card>
 
-            <card>
+            <v-card>
               <v-icon> mdi-water-percent </v-icon>
               <h1>
                 {{ this.dbrealtime.ec }}
               </h1>
               <p>ec</p>
-            </card>
+            </v-card>
           </div>
       </v-col>
       </v-row> 
@@ -101,7 +101,8 @@
         </v-col>
       </v-col>
       <v-col
-        cols="2"
+        cols="12"
+        md="2"
         class="showserial"
       >
         <v-card>
@@ -110,7 +111,7 @@
           </v-card-title>
           <v-list >
             <v-list-item
-              v-for="item in datauser.tbl_userserials"
+              v-for="item in this.getdatauser.tbl_userserials"
               :key="item.id"
               class="justify-center"
             >
@@ -176,7 +177,7 @@
 
 <script>
 import Axios from "axios";
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapGetters } from "vuex";
 export default {
   name: "DashboardDashboard",
 
@@ -202,16 +203,22 @@ export default {
     };
   },
   computed: {
-  ...mapState(["datauser"]),
+    ...mapGetters(["getdatauser"])
   },
 
-  mounted() {
-   
-  },
+    mounted(){
+        
+    }, 
   methods: {
-    filter(item){
-      console.log(item);
+    ...mapMutations({
+        set_datasensor:"SET_DATASENSOR",
+    }),
+
+    filter(){
+      
+      // this.serial = item
     },
+
     formatDate(value) {
        return  MOMENT(value).format(
             "DD/MM/YYYY  HH:mm:ss"
@@ -222,7 +229,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-card{
+.v-card{
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
@@ -233,7 +240,9 @@ card{
 
   .datawater {
     height: 100%;
-    card {
+
+    .v-card {
+      margin: 0px;
       text-align: center;
       display: flex;
       justify-content: center;
@@ -243,6 +252,7 @@ card{
 
       .data {
         position: relative;
+
         img {
           width: 200px;
           height: 200px;
@@ -266,9 +276,9 @@ card{
     margin: -10px;
     height: 100%;
 
-    card {
+    .v-card {
       width: 50%;
-      flex: 1 1 250px;
+      flex: 1 1 200px;
       margin: 10px;
       display: flex;
       flex-direction: column;
@@ -309,6 +319,18 @@ card{
 
     card {
       margin: 0px 10px !important;
+    }
+  }
+}
+
+@media screen and (max-width: 958px) {
+  .showdata {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 0px;
+    .showserial{
+      width: 100%;
+
     }
   }
 }
