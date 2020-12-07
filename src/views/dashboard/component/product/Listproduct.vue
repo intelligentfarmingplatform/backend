@@ -11,7 +11,8 @@
               grow
             >
               <v-tab v-for="item in items" :key="item">
-                {{ item }}
+                {{ item.namehad }}
+                ({{ item.count }})
               </v-tab>
             </v-tabs>
           </v-col>
@@ -56,6 +57,7 @@
                   </div>
                   <div class="product-actions">
                     <v-icon color="#FFBB29">mdi-pencil</v-icon>
+                    <v-icon color="#FF6347">mdi-delete</v-icon>
                   </div>
                 </v-card>
               </v-col>
@@ -73,7 +75,20 @@ export default {
   name: "Listproduct",
   data() {
     return {
-      items: ["ทั้งหมด", "หมด", "กำลังปลูก"],
+      items: [
+        {
+          namehad:"ทั้งหมด",
+          count:'1'
+        },
+        {
+          namehad:"หมด",
+          count:'2'
+        },
+        {
+          namehad:"กำลังปลูก",
+          count:'3'
+        }
+      ],
       showproducts: [],
     };
   },
@@ -85,10 +100,11 @@ export default {
     };
     Axios.get(`${process.env.VUE_APP_APIURL}/api/sellproducts/`, config)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         this.showproducts = response.data.data;
         this.products.nameseller = this.datauser.tbl_userdetail.name;
-        this.loading = false;
+        this.items[0].count = response.data.data
+        console.log();
       })
       .catch((err) => {
         console.log(err);
