@@ -36,7 +36,7 @@
       <!-- -----------------------end boxlogin-------------------------------- -->
       <div class="boxregister">
         <div class="login_wrap">
-          <img src="/engine2.png" alt="" />
+          <img src="/logo_ifp.png" alt="" />
           <h2>Sing Up</h2>
           <v-form @submit.prevent="res">
             <v-text-field
@@ -79,7 +79,7 @@
     </div>
     <div class="page-loader" v-if="isloaded">
       <div class="logo">
-        <img src="logo ifp.png" alt="">
+        <img src="/engine2.png" alt="">
       </div>
       <div class="boxloader">
         <div class="cube"></div>
@@ -328,7 +328,7 @@ $colors: #8CC271, #69BEEB, #F5AA39, #E9643B, #8CC271, #69BEEB,;
   }
   // -----------------------------------------------------
   .logo{
-    margin-bottom: 35px;
+    margin-bottom: 15px;
     
     img{
       animation: img 7.5s infinite;
