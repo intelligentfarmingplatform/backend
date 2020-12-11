@@ -17,6 +17,7 @@
             <img
             :src="`http://localhost:3000/profile/${datauser.tbl_userdetail.img}`"
             >
+            <input type="file" >
             <v-btn
               small
               @click="onButtonClick()"

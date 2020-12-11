@@ -42,7 +42,7 @@
                 <h1>
                   {{ this.dbrealtime.ec }}
                 </h1>
-                <p>ec</p>
+                <p>ppm</p>
               </v-card>
 
               <v-card>
@@ -50,7 +50,7 @@
                 <h1>
                   {{ this.dbrealtime.ph }}
                 </h1>
-                <p>ph</p>
+                <p>pH</p>
               </v-card>
             </div>
           </v-col>

@@ -93,15 +93,15 @@
                       @change="onsubmit()"
                       thumb-label="ticks"
                       class="align-center"
-                      :min="0"
-                      :max="10"
-                      :step="0.1"
+                      :min="1"
+                      :max="2000"
+                      :step="1"
                       hide-details
                     >
                       <template v-slot:append>
                         <v-text-field
                           v-model="settingpump.ec"
-                          suffix="ec"
+                          suffix="ppm"
                           class="mt-0 pt-0"
                           single-line
                           :min="0"
@@ -255,7 +255,7 @@ export default {
       },
     };
     Axios.post(
-      `http://localhost:3000/api/settingpump`,
+      `${process.env.VUE_APP_APIURL}/api/settingpump`,
       {"serial": "1"},
       config
     ).then((response) => {
@@ -271,7 +271,7 @@ export default {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
-      Axios.put(`http://localhost:3000/api/settingpump`, this.settingpump, config)
+      Axios.put(`${process.env.VUE_APP_APIURL}`, this.settingpump, config)
           if (response.data.statusCode == 201) {
             alert(response.data.message);
           }
