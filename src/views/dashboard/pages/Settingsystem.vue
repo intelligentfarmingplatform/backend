@@ -3,7 +3,7 @@
     <v-row>
       <v-col class="setting d-flex">
         <v-col>
-          <v-row class="profileserial">
+          <!-- <v-row class="profileserial">
             <v-card class="d-flex" width="100%">
               <div class="d-flex detail">
                 <div class="img">
@@ -20,7 +20,7 @@
                 </v-col>
               </div>
             </v-card>
-          </v-row>
+          </v-row> -->
           <v-row>
             <v-col cols="12" lg="9" class="center">
               <!-- --------------------------------------------setsensor---------------------------------- -->
@@ -28,7 +28,7 @@
                 <base-material-card
                   color="info"
                   icon="mdi-tune"
-                  title="Pump Control"
+                  title="Pump Setting"
                 >
                   <v-col cols="12">
                     อุณหภูมิ
@@ -39,10 +39,26 @@
                       thumb-label="ticks"
                       @change="onsubmit()"
                       class="align-center"
-                      :max="max"
-                      :min="min"
+                      :min="0"
+                      :max="100"
+                      :step="0.1"
                       hide-details
-                    />
+                    >
+                      <template v-slot:append>
+                        <v-text-field
+                          v-model="settingpump.temp"
+                          suffix="°C"
+                          class="mt-0 pt-0"
+                          single-line
+                          :min="0"
+                          :max="100"
+                          :step="0.1"
+                          type="number"
+                          style="width: 75px"
+                        ></v-text-field>
+                      </template>
+                    </v-slider>
+
                     ความชื้น
                     <v-slider
                       v-model="settingpump.humi"
@@ -51,10 +67,24 @@
                       thumb-label="ticks"
                       @change="onsubmit()"
                       class="align-center"
-                      :max="max"
-                      :min="min"
+                      :min="0"
+                      :max="100"
                       hide-details
-                    />
+                    >
+                      <template v-slot:append>
+                        <v-text-field
+                          v-model="settingpump.humi"
+                          suffix="%"
+                          class="mt-0 pt-0"
+                          single-line
+                          :min="0"
+                          :max="100"
+                          type="number"
+                          style="width: 75px"
+                        ></v-text-field>
+                      </template>
+                    </v-slider>
+
                     ความเข้มของปุ๋ย
                     <v-slider
                       v-model="settingpump.ec"
@@ -63,10 +93,27 @@
                       @change="onsubmit()"
                       thumb-label="ticks"
                       class="align-center"
-                      :max="max"
-                      :min="min"
+                      :min="0"
+                      :max="10"
+                      :step="0.1"
                       hide-details
-                    />
+                    >
+                      <template v-slot:append>
+                        <v-text-field
+                          v-model="settingpump.ec"
+                          suffix="ec"
+                          class="mt-0 pt-0"
+                          single-line
+                          :min="0"
+                          :max="10"
+                          :step="0.1"
+                          type="number"
+                          style="width: 75px"
+                        ></v-text-field>
+                        <!-- disabled -->
+                      </template>
+                    </v-slider>
+
                     ระดับน้ำ
                     <v-slider
                       v-model="settingpump.water_level"
@@ -75,10 +122,26 @@
                       prepend-icon="mdi-water-polo"
                       thumb-label="ticks"
                       class="align-center"
-                      :max="max"
-                      :min="min"
+                      :min="0"
+                      :max="100"
+                      :step="0.1"
                       hide-details
-                    />
+                    >
+                      <template v-slot:append>
+                        <v-text-field
+                          v-model="settingpump.water_level"
+                          suffix="cm"
+                          class="mt-0 pt-0"
+                          single-line
+                          :min="0"
+                          :max="100"
+                          :step="0.1"
+                          type="number"
+                          style="width: 75px"
+                          hide-details
+                        ></v-text-field>
+                      </template>
+                    </v-slider>
                   </v-col>
                 </base-material-card>
               </div>
@@ -149,14 +212,22 @@
           </v-row>
         </v-col>
         <v-col cols="12" md="2" class="showserial">
-          <v-card>
-            <v-card-title class="align-center"> Serial </v-card-title>
+          <base-material-card color="info" icon="mdi-tune" title="Serial">
             <v-list>
-              <v-list-item class="justify-center">
-                <v-btn class="ma-0" @click="filter(item)"> xcvxcv </v-btn>
+              <v-list-item
+                v-for="item in this.getdatauser.tbl_userserials"
+                :key="item"
+                class="justify-center"
+              >
+                <v-btn class="ma-0" 
+                v-model="ss"
+                @click="id_serial(item)"
+                >
+                  {{ item.name }}
+                </v-btn>
               </v-list-item>
             </v-list>
-          </v-card>
+          </base-material-card>
         </v-col>
       </v-col>
     </v-row>
@@ -164,30 +235,67 @@
 </template>
 <script>
 import Axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   name: "settingpump",
   data() {
     return {
       type: null,
       elapse: null,
-      settingpump: "",
+      settingpump: {},
     };
   },
+  computed: {
+    ...mapGetters(["getdatauser"]),
+  },
   created() {
-    Axios.get("http://localhost:3000/api/settingpump/1").then((response) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    Axios.post(
+      `http://localhost:3000/api/settingpump`,
+      {"serial": "1"},
+      config
+    ).then((response) => {
       this.settingpump = response.data.data;
       console.log("dataLoad", this.settingpump);
     });
   },
   methods: {
     onsubmit() {
-      Axios.put(`http://localhost:3000/api/settingpump/1`, this.settingpump)
-        .then((response) => {
+ try {
+     const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+      Axios.put(`http://localhost:3000/api/settingpump`, this.settingpump, config)
           if (response.data.statusCode == 201) {
             alert(response.data.message);
           }
-        })
-        .catch((err) => console.log(err));
+       
+ }catch (err){
+   console.log(err)
+ }
+    },
+    id_serial(item) {
+      let serial = item.id;
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+      Axios.post(
+        `${process.env.VUE_APP_APIURL}/api/settingpump`,
+        { serial: serial },
+        config
+      ).then((response) => {
+        this.settingpump = response.data.data;
+        console.log("dataLoad", this.settingpump);
+      });
     },
   },
 };

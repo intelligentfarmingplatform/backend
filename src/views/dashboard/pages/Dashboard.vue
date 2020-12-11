@@ -1,7 +1,7 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-row class="showdata">
-      <v-col> 
+      <v-col>
         <v-row>
           <v-col cols="12" sm="5" lg="5">
             <div class="datawater">
@@ -13,44 +13,52 @@
                 </div>
               </v-card>
             </div>
-        </v-col>
-        <v-spacer />
-        <v-col cols="12" sm="7" lg="7">
-          <div class="datasensor">
-            <v-card>
-              <v-icon> mdi-water-percent </v-icon>
-              <h1>{{ this.dbrealtime.temp }}%</h1>
-              <p>Temp</p>
-            </v-card>
+          </v-col>
+          <v-spacer />
+          <v-col cols="12" sm="7" lg="7">
+            <div class="datasensor">
+              <v-card>
+                <v-icon> mdi-water-percent </v-icon>
+                <h1>{{ this.dbrealtime.temp }}%</h1>
+                <p>Temp</p>
+              </v-card>
 
-            <v-card>
-              <v-icon> mdi-water-percent </v-icon>
-              <h1>{{ this.dbrealtime.humi }}%</h1>
-              <p>Humi</p>
-            </v-card>
+              <v-card>
+                <v-icon> mdi-water-percent </v-icon>
+                <h1>{{ this.dbrealtime.humi }}%</h1>
+                <p>Humi</p>
+              </v-card>
 
-            <v-card>
-              <v-icon> mdi-water-percent </v-icon>
-              <h1>
-                {{ this.dbrealtime.light_int }}
-              </h1>
-              <p>light</p>
-            </v-card>
+              <v-card>
+                <v-icon> mdi-water-percent </v-icon>
+                <h1>
+                  {{ this.dbrealtime.light_int }}
+                </h1>
+                <p>light</p>
+              </v-card>
 
-            <v-card>
-              <v-icon> mdi-water-percent </v-icon>
-              <h1>
-                {{ this.dbrealtime.ec }}
-              </h1>
-              <p>ec</p>
-            </v-card>
-          </div>
-      </v-col>
-      </v-row> 
+              <v-card>
+                <v-icon> mdi-water-percent </v-icon>
+                <h1>
+                  {{ this.dbrealtime.ec }}
+                </h1>
+                <p>ec</p>
+              </v-card>
 
-<!----------------------------end showsirsor----------------- -->
+              <v-card>
+                <v-icon> mdi-water-percent </v-icon>
+                <h1>
+                  {{ this.dbrealtime.ph }}
+                </h1>
+                <p>ph</p>
+              </v-card>
+            </div>
+          </v-col>
+        </v-row>
+
+        <!----------------------------end showsirsor----------------- -->
         <v-col cols="12" class="statuspump">
-          <v-card color="white" >
+          <v-card color="white">
             <v-card-text>
               <v-row>
                 <v-col cols="12" sm="6" lg="3">
@@ -58,7 +66,7 @@
                     color="info"
                     icon="mdi-cup-water"
                     title="Pump A"
-                    :value="dbrealtime.pump_a"
+                    :value="dbrealtime.pump_a === 0 ? 'OFF' : 'ON'"
                     sub-icon="mdi-clock"
                     sub-value="aasds"
                     :sub-text="dateConvert"
@@ -70,7 +78,7 @@
                     color="info"
                     icon="mdi-water"
                     title="Pump B"
-                    :value="dbrealtime.pump_b"
+                    :value="dbrealtime.pump_b === 0 ? 'OFF' : 'ON'"
                     sub-icon="mdi-clock"
                     :sub-text="dateConvert"
                   />
@@ -80,7 +88,7 @@
                     color="info"
                     icon="mdi-water-plus"
                     title="Pump C"
-                    :value="dbrealtime.pump_c"
+                    :value="dbrealtime.pump_c === 0 ? 'OFF' : 'ON'"
                     sub-icon="mdi-clock"
                     :sub-text="dateConvert"
                   />
@@ -90,7 +98,7 @@
                     color="info"
                     icon="mdi-bitbucket"
                     title="Pump D"
-                    :value="dbrealtime.pump_d"
+                    :value="dbrealtime.pump_d === 0 ? 'OFF' : 'ON'"
                     sub-icon="mdi-clock"
                     :sub-text="dateConvert"
                   />
@@ -100,27 +108,21 @@
           </v-card>
         </v-col>
       </v-col>
-      <v-col
-        cols="12"
-        md="2"
-        class="showserial"
-      >
-        <v-card>
-          <v-card-title class="align-center">
-            Serial
-          </v-card-title>
-          <v-list >
+
+      <v-col cols="12" md="2" class="showserial">
+        <base-material-card color="info" icon="mdi-tune" title="Serial">
+          <v-list>
             <v-list-item
               v-for="item in this.getdatauser.tbl_userserials"
-              :key="item.id"
+              :key="item"
               class="justify-center"
             >
-              <v-btn class="ma-0" @click="filter(item)">
-                {{item.name}}
+              <v-btn class="ma-0" @click="id_serial(item)">
+                {{ item.name }}
               </v-btn>
             </v-list-item>
           </v-list>
-        </v-card>
+        </base-material-card>
       </v-col>
     </v-row>
 
@@ -178,58 +180,101 @@
 <script>
 import Axios from "axios";
 import { mapState, mapMutations, mapGetters } from "vuex";
+import moment, * as MOMENT from "moment";
 export default {
   name: "DashboardDashboard",
+  created() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
 
+    Axios.post(
+      `${process.env.VUE_APP_APIURL}/api/dbrealtime`,
+      { serial: "1" },
+      config
+    ).then((response) => {
+      this.dbrealtime = response.data.data;
+      this.dateConvert = MOMENT(this.dbrealtime.updatedAt).format(
+        "DD/MM/YYYY  HH:mm:ss"
+      );
+      console.log("dataLoad", this.dbrealtime);
+    });
+
+    Axios.post(
+      `${process.env.VUE_APP_APIURL}/api/dblist`,
+      { serial: "1" },
+      config
+    ).then((response) => {
+      this.dblist = response.data.data;
+      this.createdAtConvert = MOMENT(this.dblist.updatedAt).format(
+        "YYYY-MM-DD  HH:mm:ss"
+      );
+      this.loading = false;
+      console.log("dataLoad", this.dblist);
+    });
+  },
   data() {
     return {
       headers: [
-        { text: "ID", value: "id", sortable: false, align: "center" },
+        { text: "ID", value: "id", align: "center" },
         { text: "อุณหภูมิ", value: "temp" },
         { text: "ความชื้น", value: "humi" },
         { text: "ความเข้มของแสง", value: "light_int" },
         { text: "ความเข้มของปุ๋ย", value: "ec" },
-        { text: "ถังปุ๋ย", value: "pump_a", sortable: false },
-        { text: "ถังน้ำ", value: "pump_b", sortable: false },
-        { text: "ละอองน้ำ", value: "pump_c", sortable: false },
-        { text: "...", value: "pump_d", sortable: false },
+        { text: "ph", value: "ph" },
+        { text: "Pump A", value: "pump_a" },
+        { text: "Pump B", value: "pump_b" },
+        { text: "Pump C", value: "pump_c" },
+        { text: "Pump D", value: "pump_d" },
         { text: "วันที่/เวลา", value: "createdAt" },
+        { text: "Serial", value: "serial_id" },
       ],
       dbrealtime: [],
       dblist: [],
       loading: true,
       dateConvert: "",
-      updatedAtConvert:"",
+      updatedAtConvert: "",
     };
   },
   computed: {
-    ...mapGetters(["getdatauser"])
+    ...mapGetters(["getdatauser"]),
   },
 
-    mounted(){
-        
-    }, 
+  mounted() {},
   methods: {
-    ...mapMutations({
-        set_datasensor:"SET_DATASENSOR",
-    }),
+    // ...mapMutations({
+    //     set_datasensor:"SET_DATASENSOR",
+    // }),
 
-    filter(){
-      
-      // this.serial = item
+    id_serial(item) {
+      let serial = item.id;
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+      Axios.post(
+        `${process.env.VUE_APP_APIURL}/api/dbrealtime`,
+        { serial: serial },
+        config
+      ).then((response) => {
+        this.dbrealtime = response.data.data;
+        console.log("dataLoad", this.dbrealtime);
+      });
     },
 
     formatDate(value) {
-       return  MOMENT(value).format(
-            "DD/MM/YYYY  HH:mm:ss"
-          );
-    }, 
+      return MOMENT(value).format("DD/MM/YYYY  HH:mm:ss");
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.v-card{
+.v-card {
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
@@ -266,7 +311,6 @@ export default {
           left: 50%;
           transform: translate(-50%, -50%);
         }
-
       }
     }
   }
@@ -299,7 +343,7 @@ export default {
       }
     }
   }
-  .showserial{
+  .showserial {
     padding: 25px 10px;
     .v-card {
       margin-top: 0px;
@@ -328,9 +372,8 @@ export default {
     display: flex;
     flex-direction: column-reverse;
     padding: 0px;
-    .showserial{
+    .showserial {
       width: 100%;
-
     }
   }
 }
