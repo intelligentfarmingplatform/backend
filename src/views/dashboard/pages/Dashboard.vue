@@ -125,10 +125,9 @@
         </base-material-card>
       </v-col>
     </v-row>
-
     <!-- --------------------------end สถานะปั้ม ------------------------- -->
     <v-col cols="12">
-      <base-material-card color="warning" class="px-5 py-3">
+      <base-material-card color="info" class="px-5 py-3">
         <template v-slot:heading>
           <v-col cols="12">
             <div class="display-2 font-weight-light">รายการย้อนหลังสถานะ</div>
@@ -238,9 +237,6 @@ export default {
 
   mounted() {},
   methods: {
-    // ...mapMutations({
-    //     set_datasensor:"SET_DATASENSOR",
-    // }),
 
     id_serial(item) {
       let serial = item.id;

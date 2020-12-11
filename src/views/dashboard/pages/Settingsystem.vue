@@ -255,7 +255,7 @@ export default {
       },
     };
     Axios.post(
-      `http://maims.cmtc.ac.th:3000/api/settingpump`,
+      `http://localhost:3000/api/settingpump`,
       {"serial": "1"},
       config
     ).then((response) => {
@@ -271,7 +271,7 @@ export default {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
-      Axios.put(`http://maims.cmtc.ac.th:3000/api/settingpump`, this.settingpump, config)
+      Axios.put(`http://localhost:3000/api/settingpump`, this.settingpump, config)
           if (response.data.statusCode == 201) {
             alert(response.data.message);
           }
