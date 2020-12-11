@@ -317,7 +317,7 @@ export default {
 
   .fittingbutton .theme--light.v-btn--active::before, .fittingbutton .theme--light.v-btn--active::before{
     opacity: 1;
-    background-color: #00b3ca;
+    background-color: #629d25;
     transition: 1s;
   }
   .fittingbutton .theme--light.v-btn--active .v-btn__content{
@@ -333,7 +333,7 @@ export default {
   }
   .fittingbutton .theme--light.v-btn:active::before{
     opacity: 0.2;
-    background-color: #00b3ca;
+    background-color: #629d25;
   }
 
 @media only screen and (max-width: 960px) {

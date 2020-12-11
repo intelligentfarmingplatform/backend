@@ -23,7 +23,7 @@
     <v-list-item class="logo_img">
         <v-img
           src="/engine.png"
-          max-width="80%"
+          max-width="100%"
           mt-4
           ma-5
         />

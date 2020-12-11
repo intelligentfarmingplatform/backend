@@ -49,6 +49,7 @@ import { mapState, mapMutations } from "vuex";
 </script>
 
 <style lang="scss">
+
     body{
       padding: 0 !important;
     }

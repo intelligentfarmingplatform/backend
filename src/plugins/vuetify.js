@@ -7,9 +7,9 @@ import '@fortawesome/fontawesome-free/css/all.css'
 Vue.use(Vuetify)
 
 const theme = {
-  primary: '#4CAF50',
+  primary: '#629d25',
   secondary: '#9C27b0',
-  info: '#00b3ca',
+  info: '#629d25',
   white: '#ffffff',
   black: '#000000',
 }

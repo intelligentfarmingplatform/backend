@@ -7,7 +7,7 @@
           <img id="img" src="/farmer.jpg" alt="" />
         </div>
         <div class="login_wrap">
-          <img src="/engine.png" alt="" />
+          <img src="/logo_ifp.png" alt="" />
           <h2>Sign In</h2>
           <v-form ref="form" v-model="isValid" @submit.prevent="login">
             <v-text-field
@@ -36,7 +36,7 @@
       <!-- -----------------------end boxlogin-------------------------------- -->
       <div class="boxregister">
         <div class="login_wrap">
-          <img src="/engine.png" alt="" />
+          <img src="/engine2.png" alt="" />
           <h2>Sing Up</h2>
           <v-form @submit.prevent="res">
             <v-text-field

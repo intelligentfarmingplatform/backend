@@ -16,3 +16,10 @@
 
   
 </script>
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100;300&display=swap');
+  #app{
+    font-family: 'Prompt', sans-serif;
+  }
+</style>
+

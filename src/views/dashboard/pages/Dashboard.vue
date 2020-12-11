@@ -139,35 +139,28 @@
             </div> -->
         </template>
         <v-card-text>
-          <v-data-table
-            :headers="headers"
-            :items="dblist"
-            :loading="loading"
-            loader-height="2px"
-            loading-text="Loading... Please wait"
-            color="info"
-          >
+          <v-data-table :headers="headers" :items="dblist" color="info">
             <template v-slot:item.createdAt="{ item }">
               {{ formatDate(item.updatedAt) }}
             </template>
             <template v-slot:item.pump_a="{ item }">
-              <v-chip :color="item.pump_a === 'on' ? '#4CAF50' : '#FF6347'">
-                {{ item.pump_a }}
+              <v-chip :color="item.pump_a === 1 ? '#4CAF50' : '#FF6347'">
+                {{ item.pump_a === 0 ? "OFF" : "ON" }}
               </v-chip>
             </template>
             <template v-slot:item.pump_b="{ item }">
-              <v-chip :color="item.pump_b === 'on' ? '#4CAF50' : '#FF6347'">
-                {{ item.pump_b }}
+              <v-chip :color="item.pump_b === 1 ? '#4CAF50' : '#FF6347'">
+                {{ item.pump_b === 0 ? "OFF" : "ON" }}
               </v-chip>
             </template>
             <template v-slot:item.pump_c="{ item }">
-              <v-chip :color="item.pump_c === 'on' ? '#4CAF50' : '#FF6347'">
-                {{ item.pump_c }}
+              <v-chip :color="item.pump_c === 1 ? '#4CAF50' : '#FF6347'">
+                {{ item.pump_c === 0 ? "OFF" : "ON" }}
               </v-chip>
             </template>
             <template v-slot:item.pump_d="{ item }">
-              <v-chip :color="item.pump_d === 'on' ? '#4CAF50' : '#FF6347'">
-                {{ item.pump_d }}
+              <v-chip :color="item.pump_d === 1 ? '#4CAF50' : '#FF6347'">
+                {{ item.pump_d === 0 ? "OFF" : "ON" }}
               </v-chip>
             </template>
           </v-data-table>
@@ -183,6 +176,30 @@ import { mapState, mapMutations, mapGetters } from "vuex";
 import moment, * as MOMENT from "moment";
 export default {
   name: "DashboardDashboard",
+
+  data() {
+    return {
+      headers: [
+        { text: "ID", value: "id", sortable: false, align: "center" },
+        { text: "อุณหภูมิ", value: "temp" },
+        { text: "ความชื้น", value: "humi" },
+        { text: "ความเข้มของแสง", value: "light_int" },
+        { text: "ความเข้มของปุ๋ย", value: "ec" },
+        { text: "ph", value: "ph" },
+        { text: "Pump A", value: "pump_a", sortable: false },
+        { text: "Pump B", value: "pump_b", sortable: false },
+        { text: "Pump C", value: "pump_c", sortable: false },
+        { text: "Pump D", value: "pump_d", sortable: false },
+        { text: "วันที่/เวลา", value: "createdAt" },
+        { text: "Serial", value: "serial_id" },
+      ],
+      dbrealtime: [],
+      dblist: [],
+      loading: true,
+      dateConvert: "",
+      updatedAtConvert: "",
+    };
+  },
   created() {
     const config = {
       headers: {
@@ -215,29 +232,6 @@ export default {
       console.log("dataLoad", this.dblist);
     });
   },
-  data() {
-    return {
-      headers: [
-        { text: "ID", value: "id", align: "center" },
-        { text: "อุณหภูมิ", value: "temp" },
-        { text: "ความชื้น", value: "humi" },
-        { text: "ความเข้มของแสง", value: "light_int" },
-        { text: "ความเข้มของปุ๋ย", value: "ec" },
-        { text: "ph", value: "ph" },
-        { text: "Pump A", value: "pump_a" },
-        { text: "Pump B", value: "pump_b" },
-        { text: "Pump C", value: "pump_c" },
-        { text: "Pump D", value: "pump_d" },
-        { text: "วันที่/เวลา", value: "createdAt" },
-        { text: "Serial", value: "serial_id" },
-      ],
-      dbrealtime: [],
-      dblist: [],
-      loading: true,
-      dateConvert: "",
-      updatedAtConvert: "",
-    };
-  },
   computed: {
     ...mapGetters(["getdatauser"]),
   },
@@ -262,7 +256,13 @@ export default {
         config
       ).then((response) => {
         this.dbrealtime = response.data.data;
-        console.log("dataLoad", this.dbrealtime);
+      });
+      Axios.post(
+        `${process.env.VUE_APP_APIURL}/api/dblist`,
+        { serial: serial },
+        config
+      ).then((response) => {
+        this.dblist = response.data.data;
       });
     },
 
