@@ -18,13 +18,15 @@
           <v-col cols="12" sm="7" lg="7">
             <div class="datasensor">
               <v-card>
-                <v-icon> mdi-water-percent </v-icon>
+                <v-icon> fas fa-thermometer-empty </v-icon>
+                <!-- <i class="fas fa-thermometer-empty"></i> -->
                 <h1>{{ this.dbrealtime.temp }}%</h1>
                 <p>Temp</p>
               </v-card>
 
               <v-card>
                 <v-icon> mdi-water-percent </v-icon>
+                <i class="fas fa-humidity"></i>
                 <h1>{{ this.dbrealtime.humi }}%</h1>
                 <p>Humi</p>
               </v-card>
@@ -40,7 +42,7 @@
               <v-card>
                 <v-icon> mdi-water-percent </v-icon>
                 <h1>
-                  {{ this.dbrealtime.ec }}
+                  {{ this.dbrealtime.ec.toFixed(1) }}
                 </h1>
                 <p>ppm</p>
               </v-card>
@@ -48,7 +50,7 @@
               <v-card>
                 <v-icon> mdi-water-percent </v-icon>
                 <h1>
-                  {{ this.dbrealtime.ph }}
+                  {{ this.dbrealtime.ph.toFixed(1) }}
                 </h1>
                 <p>pH</p>
               </v-card>

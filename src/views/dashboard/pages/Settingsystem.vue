@@ -54,7 +54,7 @@
                           :max="100"
                           :step="0.1"
                           type="number"
-                          style="width: 75px"
+                          style="width: 100px"
                         ></v-text-field>
                       </template>
                     </v-slider>
@@ -80,7 +80,7 @@
                           :min="0"
                           :max="100"
                           type="number"
-                          style="width: 75px"
+                          style="width: 100px"
                         ></v-text-field>
                       </template>
                     </v-slider>
@@ -93,7 +93,7 @@
                       @change="onsubmit()"
                       thumb-label="ticks"
                       class="align-center"
-                      :min="1"
+                      :min="0"
                       :max="2000"
                       :step="1"
                       hide-details
@@ -105,10 +105,10 @@
                           class="mt-0 pt-0"
                           single-line
                           :min="0"
-                          :max="10"
-                          :step="0.1"
+                          :max="2000"
+                          :step="1"
                           type="number"
-                          style="width: 75px"
+                          style="width: 100px"
                         ></v-text-field>
                         <!-- disabled -->
                       </template>
@@ -137,7 +137,7 @@
                           :max="100"
                           :step="0.1"
                           type="number"
-                          style="width: 75px"
+                          style="width: 100px"
                           hide-details
                         ></v-text-field>
                       </template>
