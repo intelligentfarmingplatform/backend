@@ -35,6 +35,7 @@
                       rows="1"
                       auto-grow
                       :rules="[(v) => !!v || 'กรุณาใส่ลายละเอียดสินค้า']"
+                      :max="50"
                       required
                       prepend-icon="mdi-comment"
                     ></v-textarea>
@@ -171,6 +172,10 @@ export default {
         (value) =>
           !value || value.type.startsWith("image") || "กรุณาเลือกไฟล์รูปภาพ",
       ],
+      rules:[
+         (v) => v.length >= 8 || "รห้สอย่างน้อย 8 ตัวอักษร"
+      ]
+
     };
   },
   computed: {

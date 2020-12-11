@@ -271,7 +271,7 @@ export default {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
-      Axios.put(`${process.env.VUE_APP_APIURL}`, this.settingpump, config)
+      Axios.put(`${process.env.VUE_APP_APIURL}/api/settingpump`, this.settingpump, config)
           if (response.data.statusCode == 201) {
             alert(response.data.message);
           }
