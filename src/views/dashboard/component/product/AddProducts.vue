@@ -34,8 +34,7 @@
                       label="ลายละเอียด"
                       rows="1"
                       auto-grow
-                      :rules="[(v) => !!v || 'กรุณาใส่ลายละเอียดสินค้า']"
-                      :max="50"
+                      :rules="rules"
                       required
                       prepend-icon="mdi-comment"
                     ></v-textarea>
@@ -99,7 +98,11 @@
                 <v-card-text>
                   <v-container>
                     <v-col>
-                      <v-radio-group v-model="products.productstatus" row>
+                      <v-radio-group
+                        v-model="products.productstatus"
+                        row
+                        :rules="[(v) => !!v || 'กรุณาใส่สถานะสินค้า']"
+                      >
                         <v-radio label="พร้อมขาย" value="1"></v-radio>
                         <v-radio label="กำลังปลูก" value="0"></v-radio>
                       </v-radio-group>
@@ -172,10 +175,10 @@ export default {
         (value) =>
           !value || value.type.startsWith("image") || "กรุณาเลือกไฟล์รูปภาพ",
       ],
-      rules:[
-         (v) => v.length >= 8 || "รห้สอย่างน้อย 8 ตัวอักษร"
-      ]
-
+      rules: [
+        (v) => v.length >= 100 || "รห้สอย่างน้อย 100 ตัวอักษร",
+        (v) => !!v || "กรุณาใส่ลายละเอียดสินค้า",
+      ],
     };
   },
   computed: {
@@ -186,7 +189,7 @@ export default {
   },
 
   mounted() {
-      this.products.nameseller = this.datauser.tbl_userdetail.name;
+    this.products.nameseller = this.datauser.tbl_userdetail.name;
   },
   methods: {
     close() {

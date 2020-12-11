@@ -25,22 +25,25 @@
               </v-card>
 
               <v-card>
-                <v-icon> mdi-water-percent </v-icon>
+                <v-icon> fad fa-caravan-alt </v-icon>
                 <i class="fas fa-humidity"></i>
+                <i class="fad fa-caravan-alt"></i>
                 <h1>{{ this.dbrealtime.humi }}%</h1>
                 <p>Humi</p>
               </v-card>
 
               <v-card>
-                <v-icon> mdi-water-percent </v-icon>
+                <v-icon> fas fa-sun </v-icon>
                 <h1>
                   {{ this.dbrealtime.light_int }}
                 </h1>
                 <p>light</p>
               </v-card>
 
+
               <v-card>
-                <v-icon> mdi-water-percent </v-icon>
+                <!-- <v-icon> mdi-water-percent </v-icon> -->
+                <v-icon> mdi-flask-empty-plus  </v-icon>
                 <h1>
                   {{ this.dbrealtime.ec.toFixed(1) }}
                 </h1>
@@ -48,7 +51,7 @@
               </v-card>
 
               <v-card>
-                <v-icon> mdi-water-percent </v-icon>
+                <v-icon> fas fa-tint </v-icon>
                 <h1>
                   {{ this.dbrealtime.ph.toFixed(1) }}
                 </h1>
@@ -132,7 +135,7 @@
       <base-material-card color="info" class="px-5 py-3">
         <template v-slot:heading>
           <v-col cols="12">
-            <div class="display-2 font-weight-light">รายการย้อนหลังสถานะ</div>
+            <div ><h1>รายการย้อนหลังสถานะ</h1> </div>
           </v-col>
 
           <!-- <div class="subtitle-1 font-weight-light">
@@ -175,6 +178,7 @@
 import Axios from "axios";
 import { mapState, mapMutations, mapGetters } from "vuex";
 import moment, * as MOMENT from "moment";
+
 export default {
   name: "DashboardDashboard",
 
