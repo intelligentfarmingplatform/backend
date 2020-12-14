@@ -154,11 +154,7 @@ export default {
             this.color = "#4CAF50"
             this.message = "เข้าสู่ระบบสำเร็จ";
             localStorage.setItem("token", response.data.token);
-            if(datauser.tbl_userdetail.status_level === "Admin"){
-              setTimeout(() => { this.$router.replace("/pages/admin/Addserial"); }, 2000);
-            }else{
               setTimeout(() => { this.$router.replace("/"); }, 2000);    
-            }
           }
         })
         .catch(err => {
