@@ -15,7 +15,7 @@
         <v-card class="v-card-profile">
           <div class="img">
             <img
-            :src="`http://localhost:3000/profile/${datauser.tbl_userdetail.img}`"
+            :src="`http://maims.cmtc.ac.th:3000/profile/${datauser.tbl_userdetail.img}`"
             >
             <!-- <input type="file" >
             <v-btn

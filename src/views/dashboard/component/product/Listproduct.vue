@@ -48,7 +48,7 @@
                 <v-card elevation="0" width="100%" class="product-card-item">
                   <div class="product-image">
                     <v-img
-                      :src="`http://localhost:3000/product/${items.productimg}`"
+                      :src="`http://maims.cmtc.ac.th:3000/product/${items.productimg}`"
                     >
                       <div
                         class="product-image-overlay"
