@@ -1,6 +1,7 @@
-< link href = "https://use.fontawesome.com/releases/v5.0.6/css/all.css"
-rel = "stylesheet" > < /link>window.FontAwesomeKitConfig = {
-asyncLoading: { enabled: true },
+// import '@fortawesome/fontawesome-free/css/all.css'
+
+window.FontAwesomeKitConfig = {
+    asyncLoading: { enabled: true },
     autoA11y: { enabled: true },
     baseUrl: "https://ka-f.fontawesome.com",
     detectConflictsUntil: null,

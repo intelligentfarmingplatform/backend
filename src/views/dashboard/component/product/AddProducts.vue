@@ -3,7 +3,7 @@
     <v-col cols="12">
       <base-material-card
         color="#ee4d2d"
-        icon="mdi-store"
+        icon="mdi-store-plus"
         title="เพิ่มสินค้าใหม่"
       >
         <v-card-title>

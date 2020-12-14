@@ -1,3 +1,4 @@
+
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-row class="showdata">
@@ -25,9 +26,8 @@
               </v-card>
 
               <v-card>
-                <v-icon> fad fa-caravan-alt </v-icon>
-                <i class="fas fa-humidity"></i>
-                <i class="fad fa-caravan-alt"></i>
+                <!-- <v-icon> fad fa-caravan-alt </v-icon> -->
+                <v-icon> mdi-water-percent </v-icon>
                 <h1>{{ this.dbrealtime.humi }}%</h1>
                 <p>Humi</p>
               </v-card>
@@ -115,7 +115,7 @@
       </v-col>
 
       <v-col cols="12" md="2" class="showserial">
-        <base-material-card color="info" icon="mdi-tune" title="Serial">
+        <base-material-card color="info" icon="mdi-rotate-orbit" title="Serial">
           <v-list>
             <v-list-item
               v-for="item in this.getdatauser.tbl_userserials"
@@ -178,6 +178,7 @@
 import Axios from "axios";
 import { mapState, mapMutations, mapGetters } from "vuex";
 import moment, * as MOMENT from "moment";
+import '@fortawesome/fontawesome-free/css/all.css'
 
 export default {
   name: "DashboardDashboard",

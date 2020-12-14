@@ -32,7 +32,7 @@
     <!-- <v-divider class="mb-2" /> -->
 
     <v-list
-      expand
+      
       nav
       class="list_menu"
       rounded
@@ -96,7 +96,8 @@
                 to: '/',
               },
               {
-                icon: 'fas fa-sliders-h',
+                icon: 'fas fa-cog',
+                // icon: 'fas fa-sliders-h',
                 title: 'Setting System',
                 to: '/pages/Settingsystem',
               },
@@ -112,7 +113,7 @@
               to: '/pages/product/listproduct',
             },
             {
-              icon: 'fas fa-store',
+              icon: 'mdi-store-plus',
               title: 'เพิ่มสินค้าใหม่',
               to: '/pages/product/addproduct',
             },
@@ -125,7 +126,7 @@
         },
         {
           title: 'การเงิน',
-          icon: 'fas fa-shopping-cart',
+          icon: 'fas fa-money-bill-alt',
           link: [
               {
                 icon: 'fas fa-hand-holding-usd',
@@ -154,6 +155,11 @@
               title: 'รห้สซีเรียล',
               to: '/pages/UserProfile/serial',
             },
+              {
+                icon: 'mdi-key-plus',
+                title: 'เพิ่มซีเรียล',
+                to: '/pages/UserProfile/addserial',
+              },
             {
               icon: 'fas fa-user-lock',
               title: 'ตั้งค่ารห้สผ่าน',
