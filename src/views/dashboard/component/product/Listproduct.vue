@@ -27,10 +27,8 @@
               <v-col class="option">
                 <router-link to="/pages/product/addproduct">
                   <v-btn>
-                    <v-icon size="55px" color="#ffffff">
-                      mdi-plus
-                    </v-icon>
-                    เพิ่มสืนค้า
+                    <v-icon size="55px" color="#ffffff"> mdi-plus </v-icon>
+                    เพิ่มสินค้า
                   </v-btn>
                 </router-link>
               </v-col>
@@ -44,24 +42,23 @@
                 m="3"
                 md="3"
                 xl="2"
-                v-for="items in this.showproducts"
-                :key="items"
+                v-for="items in showproducts"
+                :key="items.id"
               >
                 <v-card elevation="0" width="100%" class="product-card-item">
                   <div class="product-image">
                     <v-img
                       :src="`http://localhost:3000/product/${items.productimg}`"
-                    ></v-img>
-                    <div
-                      class="product-image-overlay"
-                      v-show="(items.productstatus = 0 ? false : true)"
                     >
-                      <v-icon class="mt">mdi-lock</v-icon>
-                      <span class="mt">กำลังปลูก</span>
-                      <v-btn class="mt" small @click="editstatuspro(items)"
-                        >ลงขาย</v-btn
+                      <div
+                        class="product-image-overlay"
+                        v-show="items.productstatus == '0'"
                       >
-                    </div>
+                        <v-icon>mdi-lock</v-icon>
+                        <span>กำลังปลูก</span>
+                        <v-btn small @click="editstatuspro(items)">ลงขาย</v-btn>
+                      </div>
+                    </v-img>
                   </div>
                   <div class="productdetail">
                     <div class="product-name T-dot">
@@ -119,18 +116,19 @@ export default {
         },
       ],
       showproducts: [],
+      productstatus: "",
     };
   },
-  mounted() {
+  created() {
     const config = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     };
-    Axios.get(`${process.env.VUE_APP_APIURL}/api/sellproducts/`, config)
+    Axios.get(`${process.env.VUE_APP_APIURL}/api/sellproducts`, config)
       .then((response) => {
+        console.log("response", response);
         this.showproducts = response.data.data;
-        this.products.nameseller = this.datauser.tbl_userdetail.name;
       })
       .catch((err) => {
         console.log(err);
@@ -143,12 +141,8 @@ export default {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
-      console.log(items );
-      if(items.productstatus = 0){
-        let productstatus = '1';
-      }else{
-        let productstatus = '0';
-      }
+      const index = this.showproducts.indexOf(items);
+      console.log(index);
       this.$swal({
         title: "เปลี่ยนสถานะสินค้า",
         text: "คุณต้องการเปลี่ยนสถานะสินค้าหรือไม่",
@@ -161,10 +155,13 @@ export default {
       }).then((result) => {
         if (result.value) {
           Axios.put(
-            `${process.env.VUE_APP_APIURL}/api/sellproducts/${items.id}`,productstatus,config)
+            `${process.env.VUE_APP_APIURL}/api/sellproducts/${items.id}`,
+            { productstatus: 1 },
+            config
+          )
             .then((response) => {
               if (response.data.statusCode == 201) {
-                console.log(response);
+                console.log(response.data);
                 this.$swal({
                   title: "เสร็จสิ้น",
                   text: "ทำการเปลี่ยนสถานะสินค้าเสร็จสิ้น",
@@ -172,6 +169,7 @@ export default {
                   showConfirmButton: false,
                   timer: 1000,
                 });
+                Object.assign(this.showproducts[index], response.data.data);
               }
             })
             .catch((err) => {
@@ -315,30 +313,22 @@ export default {
         align-items: center;
         justify-content: center;
         text-align: center;
-        background-color: #000000;
-        opacity: 0.5;
+        background-color: #00000054;
+      }
+      .v-icon {
+        font-size: 25px;
+        color: #ffffff;
+      }
+      span {
+        font-size: 18px;
+        color: #ffffff;
+      }
 
-        .mt {
-          margin: 5px 0px;
-        }
-
-        .v-icon {
-          font-size: 25px;
-          color: #ffffff;
-        }
-
-        span {
-          font-size: 18px;
-          color: #ffffff;
-        }
-
-        button {
-          margin: 0px;
-          width: 50%;
-        }
+      button {
+        margin: 0px !important;
+        width: 50%;
       }
     }
-
     .productdetail {
       margin-top: 5px;
       padding: 15px;

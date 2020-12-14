@@ -9,22 +9,30 @@
     height="65"
     scroll-target="#scrolling-techniques-5"
   >
-    <v-spacer />
+    <v-btn class="mr-3" elevation="1" fab small @click="setDrawer(!drawer)">
+      <v-icon v-if="drawer"> mdi-arrow-left </v-icon>
 
+      <v-icon v-else> mdi-menu </v-icon>
+    </v-btn>
+
+    <v-toolbar-title
+      class="hidden-sm-and-down font-weight-light"
+      v-text="$route.name"
+    />
+    <v-spacer />
+    <v-toolbar-title
+      class="hidden-sm-and-down font-weight-light mx-4"
+      v-text="datauser.userName"
+    />
     <v-btn
       color="primary"
       elevation="10"
       mediam
-      class="mr-2 mt-5"
+      class="mr-2 "
       @click="logout()"
     >
       Logout
-      <v-icon class="ml-2"
-        right
-        dark
-      >
-        fas fa-sign-out-alt
-      </v-icon>
+      <v-icon class="ml-2" right dark> fas fa-sign-out-alt </v-icon>
     </v-btn>
     <!-- <v-btn-fab class="mr-3" color="primary" elevation="2" fab x-large @click="logout()">sdsadsa</v-btn-fab> -->
     <!-- <v-title class="mr-3" @click="logout()">Logout</v-title> -->

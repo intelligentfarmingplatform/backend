@@ -48,12 +48,7 @@ export default new Router({
                             component: () =>
                                 import ('@/views/dashboard/component/userprofile/Serial')
                         },
-                        {
-                            name: 'Add Serial',
-                            path: '/pages/UserProfile/addserial',
-                            component: () =>
-                                import ('@/views/dashboard/component/userprofile/Addserial')
-                        },
+
                     ],
                 },
 
@@ -106,11 +101,18 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/admin'),
                     children: [{
-                        name: 'Setting Members',
-                        path: '/pages/admin/settingmenber',
-                        component: () =>
-                            import ('@/views/dashboard/pages/Settingmember'),
-                    }, ],
+                            name: 'Setting Members',
+                            path: '/pages/admin/settingmenber',
+                            component: () =>
+                                import ('@/views/dashboard/component/admin/Settingmember'),
+                        },
+                        {
+                            name: 'Add Serial',
+                            path: '/pages/admin/addserial',
+                            component: () =>
+                                import ('@/views/dashboard/component/admin/Addserial')
+                        },
+                    ],
                 },
             ],
         },

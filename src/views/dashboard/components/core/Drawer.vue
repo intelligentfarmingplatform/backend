@@ -128,11 +128,11 @@
           title: 'การเงิน',
           icon: 'fas fa-money-bill-alt',
           link: [
-              {
-                icon: 'fas fa-hand-holding-usd',
-                title: 'ยอดการขาย',
-                to: '/pages/money/Dashboardsell',
-              },
+              // {
+              //   icon: 'fas fa-hand-holding-usd',
+              //   title: 'ยอดการขาย',
+              //   to: '/pages/money/Dashboardsell',
+              // },
               {
               icon: 'fas fa-money-check',
               title: 'บัญชีธนาคาร',
@@ -155,11 +155,7 @@
               title: 'รห้สซีเรียล',
               to: '/pages/UserProfile/serial',
             },
-              {
-                icon: 'mdi-key-plus',
-                title: 'เพิ่มซีเรียล',
-                to: '/pages/UserProfile/addserial',
-              },
+
             {
               icon: 'fas fa-user-lock',
               title: 'ตั้งค่ารห้สผ่าน',
@@ -167,18 +163,23 @@
             },
             ],
         },
-        // {
-        //   title: 'บริหารจัดการ',
-        //   icon: 'fas fa-users-cog',
-        //   lavel: 'admin',
-        //   link: [
-        //     {
-        //       icon: 'mdi-account-group',
-        //       title: 'ตั้งค่าผู้ใช้งาน',
-        //       to: '/pages/admin/settingmenber',
-        //     },
-        //     ],
-        // },
+        {
+          title: 'บริหารจัดการ',
+          icon: 'fas fa-users-cog',
+          lavel: 'admin',
+          link: [
+            {
+              icon: 'mdi-account-group',
+              title: 'ตั้งค่าผู้ใช้งาน',
+              to: '/pages/admin/settingmenber',
+            },
+            {
+              icon: 'mdi-account-group',
+              title: 'เพิ่มซีเรียล',
+              to: '/pages/admin/Addserial',
+            },
+            ],
+        },
       ],
     }),
 
