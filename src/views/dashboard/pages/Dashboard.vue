@@ -206,7 +206,8 @@ export default {
       updatedAtConvert: "",
     };
   },
-  created() {
+  mounted() {
+    
     const config = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -215,7 +216,7 @@ export default {
 
     Axios.post(
       `${process.env.VUE_APP_APIURL}/api/dbrealtime`,
-      { serial: "1" },
+      { "serial": "11" },
       config
     ).then((response) => {
       this.dbrealtime = response.data.data;
@@ -227,7 +228,7 @@ export default {
 
     Axios.post(
       `${process.env.VUE_APP_APIURL}/api/dblist`,
-      { serial: "1" },
+      { serial: "11" },
       config
     ).then((response) => {
       this.dblist = response.data.data;
@@ -242,7 +243,6 @@ export default {
     ...mapGetters(["getdatauser"]),
   },
 
-  mounted() {},
   methods: {
 
     id_serial(item) {

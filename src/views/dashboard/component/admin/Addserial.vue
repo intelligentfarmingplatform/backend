@@ -205,7 +205,7 @@ export default {
         }
         this.$swal({
           title: "สำเร็จ",
-          text: "ทำการลบข้อมูลสำเร็จ",
+          text: "Successfully Add Serial",
           icon: "success",
         });
         this.close();

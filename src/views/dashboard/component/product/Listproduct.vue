@@ -2,7 +2,7 @@
   <v-container>
     <v-col cols="12">
       <v-card>
-        <v-card-text>
+        <!-- <v-card-text>
           <v-row>
             <v-tabs
               v-model="tab"
@@ -17,7 +17,7 @@
               </v-tab>
             </v-tabs>
           </v-row>
-        </v-card-text>
+        </v-card-text> -->
         <v-col>
           <v-card-title class="haderoption">
             <v-row>
@@ -155,7 +155,7 @@ export default {
       }).then((result) => {
         if (result.value) {
           Axios.put(
-            `${process.env.VUE_APP_APIURL}/api/sellproducts/${items.id}`,
+            `${process.env.VUE_APP_APIURL}/api/sellproducts/statusproduct/${items.id}`,
             { productstatus: 1 },
             config
           )

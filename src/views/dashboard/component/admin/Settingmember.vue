@@ -200,12 +200,14 @@ export default {
         { text: "รห้ส", value: "id", width: "10% ", sortable: false, align: "center" },
         { text: "ชื่อผู้ใช้", value: "userName" },
         // { text: "รห้ส", value: "password" },
-        { text: "อีเมล์", value: "email" },
+        { text: "อีเมล์", value: "tbl_userdetail.email" },
+        { text: "ที่อยู่", value: "tbl_userdetail.address" },
+        { text: "หมายเหตุ", value: "tbl_userdetail.detail" },
         {
           text: "สถานะ",
           align: "center",
           sortable: false,
-          value: "status_level",
+          value: "tbl_userdetail.status_level",
           width: "15%"
         },
         {
@@ -402,6 +404,7 @@ export default {
                       timer: 1000
                       // confirmButtonText: 'ยืนยัน'
                     }).then(() => {
+                      console.log(response.data.data);
                       this.listusers.push(response.data.data);
                       this.close();
                     });

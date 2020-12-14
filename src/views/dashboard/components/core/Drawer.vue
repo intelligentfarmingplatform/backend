@@ -31,11 +31,11 @@
 
     <!-- <v-divider class="mb-2" /> -->
 
-    <v-list
-      
+    <v-list  
       nav
       class="list_menu"
       rounded
+      v-if="datauser.tbl_userdetail.status_level==='members'"
     >
       <v-list-group
         v-for="item in items"
@@ -50,8 +50,7 @@
           </v-list-item-content>
         </template>
 
-        <v-list-item
-          :v-if="items.lavel = 'admin' "
+        <v-list-item 
           v-for="child in item.link"
           :key="child.title"
           class="listitem"
@@ -65,6 +64,41 @@
         </v-list-item>
       </v-list-group>
     </v-list>
+
+  <v-list
+      v-if="datauser.tbl_userdetail.status_level==='Admin'"
+      nav
+      class="list_menu"
+      rounded
+    >
+      <v-list-group
+        v-for="item in adminMenu"
+        :key="item.title"
+        :prepend-icon="item.icon"
+        no-action
+        color="#fff"
+      >
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title class="haderlist" v-text="item.title"></v-list-item-title>
+          </v-list-item-content>
+        </template>
+
+        <v-list-item 
+          v-for="child in item.link"
+          :key="child.title"
+          class="listitem"
+        >
+          <v-list-item-content>
+            <base-item
+              :item="child"
+              :v-if="items.check"
+            />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
+    </v-list>
+
   </v-navigation-drawer>
 </template>
 
@@ -163,24 +197,24 @@
             },
             ],
         },
-        {
+      ],
+      adminMenu:[{
           title: 'บริหารจัดการ',
           icon: 'fas fa-users-cog',
           lavel: 'admin',
           link: [
-            {
-              icon: 'mdi-account-group',
-              title: 'ตั้งค่าผู้ใช้งาน',
-              to: '/pages/admin/settingmenber',
-            },
+            // {
+            //   icon: 'mdi-account-group',
+            //   title: 'ตั้งค่าผู้ใช้งาน',
+            //   to: '/pages/admin/settingmenber',
+            // },
             {
               icon: 'mdi-account-group',
               title: 'เพิ่มซีเรียล',
               to: '/pages/admin/Addserial',
             },
             ],
-        },
-      ],
+        },]
     }),
 
     computed: {

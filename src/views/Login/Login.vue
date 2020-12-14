@@ -103,6 +103,7 @@
 
 <script>
 import Axios from "axios";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "Login",
   data() {
@@ -128,8 +129,8 @@ export default {
     };
   },
   
-  created(){
-    
+  computed: {
+  ...mapState(["datauser"]),
   },
 
   methods: {
@@ -153,7 +154,11 @@ export default {
             this.color = "#4CAF50"
             this.message = "เข้าสู่ระบบสำเร็จ";
             localStorage.setItem("token", response.data.token);
-            setTimeout(() => { this.$router.replace("/"); }, 2000);    
+            if(datauser.tbl_userdetail.status_level === "Admin"){
+              setTimeout(() => { this.$router.replace("/pages/admin/Addserial"); }, 2000);
+            }else{
+              setTimeout(() => { this.$router.replace("/"); }, 2000);    
+            }
           }
         })
         .catch(err => {

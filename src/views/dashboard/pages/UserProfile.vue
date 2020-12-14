@@ -17,14 +17,14 @@
             <img
             :src="`http://localhost:3000/profile/${datauser.tbl_userdetail.img}`"
             >
-            <input type="file" >
+            <!-- <input type="file" >
             <v-btn
               small
               @click="onButtonClick()"
               :loading="show1"
             >
               เปลี่ยนรูป
-            </v-btn>
+            </v-btn> -->
           </div>
           <v-card-text>
             <h4
@@ -40,7 +40,7 @@
         </v-card>
         <div class="serial">
           <div class="addserial">
-            <v-card class="my-5  pa-3 d-flex justify-center">
+            <!-- <v-card class="my-5  pa-3 d-flex justify-center">
               <v-col
               cols="12"
               class="d-flex  justify-md-space-between align-center"
@@ -56,7 +56,7 @@
                 </v-col>
                   <vs-button color="success" type="filled">Success</vs-button>
               </v-col>
-            </v-card>
+            </v-card> -->
           </div>
           <div class="showserial" v-for="serial in datauser.tbl_userserials" :key="serial.id" >
             <v-card class="my-5  pa-3 ">

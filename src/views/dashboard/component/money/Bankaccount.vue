@@ -161,6 +161,7 @@ name:'Backaccount',
         'ยูโอบี',
         'พร้อมเพย์',
       ],
+      listbank:[]
     };
   },
   computed: {
@@ -216,8 +217,8 @@ name:'Backaccount',
                         title: "สำเร็จ",
                         text: "ทำการเพิ่มข้อมูลสำเร็จ",
                         icon: "success"
-                    });F
-                    this.datauser.tbl_useraccountbanks.push(this.accountbank);
+                    });
+                    this.datauser.tbl_useraccountbanks.push(response.data.data);
                     this.close()
                 }).catch(err => {
                     this.$swal({

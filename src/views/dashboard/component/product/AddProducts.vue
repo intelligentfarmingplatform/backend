@@ -229,7 +229,7 @@ export default {
                     this.showproducts[this.editedIndex],
                     this.products
                   );
-                  this.products.reset;
+                  this.$refs.form.reset();
                   this.close();
                   return;
                 }

@@ -172,7 +172,7 @@ name:'Backaccount',
                         text: "ทำการเพิ่มข้อมูลสำเร็จ",
                         icon: "success"
                     });
-                    this.datauser.tbl_userserial.push(this.serial);
+                    this.datauser.tbl_userserials.push(response.data.data);
                     this.close()
                 }).catch(err => {
                     this.$swal({
@@ -202,6 +202,7 @@ name:'Backaccount',
           })
           .then((result) => {
               if (result.value) {
+                  console.log(serial.id); 
                 Axios.delete(`${process.env.VUE_APP_APIURL}/api/user/serial/${serial.id}`,config)
                 .then(response => {
                     this.$swal({
