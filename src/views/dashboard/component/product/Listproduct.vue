@@ -77,7 +77,7 @@
                     </div>
                   </div>
                   <div class="product-actions">
-                    <v-icon color="#FFBB29">mdi-pencil</v-icon>
+                    <v-icon @click="edit(items.id)" color="#FFBB29">mdi-pencil</v-icon>
                     <v-icon @click="del(items)" color="#FF6347"
                       >mdi-delete</v-icon
                     >
@@ -135,6 +135,9 @@ export default {
       });
   },
   methods: {
+    edit(items){
+      this.$router.replace(`/pages/product/listproduct/edit/${items}`);
+    },
     editstatuspro(items) {
       const config = {
         headers: {

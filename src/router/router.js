@@ -10,43 +10,43 @@ export default new Router({
     routes: [{
             path: '/',
             component: () =>
-                import ('@/views/dashboard/Index'),
+                import('@/views/dashboard/Index'),
             children: [
                 // Dashboard
                 {
                     name: 'Dashboard',
                     path: '',
                     component: () =>
-                        import ('@/views/dashboard/pages/Dashboard'),
+                        import('@/views/dashboard/pages/Dashboard'),
                 },
                 // Pages
                 {
                     name: 'ตั้งค่าระบบ',
                     path: 'pages/Settingsystem',
                     component: () =>
-                        import ('@/views/dashboard/pages/Settingsystem'),
+                        import('@/views/dashboard/pages/Settingsystem'),
                 },
                 {
                     path: 'pages/UserProfile',
                     component: () =>
-                        import ('@/views/dashboard/pages/UserProfile'),
+                        import('@/views/dashboard/pages/UserProfile'),
                     children: [{
                             name: 'ข้อมูลส่วนตัว',
                             path: '/pages/UserProfile/profile',
                             component: () =>
-                                import ('@/views/dashboard/component/userprofile/Profile')
+                                import('@/views/dashboard/component/userprofile/Profile')
                         },
                         {
                             name: 'เปลี่ยนรห้สผ่าน',
                             path: '/pages/UserProfile/password',
                             component: () =>
-                                import ('@/views/dashboard/component/userprofile/Password')
+                                import('@/views/dashboard/component/userprofile/Password')
                         },
                         {
                             name: 'รห้สซีเรียล',
                             path: '/pages/UserProfile/serial',
                             component: () =>
-                                import ('@/views/dashboard/component/userprofile/Serial')
+                                import('@/views/dashboard/component/userprofile/Serial')
                         },
 
                     ],
@@ -55,18 +55,18 @@ export default new Router({
                 {
                     path: 'pages/money',
                     component: () =>
-                        import ('@/views/dashboard/pages/money'),
+                        import('@/views/dashboard/pages/money'),
                     children: [{
                             name: 'ยอดรวมการขาย',
                             path: '/pages/money/Dashboardsell',
                             component: () =>
-                                import ('@/views/dashboard/component/money/Dashboardsell'),
+                                import('@/views/dashboard/component/money/Dashboardsell'),
                         },
                         {
                             name: 'บัญชีธนาคาร',
                             path: '/pages/money/bankaccount',
                             component: () =>
-                                import ('@/views/dashboard/component/money/Bankaccount')
+                                import('@/views/dashboard/component/money/Bankaccount')
                         },
                     ],
                 },
@@ -74,24 +74,37 @@ export default new Router({
                 {
                     path: 'pages/product',
                     component: () =>
-                        import ('@/views/dashboard/pages/product'),
+                        import('@/views/dashboard/pages/product'),
                     children: [{
+                            name: 'สินค้าทั้งหมด',
+                            path: 'product/listproduct',
+                            component: () =>
+                            import('@/views/dashboard/pages/listproduct'),
+                        },
+                        {
                             name: 'สินค้าทั้งหมด',
                             path: '/pages/product/listproduct',
                             component: () =>
-                                import ('@/views/dashboard/component/product/Listproduct'),
+                                import('@/views/dashboard/component/product/Listproduct'),
+
+                        },
+                        {
+                            name: 'แก้ไขสินค้า',
+                            path: '/pages/product/listproduct/edit/:id',
+                            component: () =>
+                                import('@/views/dashboard/component/product/Editproduct'),
                         },
                         {
                             name: 'Sell Products',
                             path: '/pages/product/addproduct',
                             component: () =>
-                                import ('@/views/dashboard/component/product/AddProducts'),
+                                import('@/views/dashboard/component/product/AddProducts'),
                         },
                         {
                             name: 'คำสั่งซื้อ',
                             path: '/pages/product/order',
                             component: () =>
-                                import ('@/views/dashboard/component/product/Order'),
+                                import('@/views/dashboard/component/product/Order'),
                         },
                     ],
                 },
@@ -99,18 +112,18 @@ export default new Router({
                 {
                     path: 'pages/admin',
                     component: () =>
-                        import ('@/views/dashboard/pages/admin'),
+                        import('@/views/dashboard/pages/admin'),
                     children: [{
                             name: 'Setting Members',
                             path: '/pages/admin/settingmenber',
                             component: () =>
-                                import ('@/views/dashboard/component/admin/Settingmember'),
+                                import('@/views/dashboard/component/admin/Settingmember'),
                         },
                         {
                             name: 'Add Serial',
                             path: '/pages/admin/addserial',
                             component: () =>
-                                import ('@/views/dashboard/component/admin/Addserial')
+                                import('@/views/dashboard/component/admin/Addserial')
                         },
                     ],
                 },
@@ -120,12 +133,12 @@ export default new Router({
             name: 'login',
             path: '/login',
             component: () =>
-                import ('@/views/Login/Login'),
+                import('@/views/Login/Login'),
         },
         {
             path: '*',
             component: () =>
-                import ('@/views/Error/Error404'),
+                import('@/views/Error/Error404'),
         },
     ],
 })

@@ -216,7 +216,7 @@ export default {
 
     Axios.post(
       `${process.env.VUE_APP_APIURL}/api/dbrealtime`,
-      { "serial": "1" },
+      { serial : "11" },
       config
     ).then((response) => {
       this.dbrealtime = response.data.data;

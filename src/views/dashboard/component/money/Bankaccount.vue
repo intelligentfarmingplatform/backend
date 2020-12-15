@@ -53,6 +53,7 @@
                     <v-card-text>
                         <v-container>
                             <v-form
+                                v-model="isValid"
                                 ref="form"
                                 @submit.prevent="save"
                             >  
@@ -69,6 +70,8 @@
                                         label="ธนาคาร"
                                         hide-details
                                         single-line
+                                        :rules="[(v) => !!v || '']"
+                                        required
                                     ></v-select>
                                 </v-col>
                                 <v-col
@@ -78,6 +81,7 @@
                                 <v-text-field
                                     v-model="accountbank.numberaccount"
                                     label="เลขบัญชี"
+                                    :rules="[(v) => !!v || 'กรุณากรอกข้อมูล']"
                                     required
                                 ></v-text-field>
                                 </v-col>
@@ -89,9 +93,11 @@
                                 <v-text-field
                                     v-model="accountbank.nameaccountTH"
                                     label="ชื่อบัญชี(ภาษาไทย)"
+                                    :rules="[(v) => !!v || 'กรุณากรอกข้อมูล']"
                                     required
                                 ></v-text-field>
                                 <v-text-field
+                                :rules="[(v) => !!v || 'กรุณากรอกข้อมูล']"
                                     v-model="accountbank.nameaccountEN"
                                     label="ชื่อบัญชี(ภาษาอังกฤษ)"
                                     required
@@ -139,9 +145,7 @@ name:'Backaccount',
       editedIndex: -1,
       password: "Password",
       rules: {
-        required: (value) => !!value || "Required.",
-        min: (v) => v.length >= 8 || "Min 8 characters",
-        emailMatch: () => `The email and password you entered don't match`,
+        required: (value) => !!value || "กรุณากรอกข้อมูล",
       },
       accountbank:{
           namebank:'',

@@ -200,7 +200,7 @@ export default {
         { text: "รห้สสั่งซื้อ", value: "id", align: "center", sortable: false },
         {
           text: "ชื่อผุ้สั่ง",
-          value: "id",
+          value: "CustomerAddress.fullname",
           align: "center",
           sortable: false,
         },
@@ -246,7 +246,9 @@ export default {
         this.filter.reverse();
         this.loading = false;
       }
-    );
+    ).catch((err=>{
+      console.log(err.message);
+    }))
     console.log(this.filter);
   },
   methods: {
@@ -267,7 +269,7 @@ export default {
         this.filter = this.listorder;
       } else {
         let datafilter = dataall.filter(
-          (status) => status.status_order == item
+          (dataall) => dataall.CustomerDelivery.orderStatus == item
         );
         this.filter = datafilter;
       }

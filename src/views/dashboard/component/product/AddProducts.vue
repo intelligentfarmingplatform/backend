@@ -150,7 +150,6 @@ export default {
   data() {
     return {
       loading: "",
-      editedIndex: -1,
       dialog: false,
       products: {
         nameseller: "",
@@ -189,6 +188,19 @@ export default {
   },
 
   mounted() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    Axios.get(`${process.env.VUE_APP_APIURL}/api/sellproducts/${this.$route.params.id}`, config)
+      .then((response) => {
+        console.log("response", response);
+        this.showproducts = response.data.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     this.products.nameseller = this.datauser.tbl_userdetail.name;
   },
   methods: {
