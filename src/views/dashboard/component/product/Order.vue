@@ -6,6 +6,7 @@
         icon="fas fa-clipboard-list"
         title="คำสั่งซื้อสินค้า"
       >
+  
         <!-- <formuser /> -->
         <v-card-title>
           <v-col cols="12" lg="4" md="4">
@@ -78,9 +79,7 @@
                 clas
                 s="mr-2"
                 color="#FFBB29"
-                @click="
-                  view(item.CustomerAddress), viewitem(itemaddress)
-                "
+                @click="view(item)"
               >
                 mdi-eye
               </v-icon>
@@ -98,9 +97,9 @@
                 <v-col cols="3" class="font-weight-bold py-2"> สถานะ </v-col>
                 <v-chip
                   :color="
-                    onelistorder.status_order === 'Order'
+                    onelistDelivery.orderStatus === 'Order'
                       ? '#F05347'
-                      : onelistorder.status_order === 'Delivery'
+                      : onelistorder.orderStatus === 'Delivery'
                       ? '#fb8c00'
                       : '#4CAF50'
                   "
@@ -132,7 +131,7 @@
                 </v-col>
               </v-row>
               <v-col cols="12" class="py-2">
-                {{ onelistorder.streetAddress }}
+                {{ onelistorder.streetAddress }} {{ onelistorder.district }} {{ onelistorder.province }} {{ onelistorder.zipCode }}
               </v-col>
               <v-row>
                 <v-col cols="3" class="font-weight-bold py-2"> เบอร์โทร </v-col>
@@ -156,10 +155,10 @@
               />
               <div class="text-center my-5">
                 <v-btn
-                  v-if="onelistorder.status_order === 'Order'"
+                  v-if="onelistDelivery.orderStatus === 'Order'"
                   class="mx-0"
                   color="primary"
-                  @click="changestatus(onelistorder.id)"
+                  @click="changestatus(onelistDelivery.id)"
                 >
                   <v-icon> mdi-car </v-icon>
                   ยืนยันการจัดส่ง
@@ -182,9 +181,8 @@ export default {
     return {
       loading: true,
       arryitem: "",
-      arryitem2: "",
       onelistorder: {},
-      onelistAddress: {},
+      onelistDelivery: {},
       filter: [],
       dialog: false,
       listorder: [],
@@ -197,29 +195,29 @@ export default {
         { text: "ราคา", sortable: false },
       ],
       headers: [
-        { text: "รห้สสั่งซื้อ", value: "id", align: "center", sortable: false },
+        { text: "รห้สสั่งซื้อ", value: "transaction.orderNo", align: "center", sortable: false },
         {
           text: "ชื่อผุ้สั่ง",
-          value: "CustomerAddress.fullname",
+          value: "CustomerAddress.fullName",
           align: "center",
           sortable: false,
         },
         {
           text: "รายการ",
-          value: "lists_order",
+          value: "tbl_sellproduct.productname",
           align: "center",
           sortable: false,
         },
         {
           text: "ราคา",
-          value: "totalpice_order",
+          value: "CustomerOrder.totalPrice",
           align: "center",
           sortable: false,
         },
         {
           text: "สถานะ",
           align: "center",
-          value: "status_order",
+          value: "CustomerDelivery.orderStatus",
           width: "15%",
           sortable: false,
         },
@@ -246,21 +244,14 @@ export default {
         this.filter.reverse();
         this.loading = false;
       }
-    ).catch((err=>{
-      console.log(err.message);
-    }))
+    );
     console.log(this.filter);
   },
   methods: {
     view(item) {
       this.arryitem = this.filter.indexOf(item);
-      this.onelistorder = Object.assign({}, item);
-      this.onelistAddress = Object.assign({}, item);
-      this.dialog = true;
-    },
-    viewitem(itemaddress) {
-      this.arryitem2 = this.filter.indexOf(itemaddress);
-      this.onelistAddress = Object.assign({}, itemaddress);
+      this.onelistorder = Object.assign({}, item.CustomerAddress);
+      this.onelistDelivery = Object.assign({}, item.CustomerDelivery);
       this.dialog = true;
     },
     order(item) {
